@@ -1,0 +1,37 @@
+v2.1.0.1
+=============
+- Fixed: Replaced link to the depricated Legacy Image Effects with one pointing to the Unity Manual's page for Post-Processing.
+
+v2.1.0.0
+=============
+- Update: Dropped support for older versions of Unity. New minimum version is 2017.4 LTS (up from Unity 4.6.1).
+- Update: Updated obsolete code for versions of Unity from 2017.4 to 2019.3.
+- Update: Updated LUT meta files.
+
+v2.0.1.2
+=============
+- Fixed: Updated some property references for Unity 5.5
+
+v2.0.1.1
+=============
+- Added: Editor GUI icon images moved to special Unity folder, "Editor Default Resources". Our icons in this folder will automatically no longer be included in your builds.
+
+v2.0.1.0
+=============
+- Added 3 new Themes.
+- Reorganized package so About and Docs folders can be easily deleted to reduce bloat.
+- Update Welcome page content.
+
+v2.0.0.0
+=============
+- Added a window to easily add or swap themes to a camera within the scene.
+- Added 10 new themes.
+- Added a help/about window.
+
+v1.1.0.0
+=============
+- Added nine new themes.
+
+v1.0.1.0
+=============
+- Added Documentation and Readme.

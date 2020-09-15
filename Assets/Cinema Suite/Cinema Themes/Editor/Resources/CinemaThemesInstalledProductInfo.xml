@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<products>
+	<product>
+		<name>Cinema Themes</name>
+		<keyImage>ThemesKeyImage</keyImage>
+		<headerText>Cinema Themes</headerText>
+		<version>2.1.0.1</version>
+		<header2Text>v2.1.0.1 detected.</header2Text>
+		<bodyText>Thank you for downloading Cinema Themes! We appreciate your support, and hope you enjoy using our collection of VFX themes for Unity!
+    
+Check out the helpful links on the left to get going.
+    
+If you have a chance, please leave us a review on the Asset Store.</bodyText>
+		
+		<resourceImage1>Cinema_Suite_Docs</resourceImage1>
+		<resourceImage2>Cinema_Suite_Forums</resourceImage2>
+		<resourceImage3>Cinema_Suite_Tips</resourceImage3>
+		<resourceImage4>Cinema_Suite_Video</resourceImage4>
+		
+		<resourceImage1Link>http://www.cinema-suite.com/Documentation/CinemaThemes/CinemaThemesDocumentation.pdf</resourceImage1Link>
+		<resourceImage2Link>http://cinema-suite.com/forum/viewforum.php?f=26</resourceImage2Link>
+		<resourceImage3Link>https://youtu.be/vfAw4vdxemg</resourceImage3Link>
+		<resourceImage4Link>https://youtu.be/uF0Ihe8Jisw</resourceImage4Link>
+		
+		<resourceImage1Label>Docs</resourceImage1Label>
+		<resourceImage2Label>Forum</resourceImage2Label>
+		<resourceImage3Label>Tips</resourceImage3Label>
+		<resourceImage4Label>Tutorial</resourceImage4Label>
+		
+		<assetStorePage>http://u3d.as/8HZ</assetStorePage>
+		
+		<installed>true</installed>
+	</product>
+</products>

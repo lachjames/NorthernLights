@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<products>
+  <product>
+    <name>Cinema Face Cap</name>
+    <keyImage>FaceCapKeyImage</keyImage>
+    <headerText>Cinema Face Cap</headerText>
+    <header2Text>Markerless Facial Capture.</header2Text>
+    <bodyText>Capture facial animations right inside of Unity using your Kinect or Kinect 2! Configure your own models, add custom filters and modules!</bodyText>
+
+    <resourceImage1>Cinema_Suite_Video</resourceImage1>
+    <resourceImage2>Cinema_Suite_Store</resourceImage2>
+    <resourceImage3>Cinema_Suite_Forums</resourceImage3>
+    <resourceImage4>Cinema_Suite_Docs</resourceImage4>
+
+    <resourceImage1Link>https://www.youtube.com/watch?v=U9-Te_haT0g</resourceImage1Link>
+    <resourceImage2Link>http://u3d.as/rbK</resourceImage2Link>
+    <resourceImage3Link>http://cinema-suite.com/forum/viewforum.php?f=38</resourceImage3Link>
+    <resourceImage4Link>http://www.cinema-suite.com/Documentation/CinemaFaceCap/Current/CinemaFaceCapUserGuide.pdf</resourceImage4Link>
+
+    <resourceImage1Label>Video</resourceImage1Label>
+    <resourceImage2Label>Store</resourceImage2Label>
+    <resourceImage3Label>Forum</resourceImage3Label>
+    <resourceImage4Label>Docs</resourceImage4Label>
+
+    <assetStorePage>http://u3d.as/rbK</assetStorePage>
+
+    <installed>false</installed>
+  </product>
+	<product>
+		<name>Cinema Director</name>
+		<keyImage>DirectorKeyImage</keyImage>
+		<headerText>Cinema Director</headerText>
+		<version>1.4.3.1</version>
+		<header2Text>Sequencer and Cutscene Editor.</header2Text>
+		<bodyText>A sequencer and timeline editor, perfect for creating cutscenes and queueing up timed events and actions.</bodyText>
+		
+		<resourceImage1>Cinema_Suite_Video</resourceImage1>
+		<resourceImage2>Cinema_Suite_Store</resourceImage2>
+		<resourceImage3>Cinema_Suite_Forums</resourceImage3>
+		<resourceImage4>Cinema_Suite_Docs</resourceImage4>
+		
+		<resourceImage1Link>https://youtu.be/ufxdul8GNdg</resourceImage1Link>
+		<resourceImage2Link>http://u3d.as/8vm</resourceImage2Link>
+		<resourceImage3Link>http://forum.unity3d.com/threads/cinema-director-released.258242/</resourceImage3Link>
+		<resourceImage4Link>http://www.cinema-suite.com/Documentation/CinemaDirector/CinemaDirectorDocumentation.pdf</resourceImage4Link>
+		
+		<resourceImage1Label>Video</resourceImage1Label>
+		<resourceImage2Label>Store</resourceImage2Label>
+		<resourceImage3Label>Forum</resourceImage3Label>
+		<resourceImage4Label>Docs</resourceImage4Label>
+		
+		<assetStorePage>http://u3d.as/8vm</assetStorePage>
+		
+		<installed>false</installed>
+	</product>
+	
+	<product>
+		<name>Cinema Mocap 2</name>
+		<keyImage>MocapKeyImage</keyImage>
+		<headerText>Cinema Mocap 2</headerText>
+		<header2Text>Markerless Motion Capture.</header2Text>
+		<bodyText>Capture animations right inside of Unity using your Kinect or Kinect 2! Animations are Mecanim compatible and can be applied to any humanoid character.</bodyText>
+		
+		<resourceImage1>Cinema_Suite_Video</resourceImage1>
+		<resourceImage2>Cinema_Suite_Store</resourceImage2>
+		<resourceImage3>Cinema_Suite_Forums</resourceImage3>
+		<resourceImage4>Cinema_Suite_Docs</resourceImage4>
+		
+		<resourceImage1Link>https://youtu.be/X_aEFKNDTYw</resourceImage1Link>
+		<resourceImage2Link>http://u3d.as/5PB</resourceImage2Link>
+		<resourceImage3Link>http://forum.unity3d.com/threads/cinema-mo-cap-released.217012/</resourceImage3Link>
+		<resourceImage4Link>http://www.cinema-suite.com/Documentation/CinemaMoCap/Current/CinemaMoCapDocumentation.pdf</resourceImage4Link>
+		
+		<resourceImage1Label>Video</resourceImage1Label>
+		<resourceImage2Label>Store</resourceImage2Label>
+		<resourceImage3Label>Forum</resourceImage3Label>
+		<resourceImage4Label>Docs</resourceImage4Label>
+		
+		<assetStorePage>http://u3d.as/ozR</assetStorePage>
+		
+		<installed>false</installed>
+	</product>
+	
+	<product>
+		<name>Cinema Pro Cams</name>
+		<keyImage>ProCamsKeyImage</keyImage>
+		<headerText>Cinema Pro Cams</headerText>
+		<header2Text>Film Lens &amp; 3D Toolkit.</header2Text>
+		<bodyText>Cinema Pro Cams is an industry standard toolbox to aid in the creation of accurate, real-world cinematic cameras inside of your Unity or project.</bodyText>
+		
+		<resourceImage1>Cinema_Suite_Video</resourceImage1>
+		<resourceImage2>Cinema_Suite_Store</resourceImage2>
+		<resourceImage3>Cinema_Suite_Forums</resourceImage3>
+		<resourceImage4>Cinema_Suite_Docs</resourceImage4>
+		
+		<resourceImage1Link>https://youtu.be/Nx3gaSbLW0s</resourceImage1Link>
+		<resourceImage2Link>http://u3d.as/6N6</resourceImage2Link>
+		<resourceImage3Link>http://forum.unity3d.com/threads/cinema-pro-cams-released.238040/</resourceImage3Link>
+		<resourceImage4Link>http://www.cinema-suite.com/Documentation/CinemaProCams/Current/CinemaProCamsDocumentation.pdf</resourceImage4Link>
+		
+		<resourceImage1Label>Video</resourceImage1Label>
+		<resourceImage2Label>Store</resourceImage2Label>
+		<resourceImage3Label>Forum</resourceImage3Label>
+		<resourceImage4Label>Docs</resourceImage4Label>
+		
+		<assetStorePage>http://u3d.as/6N6</assetStorePage>
+		
+		<installed>false</installed>
+	</product>
+	
+	<product>
+		<name>Cinema Themes</name>
+		<keyImage>ThemesKeyImage</keyImage>
+		<headerText>Cinema Themes</headerText>
+		<header2Text>Get it Free!</header2Text>
+		<bodyText>Cinema Themes is a collection of LUTs (Look Up Textures) that create a cinematic look and feel. Capture that perfect mood for your environment as you tell your story.</bodyText>
+		
+		<resourceImage1>Cinema_Suite_Video</resourceImage1>
+		<resourceImage2>Cinema_Suite_Store</resourceImage2>
+		<resourceImage3>Cinema_Suite_Forums</resourceImage3>
+		<resourceImage4>Cinema_Suite_Docs</resourceImage4>
+		
+		<resourceImage1Link>https://youtu.be/QR2nWGzlrJo</resourceImage1Link>
+		<resourceImage2Link>http://u3d.as/8HZ</resourceImage2Link>
+		<resourceImage3Link>http://cinema-suite.com/forum/viewforum.php?f=26</resourceImage3Link>
+		<resourceImage4Link>http://www.cinema-suite.com/Documentation/CinemaThemes/CinemaThemesDocumentation.pdf</resourceImage4Link>
+		
+		<resourceImage1Label>Video</resourceImage1Label>
+		<resourceImage2Label>Store</resourceImage2Label>
+		<resourceImage3Label>Forum</resourceImage3Label>
+		<resourceImage4Label>Docs</resourceImage4Label>
+		
+		<assetStorePage>http://u3d.as/8HZ</assetStorePage>
+		
+		<installed>false</installed>
+	</product>
+</products>

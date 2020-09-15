@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using static AuroraEngine.GFFObject;
+using UnityEngine;
+using AuroraEngine;
+
+[Serializable]public class AuroraUTD : AuroraStruct {
+    // Field definitions
+    [GFF("structid")] public uint structid;
+    [GFF("KeyRequired")] public Byte KeyRequired;
+    [GFF("TrapFlag")] public Byte TrapFlag;
+    [GFF("TrapOneShot")] public Byte TrapOneShot;
+    [GFF("DisarmDC")] public Byte DisarmDC;
+    [GFF("Description")] public CExoLocString Description;
+    [GFF("OnTrapTriggered")] public String OnTrapTriggered;
+    [GFF("Comment")] public CExoString Comment;
+    [GFF("OnFailToOpen")] public String OnFailToOpen;
+    [GFF("OpenLockDC")] public Byte OpenLockDC;
+    [GFF("Locked")] public Byte Locked;
+    [GFF("Conversation")] public String Conversation;
+    [GFF("OnMeleeAttacked")] public String OnMeleeAttacked;
+    [GFF("Portrait")] public String Portrait;
+    [GFF("Interruptable")] public Byte Interruptable;
+    [GFF("TemplateResRef")] public String TemplateResRef;
+    [GFF("TrapDisarmable")] public Byte TrapDisarmable;
+    [GFF("OnHeartbeat")] public String OnHeartbeat;
+    [GFF("OnSpellCastAt")] public String OnSpellCastAt;
+    [GFF("OnDamaged")] public String OnDamaged;
+    [GFF("OnOpen")] public String OnOpen;
+    [GFF("Hardness")] public Byte Hardness;
+    [GFF("AnimationState")] public Byte AnimationState;
+    [GFF("OnLock")] public String OnLock;
+    [GFF("GenericType")] public Byte GenericType;
+    [GFF("OnUnlock")] public String OnUnlock;
+    [GFF("Will")] public Byte Will;
+    [GFF("TrapDetectable")] public Byte TrapDetectable;
+    [GFF("LinkedToFlags")] public Byte LinkedToFlags;
+    [GFF("TrapType")] public Byte TrapType;
+    [GFF("Lockable")] public Byte Lockable;
+    [GFF("HP")] public Int16 HP;
+    [GFF("OnUserDefined")] public String OnUserDefined;
+    [GFF("Faction")] public UInt32 Faction;
+    [GFF("PaletteID")] public Byte PaletteID;
+    [GFF("Plot")] public Byte Plot;
+    [GFF("LinkedTo")] public CExoString LinkedTo;
+    [GFF("TrapDetectDC")] public Byte TrapDetectDC;
+    [GFF("LocName")] public CExoLocString LocName;
+    [GFF("Appearance")] public UInt32 Appearance;
+    [GFF("KeyName")] public CExoString KeyName;
+    [GFF("OnClosed")] public String OnClosed;
+    [GFF("CurrentHP")] public Int16 CurrentHP;
+    [GFF("AutoRemoveKey")] public Byte AutoRemoveKey;
+    [GFF("OnDisarm")] public String OnDisarm;
+    [GFF("Fort")] public Byte Fort;
+    [GFF("OnDeath")] public String OnDeath;
+    [GFF("Tag")] public CExoString Tag;
+    [GFF("OnClick")] public String OnClick;
+    [GFF("CloseLockDC")] public Byte CloseLockDC;
+    [GFF("Min1HP")] public Byte Min1HP;
+    [GFF("PortraitId")] public UInt16 PortraitId;
+    [GFF("Ref")] public Byte Ref;
+    [GFF("LoadScreenID")] public UInt16 LoadScreenID;
+    [GFF("Static")] public Byte Static;
+    
+}

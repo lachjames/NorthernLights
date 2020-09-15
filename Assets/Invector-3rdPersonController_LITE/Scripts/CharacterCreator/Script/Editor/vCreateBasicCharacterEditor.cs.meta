@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0be34c7083a012248a83e5a948676d12
+timeCreated: 1565059693
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - controller: {fileID: 9100000, guid: cbd1db45c75e5b948a5befe9ecb80421, type: 2}
+  - cameraListData: {fileID: 11400000, guid: dbf2c7a931be7ae4d960bc178dc4dda6, type: 2}
+  - hud: {fileID: 100834, guid: 65d09cff7cef67d47a9d1f9a022f2d84, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
