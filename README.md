@@ -1,44 +1,41 @@
-# KotOR-Unity
+# Northern Lights
 
-KotOR-Unity is a conversion layer between BioWare's Odyssey engine, which was used to develop Star Wars Knights of the Old Republic (2), and the Unity engine. The goal is to implement features of the original games inside Unity.
+The Northern Lights Project (a placeholder name) is a full reimplementation of the Aurora/Odyssey engine, targeting the two Knights of the Old Republic games (KotOR 1 and TSL). It is made of two elements:
+ - A full re-reimplementation of the Odyssey engine
+ - A level editor with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
 
-## Status
-
-Currently the following things are implemented:
- - Extract files from BIF, ERF, and RIM archives
- - Parsing of various aurora/odyssey file types into memory
- - Binary models (MDL/MDX) are fully loaded and viewable in-game with limited animation support
- - Materials are loaded from textures in TPC and TGA format with lightmap support
- - GFF files loaded and exportable to JSON format
- - Module layouts can be loaded
- - Audio files can be loaded
- - Full modules can be loaded with correct room placement, ambient music, and characters, doors, and placeables
- - Modules can be traversed in-game using standard player controllers
+## What Works
+ - Model loading and animations (thanks in no small part to the work of rwc4301, whose work in turn seems to be partially based on the Xoreos project) 
+ - NCS scripts run natively, although performance needs to be improved
+ - Many of the engine routines have been implemented, along with the corresponding systems
+ - I've got a rudimentary UI system working, but how exactly I want to handle this is still an open question
+ - Enemy combat AI is working (but is very simple; for now, I'm overriding the k_ai_master script and writing the AI logic myself).
+ - The action system has been implemented, but many of the actions require implementation
+ - Movie playback works (although it works by first converting all the movies to MP4, and then playing them). Eventually, using Xoreos as a reference, I'd like to read the movies directly from .bik format, but that's a lower priority.
  
-The following things are in the pipeline:
- - Further material support including specular maps and bump maps
- - Player interaction with placeables, doors, characters, and items
- - Better animation support
- - Support for waypoints
- - Loading files from MOD archives and the override folder
+## What doesn't work
+ - Many of the systems currently use reflection to (very significantly) improve the ability of 
+ - The save-load system
+ - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
+ - TSL support is still an ongoing issue, as TSL's game files are more complex than those for K1. However, I anticipate the majority of the issues here will be resolved shortly.
  
- Other things, notably scripting and combat, are not currently on the roadmap. If you'd like to see them implemented, you can help by contributing!
- 
-## Getting Started
+## Installation
+Please follow the following steps:
+ 1. Download the repository, either by cloning it using git or just downloading it as a .zip file
+ 2. Unzip the resulting folder somewhere on your computer
+ 3. Open the folder in Unity as a project
+ 4. Open the "KotOR" scene, in the "scenes" folder
+ 5. Open Systems>Loading System in the inspector, and change the kotorDir variable to point to the base directory of your KotOR 1 installation (TSL support is coming as a VERY high priority and is, theoretically, almost complete)
+ 6. Set the "Level Name" variable in the same inspector window as (5) to whichever module you want to load
+ 7. Press the play button at the top-middle of the screen
 
-1) First things first, you'll need a copy of the target game, KotOR or TSL. You'll also need to download the Unity game engine.
-2) Clone or download the repository.
-3) Open the KotOR-Unity directory you just downloaded as a Unity project.
-4) Inside Unity, load the sample scene from Assets -> Scenes -> SampleScene
-5) The GameManager component is the entry point for loading everything, you'll need to change the Kotor Dir property to match the root of your kotor installation, and the Target Game property to either KotOR or TSL.
-6) Enter the name of the Entry Module you wish to load, module names can be found in {KotOR Directory}/Modules.
-7) Hit play, you should be able to see the desired module load in the scene and move around with a basic 3rd person controller.
-
-## VR Support
-
-VR is working with the oculus rift, future releases will try to generalise this to any headset. In order to run in VR mode, just drag and drop the OVRPlayerController from Assets -> Resources -> PlayerControllers into the scene and make sure to remove any other player controllers.
-
-## Contributing
-
-Everyone is welcome to contribute, if you have something to add, submit a pull request or otherwise feel free to request a feature.
-
+## Who to thank
+ - Almost all of the code for loading models, GFF, LYT, RIM, MOD, ERF, ... files is either directly from, or derived from, the KotOR-Unity repo (https://github.com/rwc4301/KotOR-Unity). This project wouldn't have gotten off the ground without the amazing work of rwc4301.
+ - JC on the DeadlyStream Discord has been invaluable and this project would not exist without his knowledge of the game engine
+ - Thor110 for his help and support, tmonahan23, VicariousVeteran, and many, many others
+ - DrMcCoy and the Xoreos team for the Xoreos project (xoreos-tools is used in this project for a few things, and xoreos itself is a great reference)
+ - The Reone project, which
+ - KotOR.js, another project similar to this, whose public source code has been helpful when trying to crack a couple of difficult nuts
+ - MDLOps, whose source code I have relied on heavily when trying to understand the MDL/MDX format
+ - The NWN NSS/NCS Skywing documentation
+ - So, so much more... I need to finish this section
