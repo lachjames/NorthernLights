@@ -1,4 +1,4 @@
-# Northern Lights
+# The Northern Lights Project
 
 The Northern Lights Project (a placeholder name) is a full reimplementation of the Aurora/Odyssey engine, targeting the two Knights of the Old Republic games (KotOR 1 and TSL). It is made of two elements:
  - A full re-reimplementation of the Odyssey engine
