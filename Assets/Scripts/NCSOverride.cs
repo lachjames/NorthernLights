@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class NCSOverride
 {
+    public static int GetZero (int x)
+    {
+        return 0;
+    }
     public static int k_ai_master (AuroraObject self, int scriptVar)
     {
         switch (scriptVar)

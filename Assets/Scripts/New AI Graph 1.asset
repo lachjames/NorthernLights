@@ -1,0 +1,224 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8170902577809967275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aca3af8ca1c42c40a074d39592cdcd1, type: 3}
+  m_Name: Action
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1016, y: -664}
+  ports:
+    keys:
+    - trigger
+    - after
+    - return
+    values:
+    - _fieldName: trigger
+      _node: {fileID: -8170902577809967275}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: after
+        node: {fileID: -2509284560791448689}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: after
+      _node: {fileID: -8170902577809967275}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: trigger
+        node: {fileID: -7777439342823610547}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: return
+      _node: {fileID: -8170902577809967275}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: scriptVar
+        node: {fileID: -7777439342823610547}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  ActionName: GetRunScriptVar
+--- !u!114 &-7777439342823610547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Custom
+  m_EditorClassIdentifier: Assembly-CSharp::CustomNode
+  graph: {fileID: 11400000}
+  position: {x: -760, y: -648}
+  ports:
+    keys:
+    - trigger
+    - after
+    - self
+    - scriptVar
+    - return
+    values:
+    - _fieldName: trigger
+      _node: {fileID: -7777439342823610547}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: after
+        node: {fileID: -8170902577809967275}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: after
+      _node: {fileID: -7777439342823610547}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: self
+      _node: {fileID: -7777439342823610547}
+      _typeQualifiedName: AuroraEngine.AuroraObject, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: output
+        node: {fileID: 3080961726760289669}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+    - _fieldName: scriptVar
+      _node: {fileID: -7777439342823610547}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: return
+        node: {fileID: -8170902577809967275}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+    - _fieldName: return
+      _node: {fileID: -7777439342823610547}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  ActionName: k_ai_master
+--- !u!114 &-2509284560791448689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: On Begin Script
+  m_EditorClassIdentifier: Assembly-CSharp::OnBeginScript
+  graph: {fileID: 11400000}
+  position: {x: -1272, y: -664}
+  ports:
+    keys:
+    - trigger
+    - after
+    values:
+    - _fieldName: trigger
+      _node: {fileID: -2509284560791448689}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: after
+      _node: {fileID: -2509284560791448689}
+      _typeQualifiedName: Conditional, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: trigger
+        node: {fileID: -8170902577809967275}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: New AI Graph 1
+  m_EditorClassIdentifier: Assembly-CSharp::AIGraph
+  nodes:
+  - {fileID: -7777439342823610547}
+  - {fileID: -2509284560791448689}
+  - {fileID: 3080961726760289669}
+  - {fileID: -8170902577809967275}
+--- !u!114 &3080961726760289669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Object Self
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSelf
+  graph: {fileID: 11400000}
+  position: {x: -1016, y: -536}
+  ports:
+    keys:
+    - output
+    values:
+    - _fieldName: output
+      _node: {fileID: 3080961726760289669}
+      _typeQualifiedName: AuroraEngine.AuroraObject, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: self
+        node: {fileID: -7777439342823610547}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  output: {fileID: 0}

@@ -681,7 +681,7 @@ namespace AuroraEngine
             return RunXoreosTools("D:\\KOTOR\\KotOR-Unity\\tmp\\tmp.ncs", utility, arguments);
         }
 
-        public static string RunXoreosTools(string loc, string utility, string arguments)
+        public static string RunXoreosTools(string loc, string utility, string arguments, string workingdir = null)
         {
             // Then we read it using xoreos-tools's disassembler
             Process p = new Process();
@@ -693,6 +693,11 @@ namespace AuroraEngine
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;
             p.EnableRaisingEvents = true;
+
+            if (workingdir != null)
+            {
+                p.StartInfo.WorkingDirectory = workingdir;
+            }
 
             StringBuilder outputBuilder = new StringBuilder();
             StringBuilder errorBuilder = new StringBuilder();

@@ -12,9 +12,9 @@ public class Conditional
 	public static Conditional Trigger = new Conditional();
 }
 
-public class OnBeginScript : Node
+public class OnBeginScript : ExecutableNode
 {
-	[Output] public Conditional onBegin;
+
 }
 
 [ExecuteInEditMode]
@@ -33,4 +33,21 @@ public class ConditionalNode : ExecutableNode
 	public override object GetValue(NodePort port) {
 		return null;
 	}
+
+    public override AuroraNode Execute()
+    {
+		AuroraNode next;
+
+        if (input == 0)
+        {
+			NodePort port = (new List<NodePort>(Outputs))[0];
+			next = (AuroraNode)port.Connection.node;
+        } else
+        {
+			NodePort port = (new List<NodePort>(Outputs))[1];
+			next = (AuroraNode)port.Connection.node;
+        }
+
+		return next;
+    }
 }

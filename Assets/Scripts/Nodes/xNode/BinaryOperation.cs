@@ -7,7 +7,7 @@ using UnityEngine;
 using XNode;
 
 [ExecuteInEditMode]
-public abstract class BinaryOperation : Node {
+public abstract class BinaryOperation : ExecutableNode {
 	public object x, y;
 	public object result;
 
