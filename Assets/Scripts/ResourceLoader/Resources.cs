@@ -12,9 +12,8 @@ namespace AuroraEngine
 {
     public enum Game
 	{
-		KotOR = 1,
-		TSL = 2
-	}
+        KotOR, TSL
+    }
 
     // Reference: https://github.com/xoreos/xoreos/blob/master/src/aurora/types.h
     public enum ResourceType
@@ -417,8 +416,10 @@ namespace AuroraEngine
         public static Texture2D LoadNormal(string resref)
         {
             if (!loadedNormals.ContainsKey(resref))
+            //if (!loadedNormals.ContainsKey(resref + "_base"))
             {
                 loadedNormals[resref] = NormalMapTools.CreateNormalmap(loadedTextures[resref], 1f);
+                //loadedNormals[resref] = NormalMapTools.CreateNormalmap(loadedTextures[resref + "_base"], 1f);
             }
 
             return loadedNormals[resref];
@@ -474,7 +475,7 @@ namespace AuroraEngine
 
         public static TLKObject LoadTLK()
         {
-            string xml = RunXoreosTools(data.loader.kotorDir + "/dialog.tlk", "tlk2xml", "--kotor");
+            string xml = RunXoreosTools(AuroraPrefs.GetKotorLocation() + "/dialog.tlk", "tlk2xml", "--kotor");
             return new TLKObject(xml);
         }
 
@@ -588,8 +589,8 @@ namespace AuroraEngine
         }
 
         public static AudioClip LoadAudio(string resref)
-		{
-			using (FileStream stream = File.Open(data.loader.kotorDir + "\\streammusic\\" + resref + ".wav", FileMode.Open)) {
+        {
+            using (FileStream stream = File.Open(AuroraPrefs.GetKotorLocation() + "\\streammusic\\" + resref + ".wav", FileMode.Open)) {
 				WAVObject wav = new WAVObject(stream);
 
 				AudioClip clip = AudioClip.Create(resref, wav.data.Length / wav.channels, wav.channels, wav.sampleRate, false);
@@ -649,7 +650,7 @@ namespace AuroraEngine
             // Next six characters are the subfolder
             string subFolder = resref.Substring(6, 6);
 
-            string fullname = data.loader.kotorDir + "\\streamwaves\\" + topFolder + "\\" + subFolder + "\\" + resref + ".wav";
+            string fullname = AuroraPrefs.GetKotorLocation() + "\\streamwaves\\" + topFolder + "\\" + subFolder + "\\" + resref + ".wav";
 
             if (!File.Exists(fullname))
             {

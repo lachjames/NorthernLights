@@ -1,5 +1,4 @@
 ﻿using AuroraEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,7 +9,7 @@ using UnityEngine;
 
 public class AuroraData
 {
-    Game game = Game.KotOR;
+    public Game game = Game.KotOR;
 
     string moduleName;
     public RIMObject rim, srim;
@@ -46,39 +45,48 @@ public class AuroraData
             LoadModule();
     }
 
-    void LoadBase ()
+    void LoadBase()
     {
         loaded2das = new Dictionary<string, _2DAObject>();
 
-        keyObject = new KEYObject(loader.kotorDir + "\\chitin.key");
+        keyObject = new KEYObject(AuroraPrefs.GetKotorLocation() + "\\chitin.key");
 
         KEYObject.BIFStream[] bifs = keyObject.GetBIFs();
         bifObjects = new BIFObject[bifs.Length];
         for (int i = 0; i < bifs.Length; i++)
         {
-            bifObjects[i] = new BIFObject(loader.kotorDir + "\\" + bifs[i].Filename);
+            bifObjects[i] = new BIFObject(AuroraPrefs.GetKotorLocation() + "\\" + bifs[i].Filename);
         }
 
-        textures = new ERFObject(loader.kotorDir + "\\TexturePacks\\swpc_tex_tpa.erf");
-        guiTextures = new ERFObject(loader.kotorDir + "\\TexturePacks\\swpc_tex_gui.erf");
+        textures = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\TexturePacks\\swpc_tex_tpa.erf");
+        guiTextures = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\TexturePacks\\swpc_tex_gui.erf");
 
         // Load the VO directory
-        foreach (string filepath in Directory.GetFiles(loader.kotorDir + "\\streamwaves", "*.wav", SearchOption.AllDirectories))
+        string voicedir = AuroraPrefs.GetKotorLocation();
+        if (AuroraPrefs.TargetGame() == Game.KotOR)
+        {
+            voicedir += "\\streamwaves";
+        } else
+        {
+            voicedir += "\\streamvoice";
+        }
+
+        foreach (string filepath in Directory.GetFiles(voicedir, "*.wav", SearchOption.AllDirectories))
         {
             string filename = filepath.Split('\\').Last().Replace(".wav", "");
             voLocations[filename.ToLower()] = filepath;
         }
 
-        string tlkXML = RunXoreosTools(loader.kotorDir + "/dialog.tlk", "tlk2xml", "--kotor");
+        string tlkXML = RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
         tlk = new TLKObject(tlkXML);
 
         UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
     }
 
-    void LoadModule ()
+    void LoadModule()
     {
-        rim = new RIMObject(loader.kotorDir + "\\modules\\" + moduleName + ".rim");
-        srim = new RIMObject(loader.kotorDir + "\\modules\\" + moduleName + "_s.rim");
+        rim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim");
+        srim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim");
 
         UnityEngine.Debug.Log("Loaded " + rim.resources.Keys.Count + " items from " + moduleName + ".rim");
         UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
@@ -120,7 +128,7 @@ public class AuroraData
     }
 
 
-    public T Get<T> (string resref, ResourceType rt)
+    public T Get<T>(string resref, ResourceType rt)
     {
         // Check the override folder
 
@@ -137,7 +145,7 @@ public class AuroraData
         return default;
     }
 
-    public Stream GetStream (string resref, ResourceType rt)
+    public Stream GetStream(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromModule(resref, rt);
         if (stream != null)
@@ -146,13 +154,17 @@ public class AuroraData
         return GetStreamFromBase(resref, rt);
     }
 
-    public Stream GetStreamFromModule (string resref, ResourceType rt)
+    public Stream GetStreamFromModule(string resref, ResourceType rt)
     {
         // Check if the item is in the rim
 
-        Stream stream = rim.GetResource(resref, rt);
+        Stream stream = null;
 
-        if (stream == null)
+        if (stream == null && rim != null)
+        {
+            stream = rim.GetResource(resref, rt);
+        }
+        if (stream == null && srim != null)
         {
             stream = srim.GetResource(resref, rt);
         }
@@ -173,7 +185,7 @@ public class AuroraData
         return stream;
     }
 
-    public T GetFromModule<T> (string resref, ResourceType rt)
+    public T GetFromModule<T>(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromModule(resref, rt);
 
@@ -185,7 +197,7 @@ public class AuroraData
         return (T)obj.Serialize<T>();
     }
 
-    public T GetFromBase<T> (string resref, ResourceType rt)
+    public T GetFromBase<T>(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromBase(resref, rt);
 
@@ -196,7 +208,7 @@ public class AuroraData
         return (T)gff.Serialize<T>();
     }
 
-    public Stream GetStreamFromBase (string resref, ResourceType type)
+    public Stream GetStreamFromBase(string resref, ResourceType type)
     {
         Stream resourceStream;
         uint id;
@@ -251,7 +263,8 @@ public class AuroraData
         using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
         using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
         {
-            p.OutputDataReceived += (sender, e) => {
+            p.OutputDataReceived += (sender, e) =>
+            {
                 if (e.Data == null)
                 {
                     outputWaitHandle.Set();
@@ -299,6 +312,7 @@ public class AuroraData
         }
 
         UnityEngine.Debug.Log(output);
+        UnityEngine.Debug.Log(error);
 
         // Finally, we run the normal NCSScript reader on that
         return output;

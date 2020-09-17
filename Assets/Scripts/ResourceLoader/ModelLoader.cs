@@ -312,7 +312,14 @@ namespace AuroraEngine
                         MeshCollider c = go.GetComponent<MeshCollider>();
                         if (c != null)
                         {
-                            GameObject.Destroy(c);
+                            if (Application.isPlaying)
+                            {
+                                GameObject.Destroy(c);
+                            }
+                            else
+                            {
+                                GameObject.DestroyImmediate(c);
+                            }
                         }
 
                         //Debug.Log("Beginning bone map");

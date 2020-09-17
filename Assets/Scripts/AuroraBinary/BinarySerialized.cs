@@ -13,41 +13,44 @@ using UnityEngine;
 //{
 //    static MethodInfo getterInfo, setterInfo;
 
-//    static FieldDelegates () {
-//        getterInfo = typeof(FieldDelegates).GetMethod("CreateGetter");
-//        setterInfo = typeof(FieldDelegates).GetMethod("CreateSetter");
+//    static FieldDelegates()
+//    {
+//        //getterInfo = typeof(FieldDelegates).GetMethod("CreateGetterGeneric");
+//        setterInfo = typeof(FieldDelegates).GetMethod("CreateSetterGeneric");
+
+//        Debug.Log("Set getterInfo and setterInfo");
 //    }
 
-//    public static Delegate CreateGetter(Type target, FieldInfo field)
-//    {
-//        MethodInfo factory = getterInfo.MakeGenericMethod(target, field.FieldType);
-//        return (Delegate)factory.Invoke(null, new object[] { target, field });
-//    }
+//    //public static Delegate CreateGetter(Type target, FieldInfo field)
+//    //{
+//    //    MethodInfo factory = getterInfo.MakeGenericMethod(target, field.FieldType);
+//    //    return (Delegate)getterInfo.Invoke(null, new object[] { target, field });
+//    //}
 
 //    public static Delegate CreateSetter(Type target, FieldInfo field)
 //    {
 //        MethodInfo factory = setterInfo.MakeGenericMethod(target, field.FieldType);
-//        return (Delegate)factory.Invoke(null, new object[] { target, field });
+//        return (Delegate)factory.Invoke(null, new object[] { field });
 //    }
-//    static Delegate CreateGetter<S, T>(FieldInfo field)
-//    {
-//        string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
-//        DynamicMethod setterMethod = new DynamicMethod(methodName, typeof(T), new Type[1] { typeof(S) }, true);
-//        ILGenerator gen = setterMethod.GetILGenerator();
-//        if (field.IsStatic)
-//        {
-//            gen.Emit(OpCodes.Ldsfld, field);
-//        }
-//        else
-//        {
-//            gen.Emit(OpCodes.Ldarg_0);
-//            gen.Emit(OpCodes.Ldfld, field);
-//        }
-//        gen.Emit(OpCodes.Ret);
-//        return setterMethod.CreateDelegate(typeof(Func<S, T>));
-//    }
+//    //static Delegate CreateGetterGeneric<S, T>(FieldInfo field)
+//    //{
+//    //    string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
+//    //    DynamicMethod setterMethod = new DynamicMethod(methodName, typeof(T), new Type[1] { typeof(S) }, true);
+//    //    ILGenerator gen = setterMethod.GetILGenerator();
+//    //    if (field.IsStatic)
+//    //    {
+//    //        gen.Emit(OpCodes.Ldsfld, field);
+//    //    }
+//    //    else
+//    //    {
+//    //        gen.Emit(OpCodes.Ldarg_0);
+//    //        gen.Emit(OpCodes.Ldfld, field);
+//    //    }
+//    //    gen.Emit(OpCodes.Ret);
+//    //    return setterMethod.CreateDelegate(typeof(Func<S, T>));
+//    //}
 
-//    static Delegate CreateSetter<S, T> (FieldInfo field)
+//    public static Delegate CreateSetterGeneric<S, T>(FieldInfo field)
 //    {
 //        string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
 //        DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[2] { typeof(S), typeof(T) }, true);
@@ -88,12 +91,12 @@ public class BinaryCache
     //public class TypeCache
     //{
     //    public Dictionary<FieldInfo, Delegate> setters = new Dictionary<FieldInfo, Delegate>();
-    //    public Dictionary<FieldInfo, Delegate> getters = new Dictionary<FieldInfo, Delegate>();
-    //    public TypeCache (Type t)
+    //    //public Dictionary<FieldInfo, Delegate> getters = new Dictionary<FieldInfo, Delegate>();
+    //    public TypeCache(Type t)
     //    {
     //        foreach (FieldInfo p in fieldInfo[t])
     //        {
-    //            getters[p] = FieldDelegates.CreateGetter(t, p);
+    //            //getters[p] = FieldDelegates.CreateGetter(t, p);
     //            setters[p] = FieldDelegates.CreateSetter(t, p);
     //        }
     //    }
@@ -283,6 +286,7 @@ public class BinaryStructure
 
     public int SetAttribute (FieldInfo p, byte[] data, int offset)
     {
+        //Delegate d = BinaryCache.typeInfo[p.FieldType].setters[p];
         // Calculate the value and store it in this object
         object value = ConvertValue(p.FieldType, data, offset);
         p.SetValue(this, value);
@@ -419,6 +423,31 @@ public class BinaryLoadFrom : BinaryAttribute
     public BinaryLoadFrom (Type other)
     {
         this.other = other;
+    }
+}
+
+public class BinaryTSL : BinaryAttribute
+{
+    static bool printed = false;
+    public override int ReadAttribute(byte[] data, int offset, FieldInfo f, object target, Dictionary<string, byte[]> other)
+    {
+        //if (!printed)
+        //{
+        //    printed = true;
+        //    Debug.Log(AuroraPrefs.TargetGame());
+        //}
+
+        //if (AuroraPrefs.TargetGame() == AuroraEngine.Game.KotOR)
+        //{
+        //    return offset;
+        //}
+
+        //return offset + 4;
+
+        return offset + 4;
+
+        //// Read the attribute if we reach this point, by calling the base function
+        //return base.ReadAttribute(data, offset, f, target, other);
     }
 }
 

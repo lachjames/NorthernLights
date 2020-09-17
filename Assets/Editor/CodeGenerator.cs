@@ -114,10 +114,10 @@ using AuroraEngine;
 
         // Read GFF objects from disk
         Debug.Log("Loading BIFs");
-        LoadGFFsFromBIFs(manager.kotorDir + "\\data", defs);
+        LoadGFFsFromBIFs(AuroraPrefs.GetKotorLocation() + "\\data", defs);
 
         Debug.Log("Loading RIMs");
-        LoadGFFsFromRIMs(manager.kotorDir + "\\modules", defs);
+        LoadGFFsFromRIMs(AuroraPrefs.GetKotorLocation() + "\\modules", defs);
 
         Debug.Log("Loading saves");
         foreach (string saveFolder in Directory.GetDirectories(SaveLocation))

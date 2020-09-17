@@ -7,7 +7,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class LoadingSystem : MonoBehaviour
 {
-    public string kotorDir = "D:\\SteamLibrary\\steamapps\\common\\swkotor";
     public Game targetGame = Game.KotOR;
 
     public string levelName;

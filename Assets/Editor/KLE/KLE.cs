@@ -8,10 +8,8 @@ using UnityEngine;
 
 public class KLE : EditorWindow
 {
-    public static Game game = Game.KotOR;
-
-    bool isTSL = false;
-    string location = "D:\\SteamLibrary\\steamapps\\common\\swkotor";
+    string k1Location = "D:\\SteamLibrary\\steamapps\\common\\swkotor";
+    string tslLocation = "D:\\SteamLibrary\\steamapps\\common\\Knights of the Old Republic II";
     int moduleIdx = 0;
 
     public AuroraEngine.Module module;
@@ -47,11 +45,6 @@ public class KLE : EditorWindow
                 LoadGame();
             }
 
-            if (location == "")
-            {
-                return;
-            }
-
             if (names == null)
             {
                 return;
@@ -84,11 +77,9 @@ public class KLE : EditorWindow
 
     void LoadGame()
     {
-        string loc = location + "\\modules";
-
         AuroraEngine.Resources.Load(null);
 
-        modules = Directory.GetFiles(loc, "*.rim");
+        modules = Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\modules", "*.rim");
         names = new List<string>();
 
         foreach (string mod in modules)

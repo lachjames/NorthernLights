@@ -1,6 +1,7 @@
 ﻿using AuroraEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class ModelExplorer : EditorWindow
     
     public MDL mdlObj;
     Vector2 scroll;
+
+    Stopwatch loadTimer, instantiateTimer;
 
     [MenuItem("Window/Aurora/Model Explorer")]
     public static void ShowWindow ()
@@ -43,6 +46,27 @@ public class ModelExplorer : EditorWindow
                 }
             }
 
+            if (GUILayout.Button("Benchmark Load"))
+            {
+                BenchmarkLoad();
+            }
+
+            if (GUILayout.Button("Benchmark Instantiate"))
+            {
+                BenchmarkInstantiate();
+            }
+
+            if (loadTimer != null)
+                GUILayout.Label("Loading: " + loadTimer.Elapsed.ToString());
+    
+            if (instantiateTimer != null)
+                GUILayout.Label("Instantiation: " + instantiateTimer.Elapsed.ToString());
+
+            if (loadTimer != null && instantiateTimer != null)
+            {
+                GUILayout.Label("Loading takes " + loadTimer.Elapsed.TotalSeconds / instantiateTimer.Elapsed.TotalSeconds);
+            }
+
             //using (var scope = new EditorGUILayout.ScrollViewScope(scroll, "box"))
             //{
             //    scroll = scope.scrollPosition;
@@ -54,6 +78,35 @@ public class ModelExplorer : EditorWindow
             //    }
             //}
         }
+    }
+
+    void BenchmarkLoad()
+    {
+        loadTimer = new Stopwatch();
+        loadTimer.Start();
+
+        using (Stream mdlStream = File.OpenRead(mdlLocation))
+        using (Stream mdxStream = File.OpenRead(mdxLocation))
+        {
+            AuroraModel auroraModel = new AuroraModel(mdlStream, mdxStream, Game.KotOR);
+            mdlObj = auroraModel.mdlObject;
+        }
+
+        loadTimer.Stop();
+    }
+    void BenchmarkInstantiate()
+    {
+        instantiateTimer = new Stopwatch();
+        instantiateTimer.Start();
+
+        using (Stream mdlStream = File.OpenRead(mdlLocation))
+        using (Stream mdxStream = File.OpenRead(mdxLocation))
+        {
+            // Create an instance
+            GameObject model = AuroraEngine.Resources.LoadModel(mdlStream, mdxStream, new Dictionary<string, GameObject>(), Vector3.zero, null, null, null);
+        }
+
+        instantiateTimer.Stop();
     }
 
     void ShowMDL ()

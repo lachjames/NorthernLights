@@ -330,7 +330,7 @@ public class KModuleEditor : EditorWindow
         srim = new RIMObject(srimLoc);
 
         // If TSL, load dlg_erf and mod 
-        if (KLE.game == Game.TSL)
+        if (AuroraPrefs.TargetGame() == Game.TSL)
         {
             string dlgLoc = modulePath + "\\" + moduleName + "_dlg.erf";
             dlg = new ERFObject(dlgLoc);
