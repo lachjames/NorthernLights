@@ -17,10 +17,17 @@ public class AuroraPrefs : ScriptableObject
 
     [SerializeField]
     private string k1Location;
+    [SerializeField]
+    private string k1SaveLocation;
     
     [SerializeField]
     private string tslLocation;
-    
+    [SerializeField]
+    private string tslSaveLocation;
+
+    [SerializeField]
+    private string moduleOutLocation;
+
     [SerializeField]
     private Game game;
 
@@ -61,6 +68,36 @@ public class AuroraPrefs : ScriptableObject
         return prefs.tslLocation;
     }
 
+    public static string GetK1Location()
+    {
+        return prefs.k1Location;
+    }
+
+    public static string GetTSLLocation()
+    {
+        return prefs.tslLocation;
+    }
+
+    public static string GetK1SaveLocation()
+    {
+        return prefs.k1SaveLocation;
+    }
+
+    public static string GetTSLSaveLocation()
+    {
+        return prefs.tslSaveLocation;
+    }
+
+    public static string GetModuleOutLocation ()
+    {
+        string modOut = prefs.moduleOutLocation;
+        if (!modOut.EndsWith("\\"))
+        {
+            modOut += "\\";
+        }
+        return modOut;
+    }
+
     //public Game TargetGame ()
     //{
     //    return game;
@@ -92,9 +129,22 @@ static class MyCustomSettingsIMGUIRegister
             guiHandler = (searchContext) =>
             {
                 SerializedObject settings = AuroraPrefs.GetSerializedSettings();
+                EditorGUILayout.PropertyField(settings.FindProperty("game"), new GUIContent("Target Game"));
+
+                EditorGUILayout.Space();
+
                 EditorGUILayout.PropertyField(settings.FindProperty("k1Location"), new GUIContent("KotOR Location"));
                 EditorGUILayout.PropertyField(settings.FindProperty("tslLocation"), new GUIContent("TSL Location"));
-                EditorGUILayout.PropertyField(settings.FindProperty("game"), new GUIContent("Target Game"));
+                
+                EditorGUILayout.Space();
+                
+                EditorGUILayout.PropertyField(settings.FindProperty("k1SaveLocation"), new GUIContent("KotOR Save Location"));
+                EditorGUILayout.PropertyField(settings.FindProperty("tslSaveLocation"), new GUIContent("TSL Save Location"));
+
+                EditorGUILayout.Space();
+
+                EditorGUILayout.LabelField("NOTE: The 'Module Out Location' directory is used for temp storage, and its contents WILL OFTEN be fully and non-reversibly deleted!");
+                EditorGUILayout.PropertyField(settings.FindProperty("moduleOutLocation"), new GUIContent("Module Out Location"));
                 settings.ApplyModifiedProperties();
             },
 

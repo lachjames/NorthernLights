@@ -43,7 +43,7 @@ namespace AuroraEngine
             // If there is a supermodel, add its animations too
             if (mdlObject.supermodelName != "NULL")
             {
-                if (!modelCache.ContainsKey(mdlObject.supermodelName))
+                if (!modelCache.ContainsKey(mdlObject.supermodelName) || modelCache[mdlObject.supermodelName] == null)
                 {
                     modelCache[mdlObject.supermodelName] = Resources.LoadModel(mdlObject.supermodelName);
                 }

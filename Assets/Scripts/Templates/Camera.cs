@@ -16,9 +16,10 @@ namespace AuroraEngine
 			gameObject.name = name;
 
             //add the template component to the new object
-            CameraPoint character = gameObject.AddComponent<CameraPoint>();
+            CameraPoint camera = gameObject.AddComponent<CameraPoint>();
+            camera.gitData = acam;
 
-            return character;
+            return camera;
 		}
 
         public GameObject LoadCamera (string resref)

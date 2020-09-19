@@ -8,7 +8,7 @@ namespace AuroraEngine
 	{
 		private bool isOpen;
 
-		public static Door Create(AuroraUTD utd)
+		public static Door Create(AuroraUTD utd, AuroraGIT.ADoor gitData)
 		{
 			GameObject gameObject;
 
@@ -28,6 +28,7 @@ namespace AuroraEngine
 			//add the template component to the new object
 			Door door = gameObject.AddComponent<Door>();
 			door.template = utd;
+            door.gitData = gitData;
 
             LookAtHook hook = gameObject.GetComponentInChildren<LookAtHook>();
             if (hook != null)

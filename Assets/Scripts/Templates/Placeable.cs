@@ -8,7 +8,7 @@ namespace AuroraEngine
 		private bool isOpen;
         static GUISystem guiSystem;
 
-		public static Placeable Create(AuroraUTP utp)
+		public static Placeable Create(AuroraUTP utp, AuroraGIT.APlaceable gitData)
 		{
             if (guiSystem == null)
             {
@@ -35,6 +35,7 @@ namespace AuroraEngine
 			//add the template component to the new object
 			Placeable placeable = gameObject.AddComponent<Placeable>();
             placeable.template = utp;
+            placeable.gitData = gitData;
 
             LookAtHook hook = gameObject.GetComponentInChildren<LookAtHook>();
             if (hook != null)

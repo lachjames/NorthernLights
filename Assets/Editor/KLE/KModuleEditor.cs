@@ -17,7 +17,7 @@ public class KModuleEditor : EditorWindow
     object currentItem;
 
     int tab;
-    
+
     KItemPicker.ItemType templateType;
     string templateName;
 
@@ -113,7 +113,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void Editor ()
+    void Editor()
     {
         EditorGUILayout.LabelField("Editing module " + moduleName);
         using (new EditorGUILayout.HorizontalScope())
@@ -145,7 +145,7 @@ public class KModuleEditor : EditorWindow
                     ResourceType.CAM, ResourceType.UTC, ResourceType.UTD,
                     ResourceType.UTP, ResourceType.UTT, ResourceType.UTE,
                     ResourceType.UTS, ResourceType.UTM, ResourceType.UTW,
-                    
+
                 });
                 break;
             case 1:
@@ -163,7 +163,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void ItemSelection (ResourceType[] types)
+    void ItemSelection(ResourceType[] types)
     {
         using (var scroll = new EditorGUILayout.ScrollViewScope(itemScroll))
         {
@@ -204,7 +204,7 @@ public class KModuleEditor : EditorWindow
                 }
 
                 Color col = GUI.color;
-                
+
                 if (name != "" && name == selectedName)
                 {
                     GUI.color = Color.green;
@@ -212,10 +212,18 @@ public class KModuleEditor : EditorWindow
 
                 if (GUILayout.Button(name + " (" + rt + ")"))
                 {
-                    if (rt == ResourceType.DLG || rt == ResourceType.NCS)
+                    if (rt == ResourceType.DLG)
                     {
-                        Debug.LogWarning("Please edit DLG/NCS files using their respective editors");
-                    } else
+                        RIMObject.Resource resource = srim.resources[(name, rt)];
+                        Stream stream = srim.GetResource(resource.ResRef, resource.ResType);
+                        AuroraDLG selectedDLG = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
+                        GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(selectedDLG);
+                    }
+                    else if (rt == ResourceType.NCS)
+                    {
+                        Debug.LogWarning("Please edit NCS files using their respective editors");
+                    }
+                    else
                     {
                         RIMObject.Resource resource = srim.resources[(name, rt)];
                         Stream stream = srim.GetResource(resource.ResRef, resource.ResType);
@@ -226,19 +234,63 @@ public class KModuleEditor : EditorWindow
 
                 GUI.color = col;
             }
+
+            if (AuroraPrefs.TargetGame() == Game.KotOR)
+            {
+                return;
+            }
+
             // Get all items in the MOD
 
             // Get all items in the erf
+            foreach ((string name, ResourceType rt) in dlg.resourceKeys.Keys)
+            {
+                if (!types.Contains(rt))
+                {
+                    continue;
+                }
+
+                Color col = GUI.color;
+
+                if (name != "" && name == selectedName)
+                {
+                    GUI.color = Color.green;
+                }
+
+                if (GUILayout.Button(name + " (" + rt + ")"))
+                {
+                    if (rt == ResourceType.DLG)
+                    {
+                        Stream stream = dlg.GetResource(name, rt);
+                        AuroraDLG selectedDLG = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
+                        GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(selectedDLG);
+                    }
+                    else if (rt == ResourceType.NCS)
+                    {
+                        Debug.LogWarning("Please edit NCS files using their respective editors");
+                    }
+                    else
+                    {
+                        Stream stream = dlg.GetResource(name, rt);
+                        SelectedItem(stream, rt);
+                        selectedName = name;
+                    }
+                }
+
+                GUI.color = col;
+            }
         }
     }
 
-    void SelectedItem (Stream stream, ResourceType rt)
+    void SelectedItem(Stream stream, ResourceType rt)
     {
         if (rt == ResourceType.NCS)
         {
             // This is an NCS script
             return;
-        } else if (rt == ResourceType.CAM) {
+        }
+        else if (rt == ResourceType.CAM)
+        {
             // This is a camera
             return;
         }
@@ -280,7 +332,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void DrawEditor ()
+    void DrawEditor()
     {
         // Draw the GFF editor for the selected item
         using (var scroll = new EditorGUILayout.ScrollViewScope(editorScroll))
@@ -290,7 +342,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void Reset ()
+    void Reset()
     {
         moduleName = null;
         modulePath = null;
@@ -345,7 +397,7 @@ public class KModuleEditor : EditorWindow
 
     }
 
-    void ImportScript ()
+    void ImportScript()
     {
 
     }
@@ -355,7 +407,7 @@ public class KModuleEditor : EditorWindow
 
     }
 
-    void ImportGFF ()
+    void ImportGFF()
     {
 
     }
@@ -405,7 +457,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void AddItem (string name, AuroraStruct item, KItemPicker.ItemType itemType)
+    void AddItem(string name, AuroraStruct item, KItemPicker.ItemType itemType)
     {
         newTemplates.Add((name, item, itemType));
     }
@@ -422,7 +474,7 @@ public class KModuleEditor : EditorWindow
         }
     }
 
-    void DuplicateTemplate ()
+    void DuplicateTemplate()
     {
         // Create a new template from the current one
         AuroraStruct clone = DeepClone(selected);
@@ -451,12 +503,13 @@ public class KModuleEditor : EditorWindow
         AddItem(templateName, clone, itemType);
     }
 
-    void DeleteTemplate ()
+    void DeleteTemplate()
     {
         // Firstly, make sure the current template is not from the module
         // (otherwise, for now at least, we don't delete it since there's no
         // undo functionality)
-        for (int i = 0; i < newTemplates.Count; i++) {
+        for (int i = 0; i < newTemplates.Count; i++)
+        {
             (_, AuroraStruct template, _) = newTemplates[i];
             if (template == selected)
             {
@@ -468,77 +521,102 @@ public class KModuleEditor : EditorWindow
         Debug.LogWarning("We do not currently delete templates from the module, for safety");
     }
 
-    void SaveModule ()
+    void SaveModule()
     {
-        SaveModuleDefinition();
         SaveModuleFiles();
     }
 
-    void SaveModuleDefinition ()
-    {
-
-    }
-
-    void SaveModuleFiles ()
+    void SaveModuleFiles()
     {
         // We will save the files to a temporary folder
-        string folder = Application.dataPath + "/moduleout/";
-        
+        string folder = AuroraPrefs.GetModuleOutLocation();
+
         // Convert all the templates to GFF format, via XML
         foreach ((string name, AuroraStruct template, KItemPicker.ItemType type) in newTemplates)
         {
-            // Create an XML file for the GFF template
-            string xmlpath = folder + name + ".xml";
-            string xml = template.ToXML();
-            File.WriteAllText(xmlpath, xml);
-
-            // Convert from XML to GFF using xoreos-tools
             string ext = KItemPicker.NameMap[type];
-            string filename = name + "." + ext;
-            string fullpath = folder + filename;
-
-            AuroraEngine.Resources.RunXoreosTools(
-                xmlpath + " " + fullpath, 
-                "xml2gff", 
-                "--kotor"
-            );
+            CreateGFFFile(folder, name, template, ext);
         }
 
         // Copy the current module's _s.rim file to the temp folder
         File.Copy(modulePath + "\\" + moduleName + "_s.rim", folder + "tmp.rim");
-
-        // Unrim the module
-        AuroraEngine.Resources.RunXoreosTools(
-            folder + "tmp.rim",
-            "unrim",
-            "e",
-            folder
-        );
-
+        UnpackArchive(folder, "tmp.rim", "unrim");
         UnityEngine.Windows.File.Delete(folder + "tmp.rim");
 
+        // If we are working with TSL, we also copy the _dlg.erf and .mod files if they exist
+        if (AuroraPrefs.TargetGame() == Game.TSL)
+        {
+            File.Copy(modulePath + "\\" + moduleName + "_dlg.erf", folder + "tmp_dlg.erf");
+            UnpackArchive(folder, "tmp_dlg.erf", "unerf");
+            UnityEngine.Windows.File.Delete(folder + "tmp_dlg.erf");
+
+            File.Copy(modulePath + "\\" + moduleName + ".mod", folder + "tmp.mod");
+            UnpackArchive(folder, "tmp.mod", "unerf");
+            UnityEngine.Windows.File.Delete(folder + "tmp.mod");
+        }
+
+        if (AuroraPrefs.TargetGame() == Game.KotOR)
+            CreateArchive(folder, "module_s.rim", "rim");
+        else
+            CreateArchive(folder, "module.mod", "erf", "--mod");
+    }
+
+    public static void CreateArchive(string folder, string name, string type, string args = "")
+    {
+
         // Find all the files in the tmp folder
-        List<string> rimFiles = new List<string>();
+        List<string> archiveFiles = new List<string>();
         foreach (string path in Directory.GetFiles(folder))
         {
             Debug.Log(path);
-            rimFiles.Add(path);
+            archiveFiles.Add(path);
         }
 
-        // Create the RIM file
+        // Create the archive
         AuroraEngine.Resources.RunXoreosTools(
-            folder + "module_s.rim " + String.Join(" ", rimFiles),
-            "rim",
-            ""
+            folder + name + " " + String.Join(" ", archiveFiles),
+            type,
+            args
         );
 
         // Delete all the temporary files
         foreach (string tmpFile in Directory.GetFiles(folder))
         {
-            if (tmpFile != folder + "module_s.rim")
+            if (tmpFile != folder + name)
             {
                 UnityEngine.Windows.File.Delete(tmpFile);
             }
         }
+    }
+
+    public static void UnpackArchive(string folder, string name, string type)
+    {
+        AuroraEngine.Resources.RunXoreosTools(
+            folder + name,
+            type,
+            "e",
+            folder
+        );
+    }
+    public static void CreateGFFFile(string folder, string name, AuroraStruct template, string ext)
+    {
+        // Create an XML file for the GFF template
+        string xmlpath = folder + "tmp.xml";
+        string xml = template.ToXML();
+        Debug.Log(xml);
+        File.WriteAllText(xmlpath, xml);
+
+        // Convert from XML to GFF using xoreos-tools
+        string filename = name + "." + ext;
+        string fullpath = folder + filename;
+
+        AuroraEngine.Resources.RunXoreosTools(
+            xmlpath + " " + fullpath,
+            "xml2gff",
+            "--kotor"
+        );
+
+        // Delete the temporary XML file
+        UnityEngine.Windows.File.Delete(folder + "tmp.xml");
     }
 }

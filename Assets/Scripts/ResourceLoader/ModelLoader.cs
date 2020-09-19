@@ -297,7 +297,7 @@ namespace AuroraEngine
                     if (node.skinmeshHeader != null)
                     {
                         Mesh raw = go.GetComponent<MeshFilter>().sharedMesh;
-                        GameObject.Destroy(go.GetComponent<MeshFilter>());
+                        GameObject.DestroyImmediate(go.GetComponent<MeshFilter>());
 
                         SkinnedMeshRenderer sk = go.AddComponent<SkinnedMeshRenderer>();
 

@@ -56,7 +56,7 @@ public class KItemPicker : EditorWindow
     [MenuItem("KotOR/Item Picker")]
     public static void ShowWindow()
     {
-        GetWindow<KLE>(false, "KotOR Object Picker", true);
+        GetWindow<KItemPicker>(false, "KotOR Object Picker", true);
     }
 
     public void OnGUI()
@@ -114,69 +114,74 @@ public class KItemPicker : EditorWindow
 
     void NewInstance (string resref)
     {
-        AuroraGIT git = GetWindow<KLE>(false, "KotOR Level Editor", false).module.git;
-
         AuroraObject container;
         GameObject parent;
-        int idx = 0;
 
         switch (curItemType)
         {
             case ItemType.CREATURE:
-                container = AuroraEngine.Resources.LoadCreature(resref);
                 parent = GameObject.Find("Creatures");
-
-                // Add the object to the module's GIT
-                AuroraGIT.ACreature creature = new AuroraGIT.ACreature();
-                creature.structid = (uint)git.CreatureList.Count();
-                idx = (int)creature.structid;
-                creature.TemplateResRef = resref;
-                git.CreatureList.Add(creature);
-
+                container = AuroraEngine.Resources.LoadCreature(resref, new AuroraGIT.ACreature()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.DOOR:
-                container = AuroraEngine.Resources.LoadDoor(resref);
                 parent = GameObject.Find("Doors");
-
-                // Add the object to the module's GIT
-                AuroraGIT.ADoor door = new AuroraGIT.ADoor();
-                door.structid = (uint)git.CreatureList.Count();
-                idx = (int)door.structid;
-                door.TemplateResRef = resref;
-                git.DoorList.Add(door);
-
+                container = AuroraEngine.Resources.LoadDoor(resref, new AuroraGIT.ADoor()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.PLACEABLE:
-                container = AuroraEngine.Resources.LoadPlaceable(resref);
-                parent = GameObject.Find("Doors");
-
-                // Add the object to the module's GIT
-                AuroraGIT.APlaceable plc = new AuroraGIT.APlaceable();
-                plc.structid = (uint)git.CreatureList.Count();
-                idx = (int)plc.structid;
-                plc.TemplateResRef = resref;
-                git.PlaceableList.Add(plc);
-
+                parent = GameObject.Find("Placeables");
+                container = AuroraEngine.Resources.LoadPlaceable(resref, new AuroraGIT.APlaceable()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.TRIGGER:
-                container = AuroraEngine.Resources.LoadTrigger(resref);
                 parent = GameObject.Find("Triggers");
+                container = AuroraEngine.Resources.LoadTrigger(resref, new AuroraGIT.ATrigger()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.ENCOUNTER:
-                container = AuroraEngine.Resources.LoadEncounter(resref);
                 parent = GameObject.Find("Encounters");
+                container = AuroraEngine.Resources.LoadEncounter(resref, new AuroraGIT.AEncounter()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.SOUND:
-                container = AuroraEngine.Resources.LoadSound(resref);
                 parent = GameObject.Find("Sounds");
+                container = AuroraEngine.Resources.LoadSound(resref, new AuroraGIT.ASound()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.STORE:
-                container = AuroraEngine.Resources.LoadStore(resref);
                 parent = GameObject.Find("Stores");
+                container = AuroraEngine.Resources.LoadStore(resref, new AuroraGIT.AStore()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    ResRef = resref
+                });
                 break;
             case ItemType.WAYPOINT:
-                container = AuroraEngine.Resources.LoadWaypoint(resref);
                 parent = GameObject.Find("Waypoints");
+                container = AuroraEngine.Resources.LoadWaypoint(resref, new AuroraGIT.AWaypoint()
+                {
+                    structid = (uint)parent.transform.childCount,
+                    TemplateResRef = resref
+                });
                 break;
             case ItemType.CAMERA:
                 throw new NotImplementedException("Camera not yet implemented");
@@ -186,8 +191,6 @@ public class KItemPicker : EditorWindow
 
         container.transform.SetParent(parent.transform);
         container.transform.position = FindSpawnPoint();
-        container.gitIndex = idx;
-
     }
 
     void BIFItems ()
@@ -230,7 +233,7 @@ public class KItemPicker : EditorWindow
         List<string> objects = new List<string>();
 
         // Get items from the current module
-        foreach ((string name, AuroraEngine.ResourceType rt) in GetWindow<KLE>(false, "KotOR Level Editor", false).module.data.srim.resources.Keys)
+        foreach ((string name, AuroraEngine.ResourceType rt) in AuroraEngine.Resources.data.module.data.srim.resources.Keys)
         {
             if (rt == curType)
             {

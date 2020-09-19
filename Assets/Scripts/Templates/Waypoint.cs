@@ -4,7 +4,7 @@ namespace AuroraEngine
 {
 	public class Waypoint : AuroraObject
 	{
-		public static Waypoint Create (AuroraUTW utw)
+		public static Waypoint Create (AuroraUTW utw, AuroraGIT.AWaypoint gitData)
 		{
 			GameObject gameObject;
 
@@ -18,6 +18,7 @@ namespace AuroraEngine
 			//add the template component to the new object
 			Waypoint waypoint = gameObject.AddComponent<Waypoint>();
             waypoint.template = utw;
+			waypoint.gitData = gitData;
 
 			return waypoint;
 		}

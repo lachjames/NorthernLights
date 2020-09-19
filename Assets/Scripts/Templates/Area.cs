@@ -18,6 +18,8 @@ namespace AuroraEngine
             Area area = gameObject.AddComponent<Area>();
             area.template = are;
 
+            gameObject.AddComponent<AreaManager>();
+
 			return area;
 		}
 

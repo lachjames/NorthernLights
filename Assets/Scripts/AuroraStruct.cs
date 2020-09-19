@@ -23,12 +23,12 @@ public class AuroraStruct
         { typeof(string), "resref"},
         { typeof(byte[]), "void" }
     };
-    public string ToXML()
+    public string ToXML(bool isRecursive = false)
     {
         // Writes this object in GFF format
 
         // Convert the object to XML
-        string xml = "";
+        string xml = !isRecursive ? "<gff3>" : "";
         bool hasStructID = false;
         int structid = 0;
 
@@ -55,7 +55,7 @@ public class AuroraStruct
             {
                 AuroraStruct structVal = (AuroraStruct)value;
                 // This is a nested AuroraStruct
-                values.Add(structVal.ToXML());
+                values.Add(structVal.ToXML(true));
             }
             else if (f.FieldType.IsGenericType && (f.FieldType.GetGenericTypeDefinition() == typeof(List<>)))
             {
@@ -78,28 +78,46 @@ public class AuroraStruct
 
                     foreach (AuroraStruct item in list)
                     {
-                        listXML += item.ToXML();
+                        listXML += item.ToXML(true);
                     }
 
                     listXML += "</list>";
                 }
 
+                values.Add(listXML);
             }
             else if (f.FieldType == typeof(GFFObject.CExoLocString))
             {
-
+                values.Add(((GFFObject.CExoLocString)value).ToXML(f.Name));
             }
             else if (f.FieldType == typeof(GFFObject.CExoString))
             {
-
+                values.Add(((GFFObject.CExoString)value).ToXML(f.Name));
             }
             else if (f.FieldType == typeof(Quaternion))
             {
+                Quaternion q = (Quaternion)value;
+                string quatXML = "<orientation label=\"" + f.Name + "\">";
 
+                quatXML += "<double>" + q.x + "</double>";
+                quatXML += "<double>" + q.y + "</double>";
+                quatXML += "<double>" + q.z + "</double>";
+                quatXML += "<double>" + q.w + "</double>";
+
+                quatXML += "</orientation>";
+                values.Add(quatXML);
             }
             else if (f.FieldType == typeof(Vector3))
             {
+                Vector3 v = (Vector3)value;
+                string vecXML = "<vector label=\"" + f.Name + "\">";
 
+                vecXML += "<double>" + v.x + "</double>";
+                vecXML += "<double>" + v.y + "</double>";
+                vecXML += "<double>" + v.z + "</double>";
+
+                vecXML += "</vector>";
+                values.Add(vecXML);
             }
             else
             {
@@ -121,20 +139,31 @@ public class AuroraStruct
             }
         }
 
-        if (hasStructID)
+        if (!isRecursive)
         {
-            xml = "<struct id=\"" + structid + "\">";
+            xml += "<struct id=\"4294967295\">";
+        }
+        else if (hasStructID)
+        {
+            xml += "<struct id=\"" + structid + "\">";
 
         }
         else
         {
-            xml = "<struct>";
+            xml += "<struct id = \"0\">";
         }
+
         foreach (string s in values)
         {
             xml += s;
         }
+
         xml += "</struct>";
+
+        if (!isRecursive)
+        {
+            xml += "</gff3>";
+        }
 
         return xml;
     }

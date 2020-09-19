@@ -437,12 +437,10 @@ public class BinaryTSL : BinaryAttribute
         //    Debug.Log(AuroraPrefs.TargetGame());
         //}
 
-        //if (AuroraPrefs.TargetGame() == AuroraEngine.Game.KotOR)
-        //{
-        //    return offset;
-        //}
-
-        //return offset + 4;
+        if (AuroraPrefs.TargetGame() == AuroraEngine.Game.KotOR)
+        {
+            return offset;
+        }
 
         return offset + 4;
 

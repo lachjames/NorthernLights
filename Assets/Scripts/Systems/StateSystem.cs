@@ -469,12 +469,12 @@ public class StateSystem : MonoBehaviour
         switch ((ObjectType)nObjectType)
         {
             case ObjectType.CREATURE:
-                Creature creature = AuroraEngine.Resources.LoadCreature(sTemplate);
+                Creature creature = AuroraEngine.Resources.LoadCreature(sTemplate, null);
                 creature.gameObject.transform.position = pos;
                 creature.transform.SetParent(GameObject.Find("Creatures").transform);
                 return creature;
             case ObjectType.PLACEABLE:
-                Placeable placeable = AuroraEngine.Resources.LoadPlaceable(sTemplate);
+                Placeable placeable = AuroraEngine.Resources.LoadPlaceable(sTemplate, null);
                 placeable.gameObject.transform.position = pos;
                 placeable.transform.SetParent(GameObject.Find("Placeables").transform);
                 return placeable;

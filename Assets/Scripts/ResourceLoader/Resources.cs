@@ -15,6 +15,16 @@ namespace AuroraEngine
         KotOR, TSL
     }
 
+    public enum Compatibility
+    {
+        KotOR, TSL, BOTH
+    }
+
+    public enum ExistsIn
+    {
+        BASE, SAVE, BOTH
+    }
+
     // Reference: https://github.com/xoreos/xoreos/blob/master/src/aurora/types.h
     public enum ResourceType
     {

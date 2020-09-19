@@ -9,7 +9,7 @@ public class DialogSystem : MonoBehaviour
 {
     public enum DialogMode
     {
-        NPC, PC, FINISHED
+        NPC, PC, START, FINISHED
     }
 
     public Dictionary<int, string> tokens = new Dictionary<int, string>();

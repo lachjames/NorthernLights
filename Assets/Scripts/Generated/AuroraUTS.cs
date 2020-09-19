@@ -6,40 +6,43 @@ using AuroraEngine;
 
 [Serializable]public class AuroraUTS : AuroraStruct {
     // Field definitions
-    [GFF("structid")] public uint structid;
-    [GFF("Tag")] public CExoString Tag;
-    [GFF("LocName")] public CExoLocString LocName;
-    [GFF("TemplateResRef")] public String TemplateResRef;
-    [GFF("Active")] public Byte Active;
-    [GFF("Continuous")] public Byte Continuous;
-    [GFF("Looping")] public Byte Looping;
-    [GFF("Positional")] public Byte Positional;
-    [GFF("RandomPosition")] public Byte RandomPosition;
-    [GFF("Random")] public Byte Random;
-    [GFF("Elevation")] public Single Elevation;
-    [GFF("MaxDistance")] public Single MaxDistance;
-    [GFF("MinDistance")] public Single MinDistance;
-    [GFF("RandomRangeX")] public Single RandomRangeX;
-    [GFF("RandomRangeY")] public Single RandomRangeY;
-    [GFF("Interval")] public UInt32 Interval;
-    [GFF("IntervalVrtn")] public UInt32 IntervalVrtn;
-    [GFF("PitchVariation")] public Single PitchVariation;
-    [GFF("Priority")] public Byte Priority;
-    [GFF("Hours")] public UInt32 Hours;
-    [GFF("Times")] public Byte Times;
-    [GFF("Volume")] public Byte Volume;
-    [GFF("VolumeVrtn")] public Byte VolumeVrtn;
-    [GFF("PaletteID")] public Byte PaletteID;
-    [GFF("Comment")] public CExoString Comment;
+    [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
+    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName;
+    [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
+    [GFF("Active", Compatibility.BOTH, ExistsIn.BASE)] public Byte Active;
+    [GFF("Continuous", Compatibility.BOTH, ExistsIn.BASE)] public Byte Continuous;
+    [GFF("Looping", Compatibility.BOTH, ExistsIn.BASE)] public Byte Looping;
+    [GFF("Positional", Compatibility.BOTH, ExistsIn.BASE)] public Byte Positional;
+    [GFF("RandomPosition", Compatibility.BOTH, ExistsIn.BASE)] public Byte RandomPosition;
+    [GFF("Random", Compatibility.BOTH, ExistsIn.BASE)] public Byte Random;
+    [GFF("Elevation", Compatibility.BOTH, ExistsIn.BASE)] public Single Elevation;
+    [GFF("MaxDistance", Compatibility.BOTH, ExistsIn.BASE)] public Single MaxDistance;
+    [GFF("MinDistance", Compatibility.BOTH, ExistsIn.BASE)] public Single MinDistance;
+    [GFF("RandomRangeX", Compatibility.BOTH, ExistsIn.BASE)] public Single RandomRangeX;
+    [GFF("RandomRangeY", Compatibility.BOTH, ExistsIn.BASE)] public Single RandomRangeY;
+    [GFF("Interval", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Interval;
+    [GFF("IntervalVrtn", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 IntervalVrtn;
+    [GFF("PitchVariation", Compatibility.BOTH, ExistsIn.BASE)] public Single PitchVariation;
+    [GFF("Priority", Compatibility.BOTH, ExistsIn.BASE)] public Byte Priority;
+    [GFF("Hours", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Hours;
+    [GFF("Times", Compatibility.BOTH, ExistsIn.BASE)] public Byte Times;
+    [GFF("Volume", Compatibility.BOTH, ExistsIn.BASE)] public Byte Volume;
+    [GFF("VolumeVrtn", Compatibility.BOTH, ExistsIn.BASE)] public Byte VolumeVrtn;
+    [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
-    [GFF("Sounds")] public List<ASounds> Sounds = new List<ASounds>();
+    [GFF("Sounds", Compatibility.BOTH, ExistsIn.BASE)] public List<ASounds> Sounds = new List<ASounds>();
 
     // Class definitions    
     [Serializable]public class ASounds : AuroraStruct {
         // Field definitions
-        [GFF("structid")] public uint structid;
-        [GFF("Sound")] public String Sound;
+        [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+        [GFF("Sound", Compatibility.BOTH, ExistsIn.BASE)] public String Sound;
         
     }
     

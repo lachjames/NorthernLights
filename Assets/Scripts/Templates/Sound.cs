@@ -4,7 +4,7 @@ namespace AuroraEngine
 {
 	public class SoundPoint : AuroraObject
 	{
-		public static SoundPoint Create (AuroraUTS uts)
+		public static SoundPoint Create (AuroraUTS uts, AuroraGIT.ASound gitData)
 		{
 			GameObject gameObject;
 
@@ -18,6 +18,7 @@ namespace AuroraEngine
             //add the template component to the new object
             SoundPoint soundPoint = gameObject.AddComponent<SoundPoint>();
             soundPoint.template = uts;
+			soundPoint.gitData = gitData;
 
 			return soundPoint;
 		}

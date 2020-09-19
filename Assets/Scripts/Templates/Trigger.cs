@@ -4,7 +4,7 @@ namespace AuroraEngine
 {
 	public class Trigger : AuroraObject
 	{
-		public static Trigger Create (AuroraUTT utt)
+		public static Trigger Create (AuroraUTT utt, AuroraGIT.ATrigger gitData)
 		{
 			GameObject gameObject;
 
@@ -18,6 +18,7 @@ namespace AuroraEngine
 			//add the template component to the new object
 			Trigger character = gameObject.AddComponent<Trigger>();
             character.template = utt;
+            character.gitData = gitData;
 
 			return character;
 		}

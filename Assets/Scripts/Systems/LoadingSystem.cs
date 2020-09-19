@@ -83,12 +83,12 @@ public class LoadingSystem : MonoBehaviour
         // Load the data for the game and module
         AuroraEngine.Resources.Load(levelName);
 
-        // Create the player character
-        actions.Enqueue(() => CreatePC());
-        // The LoadItems coroutine runs every frame
-
         if (Application.isPlaying)
         {
+            // Create the player character
+            actions.Enqueue(() => CreatePC());
+
+            // The LoadItems coroutine runs every frame
             StartCoroutine("LoadItems");
         } else
         {

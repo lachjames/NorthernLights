@@ -11,59 +11,59 @@ namespace AuroraEngine
             return ad;
         }
 
-        public static Creature LoadCreature(string resref)
+        public static Creature LoadCreature(string resref, AuroraGIT.ACreature gitData)
 		{
             AuroraUTC ac = data.Get<AuroraUTC>(resref, ResourceType.UTC);
-            Creature c = Creature.Create(ac);
+            Creature c = Creature.Create(ac, gitData);
             return c;
 		}
 
-		public static Placeable LoadPlaceable(string resref)
+		public static Placeable LoadPlaceable(string resref, AuroraGIT.APlaceable gitData)
 		{
             AuroraUTP ap = data.Get<AuroraUTP>(resref, ResourceType.UTP);
-            Placeable p = Placeable.Create(ap);
+            Placeable p = Placeable.Create(ap, gitData);
             return p;
         }
 
-        public static SoundPoint LoadSound(string resref)
+        public static SoundPoint LoadSound(string resref, AuroraGIT.ASound gitData)
         {
             AuroraUTS ap = data.Get<AuroraUTS>(resref, ResourceType.UTS);
-            SoundPoint p = SoundPoint.Create(ap);
+            SoundPoint p = SoundPoint.Create(ap, gitData);
             return p;
         }
 
-        public static Store LoadStore(string resref)
+        public static Store LoadStore(string resref, AuroraGIT.AStore gitData)
         {
             AuroraUTM ap = data.Get<AuroraUTM>(resref, ResourceType.UTM);
-            Store p = Store.Create(ap);
+            Store p = Store.Create(ap, gitData);
             return p;
         }
 
-        public static Waypoint LoadWaypoint(string resref)
+        public static Waypoint LoadWaypoint(string resref, AuroraGIT.AWaypoint gitData)
         {
             AuroraUTW ap = data.Get<AuroraUTW>(resref, ResourceType.UTW);
-            Waypoint p = Waypoint.Create(ap);
+            Waypoint p = Waypoint.Create(ap, gitData);
             return p;
         }
 
-        public static Trigger LoadTrigger(string resref)
+        public static Trigger LoadTrigger(string resref, AuroraGIT.ATrigger gitData)
         {
             AuroraUTT at = data.Get<AuroraUTT>(resref, ResourceType.UTT);
-            Trigger t = Trigger.Create(at);
+            Trigger t = Trigger.Create(at, gitData);
             return t;
         }
 
-        public static Encounter LoadEncounter(string resref)
+        public static Encounter LoadEncounter(string resref, AuroraGIT.AEncounter gitData)
         {
             AuroraUTE ae = data.Get<AuroraUTE>(resref, ResourceType.UTE);
-            Encounter e = Encounter.Create(ae);
+            Encounter e = Encounter.Create(ae, gitData);
             return e;
         }
 
-        public static Door LoadDoor(string resref)
+        public static Door LoadDoor(string resref, AuroraGIT.ADoor gitData)
 		{
             AuroraUTD ad = data.Get<AuroraUTD>(resref, ResourceType.UTD);
-            Door d = Door.Create(ad);
+            Door d = Door.Create(ad, gitData);
             return d;
         }
 

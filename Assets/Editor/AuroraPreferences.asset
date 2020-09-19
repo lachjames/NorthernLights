@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 9123695e04a9e3646b1a4e7736bbd112, type: 3}
   m_Name: AuroraPreferences
-  m_EditorClassIdentifier: Assembly-CSharp::AuroraPrefs
+  m_EditorClassIdentifier: 
   m_Number: 0
   k1Location: D:\SteamLibrary\steamapps\common\swkotor
+  k1SaveLocation: 
   tslLocation: D:\SteamLibrary\steamapps\common\Knights of the Old Republic II
-  game: 0
+  tslSaveLocation: 
+  moduleOutLocation: D:\KOTOR\KotOR-Unity\moduleout
+  game: 1

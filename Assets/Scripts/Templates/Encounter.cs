@@ -4,7 +4,7 @@ namespace AuroraEngine
 {
 	public class Encounter : AuroraObject
 	{
-		public static Encounter Create(AuroraUTE ute)
+		public static Encounter Create(AuroraUTE ute, AuroraGIT.AEncounter gitData)
 		{
 			GameObject gameObject;
 
@@ -18,6 +18,7 @@ namespace AuroraEngine
             //add the template component to the new object
             Encounter character = gameObject.AddComponent<Encounter>();
             character.template = ute;
+            character.gitData = gitData;
 
 			return character;
         }

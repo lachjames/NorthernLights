@@ -250,7 +250,7 @@ namespace AuroraEngine
                     float bearing = Mathf.Tan(x / y);
                     Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
 
-                    Creature creature = Resources.LoadCreature(c.TemplateResRef);
+                    Creature creature = Resources.LoadCreature(c.TemplateResRef, c);
                     creature.gameObject.transform.position = position;
                     creature.gameObject.transform.rotation = rotation;
                     creature.gameObject.tag = "Creature";
@@ -282,7 +282,7 @@ namespace AuroraEngine
                     float bearing = d.Bearing;
                     Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
 
-                    Door door = Resources.LoadDoor(d.TemplateResRef);
+                    Door door = Resources.LoadDoor(d.TemplateResRef, d);
                     door.gameObject.transform.position = position;
                     door.gameObject.transform.rotation = rotation;
                     door.gameObject.tag = "Door";
@@ -340,7 +340,7 @@ namespace AuroraEngine
                     float bearing = p.Bearing;
                     Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
 
-                    placeable = Resources.LoadPlaceable(p.TemplateResRef);
+                    placeable = Resources.LoadPlaceable(p.TemplateResRef, p);
                     placeable.gameObject.transform.position = position;
                     placeable.gameObject.transform.rotation = rotation;
                     placeable.gameObject.tag = "Placeable";
@@ -368,7 +368,7 @@ namespace AuroraEngine
                 {
                     Vector3 position = new Vector3(p.XPosition, p.ZPosition, p.YPosition);
 
-                    sound = Resources.LoadSound(p.TemplateResRef);
+                    sound = Resources.LoadSound(p.TemplateResRef, p);
                     sound.gameObject.transform.position = position;
 
                     sound.transform.SetParent(parent.transform);
@@ -396,7 +396,7 @@ namespace AuroraEngine
                     float bearing = Mathf.Tan(x / y);
                     Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
 
-                    store = Resources.LoadStore(p.ResRef);
+                    store = Resources.LoadStore(p.ResRef, p);
                     store.gameObject.transform.position = position;
                     store.gameObject.transform.rotation = rotation;
 
@@ -424,7 +424,7 @@ namespace AuroraEngine
                     float bearing = Mathf.Tan(x / y);
                     Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
 
-                    waypoint = Resources.LoadWaypoint(p.TemplateResRef);
+                    waypoint = Resources.LoadWaypoint(p.TemplateResRef, p);
                     waypoint.gameObject.transform.position = position;
 
                     waypoint.transform.SetParent(parent.transform);
@@ -451,11 +451,20 @@ namespace AuroraEngine
             {
                 loader.AddAction(() =>
                 {
-                    Vector3 position = p.Position;
-                    Quaternion rotation = p.Orientation;
-
+                    Vector3 position = new Vector3(
+                        p.Position.x,
+                        p.Position.z,
+                        p.Position.y
+                    );
+                    Quaternion rotation = new Quaternion(
+                        -p.Orientation.x,
+                        -p.Orientation.z,
+                        -p.Orientation.y,
+                        p.Orientation.w
+                    );
                     cam = CameraPoint.Create(p);
                     cam.gameObject.transform.position = position;
+                    cam.gameObject.transform.rotation = rotation;
 
                     cam.transform.SetParent(parent.transform);
                     cameraPoints.Add(cam);
@@ -478,7 +487,7 @@ namespace AuroraEngine
                     Vector3 position = new Vector3(t.XPosition, t.ZPosition, t.YPosition);
                     //Vector3 rotation = new Vector3(t.XOrientation, t.YOrientation, t.ZOrientation);
 
-                    trigger = Resources.LoadTrigger(t.TemplateResRef);
+                    trigger = Resources.LoadTrigger(t.TemplateResRef, t);
                     trigger.gameObject.transform.position = position;
                     //trigger.gameObject.transform.rotation = Quaternion.Euler(rotation);
 
@@ -529,7 +538,7 @@ namespace AuroraEngine
                 {
                     Vector3 position = new Vector3(e.XPosition, e.ZPosition, e.YPosition);
 
-                    encounter = Resources.LoadEncounter(e.TemplateResRef);
+                    encounter = Resources.LoadEncounter(e.TemplateResRef, e);
                     encounter.gameObject.transform.position = position;
                     //trigger.gameObject.transform.rotation = Quaternion.Euler(rotation);
 

@@ -6,101 +6,101 @@ using AuroraEngine;
 
 [Serializable]public class AuroraBTC : AuroraStruct {
     // Field definitions
-    [GFF("structid")] public uint structid;
-    [GFF("FirstName")] public CExoLocString FirstName;
-    [GFF("FactionID")] public UInt16 FactionID;
-    [GFF("ScriptOnNotice")] public String ScriptOnNotice;
-    [GFF("Deity")] public CExoString Deity;
-    [GFF("ScriptSpawn")] public String ScriptSpawn;
-    [GFF("Phenotype")] public Int32 Phenotype;
-    [GFF("SaveFortitude")] public Byte SaveFortitude;
-    [GFF("ScriptHeartbeat")] public String ScriptHeartbeat;
-    [GFF("ScriptAttacked")] public String ScriptAttacked;
-    [GFF("ScriptSpellAt")] public String ScriptSpellAt;
-    [GFF("Disarmable")] public Byte Disarmable;
-    [GFF("Con")] public Byte Con;
-    [GFF("Cha")] public Byte Cha;
-    [GFF("NaturalAC")] public Byte NaturalAC;
-    [GFF("ScriptDisturbed")] public String ScriptDisturbed;
-    [GFF("Int")] public Byte Int;
-    [GFF("GoodEvil")] public Byte GoodEvil;
-    [GFF("Race")] public Byte Race;
-    [GFF("Tag")] public CExoString Tag;
-    [GFF("Morale")] public Byte Morale;
-    [GFF("ChallengeRating")] public Single ChallengeRating;
-    [GFF("ScriptEndRound")] public String ScriptEndRound;
-    [GFF("MoraleRecovery")] public Byte MoraleRecovery;
-    [GFF("HitPoints")] public Int16 HitPoints;
-    [GFF("IsPC")] public Byte IsPC;
-    [GFF("Tail")] public Byte Tail;
-    [GFF("Dex")] public Byte Dex;
-    [GFF("SaveWill")] public Byte SaveWill;
-    [GFF("ScriptDeath")] public String ScriptDeath;
-    [GFF("Description")] public CExoLocString Description;
-    [GFF("Portrait")] public String Portrait;
-    [GFF("LastName")] public CExoLocString LastName;
-    [GFF("Wings")] public Byte Wings;
-    [GFF("TemplateResRef")] public String TemplateResRef;
-    [GFF("Wis")] public Byte Wis;
-    [GFF("ScriptDamaged")] public String ScriptDamaged;
-    [GFF("MoraleBreakpoint")] public Byte MoraleBreakpoint;
-    [GFF("ScriptDialogue")] public String ScriptDialogue;
-    [GFF("SubRace")] public CExoString SubRace;
-    [GFF("Conversation")] public String Conversation;
-    [GFF("CRAdjust")] public Int32 CRAdjust;
-    [GFF("Appearance_Type")] public UInt16 Appearance_Type;
-    [GFF("WalkRate")] public Int32 WalkRate;
-    [GFF("LawfulChaotic")] public Byte LawfulChaotic;
-    [GFF("ScriptRested")] public String ScriptRested;
-    [GFF("ScriptUserDefine")] public String ScriptUserDefine;
-    [GFF("Str")] public Byte Str;
-    [GFF("Gender")] public Byte Gender;
-    [GFF("Comment")] public CExoString Comment;
-    [GFF("SaveReflex")] public Byte SaveReflex;
-    [GFF("PaletteID")] public Byte PaletteID;
-    [GFF("Interruptable")] public Byte Interruptable;
-    [GFF("ScriptOnBlocked")] public String ScriptOnBlocked;
-    [GFF("SoundSet")] public UInt32 SoundSet;
-    [GFF("CurrentHitPoints")] public Int16 CurrentHitPoints;
-    [GFF("Appearance_Head")] public Byte Appearance_Head;
-    [GFF("Plot")] public Byte Plot;
-    [GFF("PerceptionRange")] public Byte PerceptionRange;
+    [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+    [GFF("FirstName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString FirstName;
+    [GFF("FactionID", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 FactionID;
+    [GFF("ScriptOnNotice", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptOnNotice;
+    [GFF("Deity", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Deity;
+    [GFF("ScriptSpawn", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptSpawn;
+    [GFF("Phenotype", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Phenotype;
+    [GFF("SaveFortitude", Compatibility.BOTH, ExistsIn.BASE)] public Byte SaveFortitude;
+    [GFF("ScriptHeartbeat", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptHeartbeat;
+    [GFF("ScriptAttacked", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptAttacked;
+    [GFF("ScriptSpellAt", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptSpellAt;
+    [GFF("Disarmable", Compatibility.BOTH, ExistsIn.BASE)] public Byte Disarmable;
+    [GFF("Con", Compatibility.BOTH, ExistsIn.BASE)] public Byte Con;
+    [GFF("Cha", Compatibility.BOTH, ExistsIn.BASE)] public Byte Cha;
+    [GFF("NaturalAC", Compatibility.BOTH, ExistsIn.BASE)] public Byte NaturalAC;
+    [GFF("ScriptDisturbed", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptDisturbed;
+    [GFF("Int", Compatibility.BOTH, ExistsIn.BASE)] public Byte Int;
+    [GFF("GoodEvil", Compatibility.BOTH, ExistsIn.BASE)] public Byte GoodEvil;
+    [GFF("Race", Compatibility.BOTH, ExistsIn.BASE)] public Byte Race;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
+    [GFF("Morale", Compatibility.BOTH, ExistsIn.BASE)] public Byte Morale;
+    [GFF("ChallengeRating", Compatibility.BOTH, ExistsIn.BASE)] public Single ChallengeRating;
+    [GFF("ScriptEndRound", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptEndRound;
+    [GFF("MoraleRecovery", Compatibility.BOTH, ExistsIn.BASE)] public Byte MoraleRecovery;
+    [GFF("HitPoints", Compatibility.BOTH, ExistsIn.BASE)] public Int16 HitPoints;
+    [GFF("IsPC", Compatibility.BOTH, ExistsIn.BASE)] public Byte IsPC;
+    [GFF("Tail", Compatibility.BOTH, ExistsIn.BASE)] public Byte Tail;
+    [GFF("Dex", Compatibility.BOTH, ExistsIn.BASE)] public Byte Dex;
+    [GFF("SaveWill", Compatibility.BOTH, ExistsIn.BASE)] public Byte SaveWill;
+    [GFF("ScriptDeath", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptDeath;
+    [GFF("Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Description;
+    [GFF("Portrait", Compatibility.BOTH, ExistsIn.BASE)] public String Portrait;
+    [GFF("LastName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LastName;
+    [GFF("Wings", Compatibility.BOTH, ExistsIn.BASE)] public Byte Wings;
+    [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
+    [GFF("Wis", Compatibility.BOTH, ExistsIn.BASE)] public Byte Wis;
+    [GFF("ScriptDamaged", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptDamaged;
+    [GFF("MoraleBreakpoint", Compatibility.BOTH, ExistsIn.BASE)] public Byte MoraleBreakpoint;
+    [GFF("ScriptDialogue", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptDialogue;
+    [GFF("SubRace", Compatibility.BOTH, ExistsIn.BASE)] public CExoString SubRace;
+    [GFF("Conversation", Compatibility.BOTH, ExistsIn.BASE)] public String Conversation;
+    [GFF("CRAdjust", Compatibility.BOTH, ExistsIn.BASE)] public Int32 CRAdjust;
+    [GFF("Appearance_Type", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Appearance_Type;
+    [GFF("WalkRate", Compatibility.BOTH, ExistsIn.BASE)] public Int32 WalkRate;
+    [GFF("LawfulChaotic", Compatibility.BOTH, ExistsIn.BASE)] public Byte LawfulChaotic;
+    [GFF("ScriptRested", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptRested;
+    [GFF("ScriptUserDefine", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptUserDefine;
+    [GFF("Str", Compatibility.BOTH, ExistsIn.BASE)] public Byte Str;
+    [GFF("Gender", Compatibility.BOTH, ExistsIn.BASE)] public Byte Gender;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("SaveReflex", Compatibility.BOTH, ExistsIn.BASE)] public Byte SaveReflex;
+    [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
+    [GFF("Interruptable", Compatibility.BOTH, ExistsIn.BASE)] public Byte Interruptable;
+    [GFF("ScriptOnBlocked", Compatibility.BOTH, ExistsIn.BASE)] public String ScriptOnBlocked;
+    [GFF("SoundSet", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 SoundSet;
+    [GFF("CurrentHitPoints", Compatibility.BOTH, ExistsIn.BASE)] public Int16 CurrentHitPoints;
+    [GFF("Appearance_Head", Compatibility.BOTH, ExistsIn.BASE)] public Byte Appearance_Head;
+    [GFF("Plot", Compatibility.BOTH, ExistsIn.BASE)] public Byte Plot;
+    [GFF("PerceptionRange", Compatibility.BOTH, ExistsIn.BASE)] public Byte PerceptionRange;
 
     // List definitions
-    [GFF("SkillList")] public List<ASkill> SkillList = new List<ASkill>();
-    [GFF("ClassList")] public List<AClass> ClassList = new List<AClass>();
-    [GFF("SpecAbilityList")] public List<ASpecAbility> SpecAbilityList = new List<ASpecAbility>();
-    [GFF("Equip_ItemList")] public List<AEquip_Item> Equip_ItemList = new List<AEquip_Item>();
+    [GFF("SkillList", Compatibility.BOTH, ExistsIn.BASE)] public List<ASkill> SkillList = new List<ASkill>();
+    [GFF("ClassList", Compatibility.BOTH, ExistsIn.BASE)] public List<AClass> ClassList = new List<AClass>();
+    [GFF("SpecAbilityList", Compatibility.BOTH, ExistsIn.BASE)] public List<ASpecAbility> SpecAbilityList = new List<ASpecAbility>();
+    [GFF("Equip_ItemList", Compatibility.BOTH, ExistsIn.BASE)] public List<AEquip_Item> Equip_ItemList = new List<AEquip_Item>();
 
     // Class definitions    
     [Serializable]public class ASkill : AuroraStruct {
         // Field definitions
-        [GFF("structid")] public uint structid;
-        [GFF("Rank")] public Byte Rank;
+        [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+        [GFF("Rank", Compatibility.BOTH, ExistsIn.BASE)] public Byte Rank;
         
     }
     
     [Serializable]public class AClass : AuroraStruct {
         // Field definitions
-        [GFF("structid")] public uint structid;
-        [GFF("ClassLevel")] public Int16 ClassLevel;
-        [GFF("Class")] public Int32 Class;
+        [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+        [GFF("ClassLevel", Compatibility.BOTH, ExistsIn.BASE)] public Int16 ClassLevel;
+        [GFF("Class", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Class;
         
     }
     
     [Serializable]public class ASpecAbility : AuroraStruct {
         // Field definitions
-        [GFF("structid")] public uint structid;
-        [GFF("Spell")] public UInt16 Spell;
-        [GFF("SpellFlags")] public Byte SpellFlags;
-        [GFF("SpellCasterLevel")] public Byte SpellCasterLevel;
+        [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+        [GFF("Spell", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Spell;
+        [GFF("SpellFlags", Compatibility.BOTH, ExistsIn.BASE)] public Byte SpellFlags;
+        [GFF("SpellCasterLevel", Compatibility.BOTH, ExistsIn.BASE)] public Byte SpellCasterLevel;
         
     }
     
     [Serializable]public class AEquip_Item : AuroraStruct {
         // Field definitions
-        [GFF("structid")] public uint structid;
-        [GFF("EquippedRes")] public String EquippedRes;
+        [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
+        [GFF("EquippedRes", Compatibility.BOTH, ExistsIn.BASE)] public String EquippedRes;
         
     }
     

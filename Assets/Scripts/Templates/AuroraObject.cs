@@ -26,6 +26,8 @@ namespace AuroraEngine
     [SelectionBase]
     public class AuroraObject : MonoBehaviour
 	{
+        public string resref;
+
         public float timeSinceHeartbeat = 0f;
 
         public int gitIndex;
@@ -38,7 +40,7 @@ namespace AuroraEngine
         public static StateSystem stateManager;
         //public static Stack<AuroraObject> ObjectSelfStack = new Stack<AuroraObject>();
 
-        public AuroraStruct template;
+        public AuroraStruct template, gitData;
 
         float actionTimer = 0f;
 
@@ -391,10 +393,15 @@ namespace AuroraEngine
     public class GFFAttribute : System.Attribute
     {
         public string name;
+        public Game game;
+        public Compatibility compatibility;
+        public ExistsIn existsIn;
 
-        public GFFAttribute (string name)
+        public GFFAttribute (string name, Compatibility compat = Compatibility.BOTH, ExistsIn exists = ExistsIn.BOTH)
         {
             this.name = name;
+            this.compatibility = compatibility;
+            this.existsIn = exists;
         }
     }
 

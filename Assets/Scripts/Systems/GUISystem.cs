@@ -89,16 +89,16 @@ public class GUISystem : MonoBehaviour
 
     void LoadGUI (string name)
     {
-        gui = AuroraEngine.Resources.LoadGUI(name);
+        //gui = AuroraEngine.Resources.LoadGUI(name);
 
-        // Load textures
-        textures = new Dictionary<string, Texture>();
-        foreach (AuroraGUI.ACONTROLS control in gui.CONTROLS)
-        {
-            string texname = control.BORDER.FILL;
-            Texture texture = AuroraEngine.Resources.LoadTexture2D(texname);
-            textures[texname] = texture;
-        }
+        //// Load textures
+        //textures = new Dictionary<string, Texture>();
+        //foreach (AuroraGUI.ACONTROLS control in gui.CONTROLS)
+        //{
+        //    string texname = control.BORDER.FILL;
+        //    Texture texture = AuroraEngine.Resources.LoadTexture2D(texname);
+        //    textures[texname] = texture;
+        //}
     }
 
     //Rect Position(Rect pos)
@@ -135,38 +135,38 @@ public class GUISystem : MonoBehaviour
     void DrawGUI ()
     {
         // Draw the GUI
-        foreach (AuroraGUI.ACONTROLS control in gui.CONTROLS)
-        {
-            // Create a label
-            Rect pos = new Rect(
-                control.EXTENT.LEFT,
-                control.EXTENT.TOP,
-                control.EXTENT.WIDTH,
-                control.EXTENT.HEIGHT
-            );
+        //foreach (AuroraGUI.ACONTROLS control in gui.CONTROLS)
+        //{
+        //    // Create a label
+        //    Rect pos = new Rect(
+        //        control.EXTENT.LEFT,
+        //        control.EXTENT.TOP,
+        //        control.EXTENT.WIDTH,
+        //        control.EXTENT.HEIGHT
+        //    );
 
-            //pos = Position(pos);
+        //    //pos = Position(pos);
 
-            // Find text for the label
-            string text = "";
-            if (control.TEXT != null)
-            {
-                if (control.TEXT.TEXT != "")
-                {
-                    text = control.TEXT.TEXT;
-                }
-                else
-                {
-                    text = AuroraEngine.Resources.GetString((int)control.TEXT.STRREF);
-                }
-            }
+        //    // Find text for the label
+        //    string text = "";
+        //    if (control.TEXT != null)
+        //    {
+        //        if (control.TEXT.TEXT != "")
+        //        {
+        //            text = control.TEXT.TEXT;
+        //        }
+        //        else
+        //        {
+        //            text = AuroraEngine.Resources.GetString((int)control.TEXT.STRREF);
+        //        }
+        //    }
 
-            // Find image for the label
-            string texName = control.BORDER.FILL;
-            Texture tex = textures[texName];
+        //    // Find image for the label
+        //    string texName = control.BORDER.FILL;
+        //    Texture tex = textures[texName];
 
-            GUI.Label(pos, tex);
-        }
+        //    GUI.Label(pos, tex);
+        //}
     }
 
     void DrawHooks ()

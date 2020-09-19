@@ -4,7 +4,7 @@ namespace AuroraEngine
 {
 	public class Store : AuroraObject
 	{
-		public static Store Create (AuroraUTM utm)
+		public static Store Create (AuroraUTM utm, AuroraGIT.AStore gitData)
 		{
 			GameObject gameObject;
 
@@ -18,6 +18,7 @@ namespace AuroraEngine
             //add the template component to the new object
             Store store = gameObject.AddComponent<Store>();
             store.template = utm;
+			store.gitData = gitData;
 
 			return store;
 		}

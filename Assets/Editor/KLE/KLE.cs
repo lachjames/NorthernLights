@@ -12,8 +12,6 @@ public class KLE : EditorWindow
     string tslLocation = "D:\\SteamLibrary\\steamapps\\common\\Knights of the Old Republic II";
     int moduleIdx = 0;
 
-    public AuroraEngine.Module module;
-
     string[] modules;
     List<string> names;
 
@@ -61,10 +59,10 @@ public class KLE : EditorWindow
             GUILayout.Space(10);
             savedName = GUILayout.TextField(savedName);
 
-            //if (GUILayout.Button("Save module"))
-            //{
-            //    SaveModule();
-            //}
+            if (GUILayout.Button("Save module"))
+            {
+                SaveModule();
+            }
 
             GUILayout.Space(10);
 
@@ -72,6 +70,7 @@ public class KLE : EditorWindow
             {
                 GetWindow<KItemPicker>(false, "KotOR Level Editor", true);
             }
+
         }
     }
 
@@ -97,99 +96,60 @@ public class KLE : EditorWindow
         AuroraEngine.Resources.data.loader.Load(names[moduleIdx]);
     }
 
-    //    void SaveModule ()
-    //    {
-    //        string tmpFolder = "D:\\KOTOR\\KLE\\Kotor Level Editor\\tmp";
-    //        /* A module consists of two files:
-    //           mod.rim:
-    //             - mod.are: An ARE file (GFF)
-    //             - mod.git: A GIT file (GFF)
-    //             - mod.ifo: An IFO file (IFO, need to write custom writer for this)
+    void SaveModule ()
+    {
+        string folder = AuroraPrefs.GetModuleOutLocation();
 
-    //           mod_s.rim:
-    //             - All other data files, in GFF format
+        Module module = AuroraEngine.Resources.data.module;
+        string moduleName = module.moduleName;
 
-    //           To save a module, we do the following:
-    //             1. Save all the GFF files to a temporary folder using xoreos-tools' xml2gff
-    //             2. Package into mod_s.rim using xoreos-tools
-    //             3. Create the ARE, GIT, IFO, and LYT files
-    //             4. Package mod.rim using xoreos-tools
-    //             5. Save files into KotOR module directory
-    //        */
+        if (AuroraPrefs.TargetGame() == Game.TSL)
+        {
+            string filename = EditorUtility.OpenFilePanel("MOD archive to duplicate and insert into", "", "mod");
 
-    //        // Save all the GFF files to a temporary folder
-    //        int i = 0;
-    //        string filenames = "";
+            // Copy the .mod file to the moduleout folder
+            File.Copy(filename, folder + "tmp.mod");
 
-    //        foreach (GameObject g in FindObjectsOfType<GameObject>())
-    //        {
-    //            AuroraObject[] data = g.GetComponents<AuroraObject>();
+            // Unpack the mod
+            KModuleEditor.UnpackArchive(folder, "tmp.mod", "unerf");
 
-    //            if (data.Length == 0)
-    //            {
-    //                continue;
-    //            }
+            // Delete the temporary module file
+            UnityEngine.Windows.File.Delete(folder + "tmp.mod");
+        }
 
-    //            AuroraObject container = data[0];
+        // Access/create the required files
+        AuroraGIT git = GameObject.Find("Area").GetComponent<AreaManager>().CreateGIT();
+        AuroraARE are = module.are;
+        AuroraIFO ifo = module.ifo;
+        string areaName = ifo.Mod_Entry_Area;
+        
+        // Create the GFF files
+        KModuleEditor.CreateGFFFile(folder, areaName, git, "git");
+        KModuleEditor.CreateGFFFile(folder, areaName, are, "are");
+        KModuleEditor.CreateGFFFile(folder, "module", ifo, "ifo");
 
-    //            if (data.Length > 1)
-    //            {
-    //                foreach (AuroraObject c in data)
-    //                {
-    //                    if (c.template != null)
-    //                    {
-    //                        container = c;
-    //                        break;
-    //                    }
-    //                }
-    //            }
+        // Package the items up
+        if (AuroraPrefs.TargetGame() == Game.KotOR)
+        {
+            // Create a RIM archive
+            KModuleEditor.CreateArchive(folder, moduleName + ".rim", "rim");
+        }
+        else
+        {
+            // Repack the MOD
+            KModuleEditor.CreateArchive(folder, moduleName + ".mod", "erf", "--mod");
+        }
+    }
 
-    //            if (container.template != null)
-    //            {
+    void SaveK1 ()
+    {
+        // For KotOR 1, save the files to a .rim file
 
-    //                string xml = container.template.ToXML();
-    //                Debug.Log(xml);
+    }
 
-    //                string ext = extensions[container.template.GetType()];
+    void SaveK2 ()
+    {
+        // For KotOR 2, save the files to a .mod file
 
-    //                File.WriteAllText(tmpFolder + "\\" + container.resref + "." + ext, xml);
-
-    //                filenames += " \"" + tmpFolder + "\\" + container.resref + "." + ext + "\"";
-    //            }
-    //        }
-
-    //        // Package the mod_s.rim file
-    //        AuroraEngine.Resources.RunXoreosTools(
-    //            "",
-    //            "rim",
-    //            savedName + "_s.rim " + filenames
-    //        );
-
-    //        string rimLoc = "";
-
-    //        // Create the ARE file
-    //        string areXML = module.are.ToXML();
-    //        File.WriteAllText(tmpFolder + "\\" + savedName + "module.are", areXML);
-    //        rimLoc += "\"" + tmpFolder + "\\module.are" + "\" ";
-    //        // Create the GIT file
-    //        string gitXML = module.git.ToXML();
-    //        File.WriteAllText(tmpFolder + "\\" + savedName + ".git", gitXML);
-    //        rimLoc += "\"" + tmpFolder + "\\module.git" + "\" ";
-
-    //        // Create the IFO file
-    //        string ifoXML = module.ifo.ToXML();
-    //        File.WriteAllText(tmpFolder + "\\module.ifo", ifoXML);
-    //        rimLoc += "\"" + tmpFolder + "\\module.ifo" + "\"";
-
-    //        // Package mod.rim
-    //        AuroraEngine.Resources.RunXoreosTools(
-    //            "",
-    //            "rim",
-    //            savedName + ".rim " + rimLoc
-    //        );
-
-    //        // Create the LYT file
-
-
-    //    }
+    }
 }

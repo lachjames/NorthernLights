@@ -72,6 +72,11 @@ namespace AuroraEngine
                 };
             }
 
+            public string ToXML (string label)
+            {
+                return "<resref label=\"" + label + "\" strref=\"" + str + "\"/>";
+            }
+
             public override string ToString ()
             {
                 return str;
@@ -138,40 +143,6 @@ namespace AuroraEngine
             Type = type;
             Value = value;
             StructID = structID;
-        }
-
-        //      public GFFObject(string json)
-        //{
-        //	JSON.FillObject(this, json);
-        //}
-
-        //public string ToJSON()
-        //{
-        //	JSON.RegisterCustomType(typeof(Vector3), JSONSerializeVector3, JSONDeserializeVector3);
-        //	JSON.RegisterCustomType(typeof(Quaternion), JSONSerializeQuaternion, JSONDeserializeQuaternion);
-
-        //	return JSON.ToNiceJSON(this);
-        //}
-
-        private static string JSONSerializeVector3(object value)
-        {
-            return ((Vector3)value).ToString();
-        }
-
-        private static object JSONDeserializeVector3(string value)
-        {
-            return new Vector3();
-        }
-
-        private static string JSONSerializeQuaternion(object value)
-        {
-            return ((Quaternion)value).ToString();
-        }
-
-
-        private static object JSONDeserializeQuaternion(string value)
-        {
-            return new Quaternion();
         }
 
         //if this field is of the type 'struct', cast the data value as a dictionary and retrieve the requested child field by key

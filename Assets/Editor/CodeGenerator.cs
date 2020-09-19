@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.Networking.NetworkSystem;
+using System.Net.Configuration;
 
 public class CodeGenerator : EditorWindow
 {
@@ -16,7 +18,7 @@ public class CodeGenerator : EditorWindow
     //string OutputLocation = "D:\\KOTOR\\KotOR-Unity\\tmp\\GeneratedTmp";
     string MetadataLocation = "D:\\KOTOR\\KOTOR1\\KOTOR\\tools\\aurorapdf\\tables";
 
-    string SaveLocation = "C:\\Users\\lachl\\Downloads\\My kotor saves 1.1";
+    //string SaveLocation = "C:\\Users\\lachl\\Downloads\\My kotor saves 1.1";
     string TmpLocation = "D:\\KOTOR\\KotOR-Unity\\tmp";
 
     bool loadedGFFs = false;
@@ -107,20 +109,66 @@ using AuroraEngine;
         Debug.Log("Loading GFFs");
 
         LoadingSystem manager = GameObject.Find("Loading System").GetComponent<LoadingSystem>();
+
+        Dictionary<string, ClassDefinition> k1BaseDefs = LoadBaseGameGFFs(Compatibility.KotOR);
+        Dictionary<string, ClassDefinition> tslBaseDefs = LoadBaseGameGFFs(Compatibility.TSL);
+
+        Dictionary<string, ClassDefinition> k1SaveDefs = LoadSaveGFFs(Compatibility.KotOR);
+        Dictionary<string, ClassDefinition> tslSaveDefs = LoadSaveGFFs(Compatibility.TSL);
+
+        //Dictionary<string, ClassDefinition> k1SaveDefs = new Dictionary<string, ClassDefinition>();
+        //Dictionary<string, ClassDefinition> tslSaveDefs = new Dictionary<string, ClassDefinition>();
+
+        Dictionary<string, ClassDefinition> defs = CombineDefinitions(k1BaseDefs, tslBaseDefs, k1SaveDefs, tslSaveDefs);
+
+        foreach (string str in defs.Keys)
+        {
+            Debug.Log("Created class " + str + " from TSL base game files");
+        }
+
+        // Generate and write code to disk
+        foreach (string className in defs.Keys)
+        {
+            string code = preamble + defs[className].ToString();
+            File.WriteAllText(OutputLocation + "\\" + className + ".cs", code);
+        }
+    }
+
+    Dictionary<string, ClassDefinition> LoadBaseGameGFFs(Compatibility compat)
+    {
+        string loc = compat == Compatibility.KotOR ? AuroraPrefs.GetK1Location() : AuroraPrefs.GetTSLLocation();
+        
         Dictionary<string, ClassDefinition> defs = new Dictionary<string, ClassDefinition>();
-
-        // Read metadata JSON
-        //List<GFFMetadata> metadata = LoadMetadata();
-
         // Read GFF objects from disk
         Debug.Log("Loading BIFs");
-        LoadGFFsFromBIFs(AuroraPrefs.GetKotorLocation() + "\\data", defs);
+        LoadGFFsFromBIFs(loc + "\\data", defs, compat, ExistsIn.BASE);
 
         Debug.Log("Loading RIMs");
-        LoadGFFsFromRIMs(AuroraPrefs.GetKotorLocation() + "\\modules", defs);
+        LoadGFFsFromRIMs(loc + "\\modules", defs, compat, ExistsIn.BASE);
 
-        Debug.Log("Loading saves");
-        foreach (string saveFolder in Directory.GetDirectories(SaveLocation))
+        if (compat == Compatibility.TSL)
+        {
+            // Load data from all .erf files (which are ERF files, and contain DLG files for the module)
+            foreach (string erf in Directory.GetFiles(loc + "\\modules", "*.erf"))
+            {
+                LoadGFFsFromERF(erf, defs, compat, ExistsIn.BASE);
+            }
+
+            // Load data from all .mod files (which are ERF files)
+            foreach (string mod in Directory.GetFiles(loc + "\\modules", "*.mod"))
+            {
+                LoadGFFsFromERF(mod, defs, compat, ExistsIn.BASE);
+            }
+        }
+
+        return defs;
+    }
+    Dictionary<string, ClassDefinition> LoadSaveGFFs(Compatibility compat)
+    {
+        string loc = compat == Compatibility.KotOR ? AuroraPrefs.GetK1SaveLocation() : AuroraPrefs.GetTSLSaveLocation();
+
+        Dictionary<string, ClassDefinition> defs = new Dictionary<string, ClassDefinition>();
+        foreach (string saveFolder in Directory.GetDirectories(loc))
         {
             Debug.Log(saveFolder);
 
@@ -129,7 +177,7 @@ using AuroraEngine;
             // Shuffle the subfolders and pick some
             //System.Random rnd = new System.Random();
             //subFolders = subFolders.OrderBy(c => rnd.Next()).ToArray();
-            //int i = 0;
+            int i = 0;
             foreach (string subFolder in subFolders)
             {
                 Debug.Log(subFolder);
@@ -141,34 +189,24 @@ using AuroraEngine;
                      - Screen.tga (can ignore this)
                 */
                 // Load the GFFs
-                LoadGFFFromFile(subFolder + "\\GLOBALVARS.res", defs, "AuroraGlobalVars");
-                LoadGFFFromFile(subFolder + "\\PARTYTABLE.res", defs, "AuroraPartyTable");
-                LoadGFFFromFile(subFolder + "\\savenfo.res", defs, "AuroraSaveNfo");
+                LoadGFFFromFile(subFolder + "\\GLOBALVARS.res", defs, "AuroraGlobalVars", compat, ExistsIn.SAVE);
+                LoadGFFFromFile(subFolder + "\\PARTYTABLE.res", defs, "AuroraPartyTable", compat, ExistsIn.SAVE);
+                LoadGFFFromFile(subFolder + "\\savenfo.res", defs, "AuroraSaveNfo", compat, ExistsIn.SAVE);
 
                 // Load the SAV (in ERF format)
-                LoadGFFsFromERF(subFolder + "\\SAVEGAME.sav", defs);
-                //if (i >= 10)
-                //{
-                //    break;
-                //}
+                LoadGFFsFromERF(subFolder + "\\SAVEGAME.sav", defs, compat, ExistsIn.SAVE);
+                if (i >= 2)
+                {
+                    break;
+                }
                 //break;
             }
         }
 
-        //foreach (string className in defs.Keys)
-        //{
-        //    defs[className].Match(metadata);
-        //}
-
-        // Generate and write code to disk
-        foreach (string className in defs.Keys)
-        {
-            string code = preamble + defs[className].ToString();
-            File.WriteAllText(OutputLocation + "\\" + className + ".cs", code);
-        }
+        return defs;
     }
 
-    void LoadGFFsFromRIMs(string moduleDir, Dictionary<string, ClassDefinition> defs)
+    void LoadGFFsFromRIMs(string moduleDir, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         // We load every module in the game files
 
@@ -186,11 +224,11 @@ using AuroraEngine;
             for (int i = 0; i < resources.Count(); i++)
             {
                 RIMObject.Resource resource = resources[i];
-                LoadRIM(obj, resource, defs);
+                LoadRIM(obj, resource, defs, compat, existsIn);
             }
         }
     }
-    void LoadGFFsFromERF(string filename, Dictionary<string, ClassDefinition> defs)
+    void LoadGFFsFromERF(string filename, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         // We load every module in the game files
 
@@ -199,10 +237,10 @@ using AuroraEngine;
         //Debug.Log("Loading " + filename);
         ERFObject obj = new ERFObject(filename);
 
-        LoadERFObj(obj, defs);
+        LoadERFObj(obj, defs, compat, existsIn);
     }
 
-    void LoadGFFsFromBIFs (string dataDir, Dictionary<string, ClassDefinition> defs)
+    void LoadGFFsFromBIFs (string dataDir, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
 
         // We load every BIF file in the game files
@@ -214,30 +252,30 @@ using AuroraEngine;
         {
             //Debug.Log("Loading " + filename);
             BIFObject obj = new BIFObject(filename);
-            LoadBIF(obj, defs);
+            LoadBIF(obj, defs, compat, existsIn);
         }
     }
     
-    void LoadGFFFromFile(string location, Dictionary<string, ClassDefinition> defs, string className)
+    void LoadGFFFromFile(string location, Dictionary<string, ClassDefinition> defs, string className, Compatibility compat, ExistsIn existsIn)
     {
         using (Stream stream = File.OpenRead(location))
         {
             GFFObject gff = (new GFFLoader(stream)).GetObject();
-            LoadGFF(gff, defs, className);
+            LoadGFF(gff, defs, className, compat, existsIn);
         }
     }
 
-    void LoadGFF(GFFObject gff, Dictionary<string, ClassDefinition> defs, string className)
+    void LoadGFF(GFFObject gff, Dictionary<string, ClassDefinition> defs, string className, Compatibility compat, ExistsIn existsIn)
     {
         if (!defs.ContainsKey(className))
         {
             defs[className] = new ClassDefinition();
         }
         // Update the class definition
-        defs[className].AddToDefinition(gff, className, 0);
+        defs[className].AddToDefinition(gff, className, 0, compat, existsIn);
     }
 
-    void LoadRIM(RIMObject obj, RIMObject.Resource resource, Dictionary<string, ClassDefinition> defs)
+    void LoadRIM(RIMObject obj, RIMObject.Resource resource, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         if (!gffTypes.Contains(resource.ResType))
         {
@@ -252,7 +290,7 @@ using AuroraEngine;
             // Load the resource from the RIM
             Stream stream = obj.GetResource(resource.ResRef, resource.ResType);
             GFFObject gffObject = new GFFLoader(stream).GetObject();
-            LoadGFF(gffObject, defs, className);
+            LoadGFF(gffObject, defs, className, compat, existsIn);
         }
         catch
         {
@@ -261,16 +299,16 @@ using AuroraEngine;
         }
     }
 
-    void LoadERFObj (ERFObject obj, Dictionary<string, ClassDefinition> defs)
+    void LoadERFObj (ERFObject obj, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         foreach ((string resRef, ResourceType resType) in obj.resourceKeys.Keys)
         {
             //Debug.Log("Loading erf object " + resRef);
-            LoadERF(obj, resRef, resType, defs);
+            LoadERF(obj, resRef, resType, defs, compat, existsIn);
         }
     }
 
-    void LoadERF(ERFObject obj, string resRef, ResourceType resType, Dictionary<string, ClassDefinition> defs)
+    void LoadERF(ERFObject obj, string resRef, ResourceType resType, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         if (!gffTypes.Contains(resType))
         {
@@ -289,7 +327,7 @@ using AuroraEngine;
         {
             // ERFs can contain ERFs themselves!
             //Debug.Log("Loading nested ERF file " + resRef);
-            LoadERFObj(new ERFObject(stream), defs);
+            LoadERFObj(new ERFObject(stream), defs, compat, existsIn);
             //Debug.Log("Finished loading nested ERF file " + resRef);
         }
         else
@@ -297,10 +335,10 @@ using AuroraEngine;
             // Load the resource from the ERF
             GFFObject gffObject = new GFFLoader(stream).GetObject();
             // Update the class definition
-            LoadGFF(gffObject, defs, className);
+            LoadGFF(gffObject, defs, className, compat, existsIn);
         }
     }
-    void LoadBIF(BIFObject obj, Dictionary<string, ClassDefinition> defs)
+    void LoadBIF(BIFObject obj, Dictionary<string, ClassDefinition> defs, Compatibility compat, ExistsIn existsIn)
     {
         List<BIFObject.Resource> resources = obj.resources.ToList();
 
@@ -323,7 +361,7 @@ using AuroraEngine;
                 // Load the resource from the RIM
                 Stream stream = obj.GetResourceData(resource);
                 GFFObject gffObject = new GFFLoader(stream).GetObject();
-                LoadGFF(gffObject, defs, className);
+                LoadGFF(gffObject, defs, className, compat, existsIn);
             }
             catch
             {
@@ -333,21 +371,53 @@ using AuroraEngine;
         }
     }
 
+    Dictionary<string, ClassDefinition> CombineDefinitions (Dictionary<string, ClassDefinition> k1Base, Dictionary<string, ClassDefinition> tslBase,
+        Dictionary<string, ClassDefinition> k1Saves, Dictionary<string, ClassDefinition> tslSaves)
+    {
+        Dictionary<string, ClassDefinition> defs = new Dictionary<string, ClassDefinition>();
+
+        HashSet<string> baseTypes = new HashSet<string>();
+        baseTypes.UnionWith(k1Base.Keys);
+        baseTypes.UnionWith(tslBase.Keys);
+        baseTypes.UnionWith(k1Saves.Keys);
+        baseTypes.UnionWith(tslSaves.Keys);
+        
+        foreach (string defName in baseTypes)
+        {
+            ClassDefinition k1BaseDef = k1Base.ContainsKey(defName) ? k1Base[defName] : null;
+            ClassDefinition tslBaseDef = tslBase.ContainsKey(defName) ? tslBase[defName] : null;
+            ClassDefinition k1SaveDef = k1Saves.ContainsKey(defName) ? k1Saves[defName] : null;
+            ClassDefinition tslSaveDef = tslSaves.ContainsKey(defName) ? tslSaves[defName] : null;
+
+            ClassDefinition def = new ClassDefinition();
+            def.CreateDefinition(k1BaseDef, tslBaseDef, k1SaveDef, tslSaveDef);
+
+            defs[defName] = def;
+        }
+
+        return defs;
+    } 
+
     class ClassDefinition {
         public string Name;
         public int Level;
 
-        public Dictionary<string, string> Fields = new Dictionary<string, string>()
-        {
-            { "structid", "uint" }
-        };
-        public Dictionary<string, ClassDefinition> Structs = new Dictionary<string, ClassDefinition>();
-        public Dictionary<string, ClassDefinition> Lists = new Dictionary<string, ClassDefinition>();
+        public Compatibility Compat;
+        public ExistsIn ExistsIn;
 
-        public void AddToDefinition(GFFObject obj, string name, int level)
+        public Dictionary<string, (string, Compatibility, ExistsIn)> Fields = new Dictionary<string, (string, Compatibility, ExistsIn)>()
+        {
+            { "structid", ("uint", Compatibility.BOTH, ExistsIn.BOTH) }
+        };
+        public Dictionary<string, (ClassDefinition, Compatibility, ExistsIn)> Structs = new Dictionary<string, (ClassDefinition, Compatibility, ExistsIn)>();
+        public Dictionary<string, (ClassDefinition, Compatibility, ExistsIn)> Lists = new Dictionary<string, (ClassDefinition, Compatibility, ExistsIn)>();
+
+        public void AddToDefinition(GFFObject obj, string name, int level, Compatibility compat, ExistsIn existsIn)
         {
             Name = name;
             Level = level;
+            Compat = compat;
+            ExistsIn = existsIn;
 
             if (obj.Type != GFFObject.FieldType.Struct)
             {
@@ -362,20 +432,21 @@ using AuroraEngine;
                 GFFObject child = dict[key];
                 if (child.Type == GFFObject.FieldType.Struct)
                 {
+                    ClassDefinition structDef = new ClassDefinition();
                     // Add a struct definition if one does not exist
                     if (!Structs.ContainsKey(child.Label))
                     {
-                        Structs[child.Label] = new ClassDefinition();
+                        Structs[child.Label] = (structDef, compat, existsIn);
                     }
 
                     // Update the struct definition with this GFFObject
                     if (child.Label == Name)
                     {
                         // We need to append a suffix to the name
-                        Structs[child.Label].AddToDefinition(child, "A" + child.Label.Replace(" ", "") + "2", Level + 1);
+                        structDef.AddToDefinition(child, "A" + child.Label.Replace(" ", "") + "2", Level + 1, compat, existsIn);
                     } else
                     {
-                        Structs[child.Label].AddToDefinition(child, "A" + child.Label.Replace(" ", ""), Level + 1);
+                        structDef.AddToDefinition(child, "A" + child.Label.Replace(" ", ""), Level + 1, compat, existsIn);
                     }
 
                 } else if (child.Type == GFFObject.FieldType.List)
@@ -389,13 +460,15 @@ using AuroraEngine;
 
                     // If we reach this point, there is at least one item in the list;
                     // so we have to add their information to the definition
-
+                    ClassDefinition listDef;
                     if (!Lists.ContainsKey(child.Label))
                     {
-                        Lists[child.Label] = new ClassDefinition();
+                        listDef = new ClassDefinition();
+                        Lists[child.Label] = (listDef, compat, existsIn);
+                    } else
+                    {
+                        (listDef, _, _) = Lists[child.Label];
                     }
-
-                    ClassDefinition listObjDefinition = Lists[child.Label];
 
                     foreach (GFFObject listObject in childList)
                     {
@@ -409,10 +482,12 @@ using AuroraEngine;
                         {
                             listObjName = "A" + childName;
                         }
-                        listObjDefinition.AddToDefinition(
+                        listDef.AddToDefinition(
                             listObject,
                             listObjName,
-                            Level + 1
+                            Level + 1,
+                            compat,
+                            existsIn
                         );
                     }
                 } else
@@ -422,9 +497,231 @@ using AuroraEngine;
                     {
                         continue;
                     }
-                    Fields[child.Label] = child.Value.GetType().Name;
+                    Fields[child.Label] = (child.Value.GetType().Name, compat, existsIn);
                 }
             }
+        }
+
+        public void CreateDefinition (ClassDefinition k1Base, ClassDefinition tslBase, ClassDefinition k1Save, ClassDefinition tslSave)
+        {
+            // Determine when the class is created
+            if (k1Base == null && tslBase == null)
+            {
+                ExistsIn = ExistsIn.SAVE;
+            } else if (k1Save == null && tslSave == null)
+            {
+                ExistsIn = ExistsIn.BASE;
+            } else
+            {
+                ExistsIn = ExistsIn.BOTH;
+            }
+
+            // Determine which game(s) the class appears in
+            if (k1Base == null && k1Save == null)
+            {
+                Compat = Compatibility.TSL;
+            }
+            else if (tslBase == null && tslSave == null)
+            {
+                Compat = Compatibility.KotOR;
+            }
+            else
+            {
+                Compat = Compatibility.BOTH;
+            }
+
+            // Get the name of the class
+            if (tslSave != null)
+                Name = tslSave.Name;
+            if (tslBase != null)
+                Name = tslBase.Name;
+            if (k1Save != null)
+                Name = k1Save.Name;
+            if (k1Base != null)
+                Name = k1Base.Name;
+
+            // Create a list of all the fields in all four definitions
+            List<string> fieldNames = new List<string>();
+            if (k1Base != null)
+                fieldNames.AddRange(k1Base.Fields.Keys);
+            if (tslBase != null)
+                fieldNames.AddRange(tslBase.Fields.Keys);
+            if (k1Save != null)
+                fieldNames.AddRange(k1Save.Fields.Keys);
+            if (tslSave != null)
+                fieldNames.AddRange(tslSave.Fields.Keys);
+
+            foreach (string fieldName in fieldNames)
+            {
+                (Compatibility c, ExistsIn e) = GetMetadata(
+                    fieldName,
+                    k1Base != null ? k1Base.Fields.ContainsKey(fieldName) : false,
+                    tslBase != null ? tslBase.Fields.ContainsKey(fieldName) : false,
+                    k1Save != null ? k1Save.Fields.ContainsKey(fieldName) : false,
+                    tslSave != null ? tslSave.Fields.ContainsKey(fieldName) : false
+                );
+
+                string fieldType = null;
+                // Get the field type
+                if (tslSave != null && tslSave.Fields.ContainsKey(fieldName))
+                {
+                    (fieldType, _, _) = tslSave.Fields[fieldName];
+                }
+                else if (tslBase != null && tslBase.Fields.ContainsKey(fieldName))
+                {
+                    (fieldType, _, _) = tslBase.Fields[fieldName];
+                }
+                else if (k1Save != null && k1Save.Fields.ContainsKey(fieldName))
+                {
+                    (fieldType, _, _) = k1Save.Fields[fieldName];
+                }
+                else if (k1Base != null && k1Base.Fields.ContainsKey(fieldName))
+                {
+                    (fieldType, _, _) = k1Base.Fields[fieldName];
+                } else
+                {
+                    // This should never happen
+                    throw new Exception();
+                }
+
+                Fields[fieldName] = (fieldType, c, e);
+            }
+
+            // Create a list of all the lists in all four definitions
+            List<string> listNames = new List<string>();
+            if (k1Base != null)
+                listNames.AddRange(k1Base.Lists.Keys);
+            if (tslBase != null)
+                listNames.AddRange(tslBase.Lists.Keys);
+            if (k1Save != null)
+                listNames.AddRange(k1Save.Lists.Keys);
+            if (tslSave != null)
+                listNames.AddRange(tslSave.Lists.Keys);
+
+            foreach (string listName in listNames)
+            {
+                (Compatibility c, ExistsIn e) = GetMetadata(
+                    listName,
+                    k1Base != null ? k1Base.Lists.ContainsKey(listName) : false,
+                    tslBase != null ? tslBase.Lists.ContainsKey(listName) : false,
+                    k1Save != null ? k1Save.Lists.ContainsKey(listName) : false,
+                    tslSave != null ? tslSave.Lists.ContainsKey(listName) : false
+                );
+
+                ClassDefinition k1BaseClass = null;
+                ClassDefinition k1SaveClass = null;
+                ClassDefinition tslBaseClass = null;
+                ClassDefinition tslSaveClass = null;
+                if (k1Base != null && k1Base.Lists.ContainsKey(listName))
+                {
+                    (k1BaseClass, _, _) = k1Base.Lists[listName];
+                }
+                if (k1Save != null && k1Save.Lists.ContainsKey(listName))
+                {
+                    (k1SaveClass, _, _) = k1Save.Lists[listName];
+                }
+                if (tslBase != null && tslBase.Lists.ContainsKey(listName))
+                {
+                    (tslBaseClass, _, _) = tslBase.Lists[listName];
+                }
+                if (tslSave != null && tslSave.Lists.ContainsKey(listName))
+                {
+                    (tslSaveClass, _, _) = tslSave.Lists[listName];
+                }
+
+                ClassDefinition listDef = new ClassDefinition();
+                listDef.CreateDefinition(k1BaseClass, tslBaseClass, k1SaveClass, tslSaveClass);
+                Lists[listName] = (listDef, c, e);
+            }
+
+
+            // Create a list of all the lists in all four definitions
+            List<string> structNames = new List<string>();
+            if (k1Base != null)
+                structNames.AddRange(k1Base.Structs.Keys);
+            if (tslBase != null)
+                structNames.AddRange(tslBase.Structs.Keys);
+            if (k1Save != null)
+                structNames.AddRange(k1Save.Structs.Keys);
+            if (tslSave != null)
+                structNames.AddRange(tslSave.Structs.Keys);
+
+            foreach (string structName in structNames)
+            {
+                (Compatibility c, ExistsIn e) = GetMetadata(
+                    structName,
+                    k1Base != null ? k1Base.Structs.ContainsKey(structName) : false,
+                    tslBase != null ? tslBase.Structs.ContainsKey(structName) : false,
+                    k1Save != null ? k1Save.Structs.ContainsKey(structName) : false,
+                    tslSave != null ? tslSave.Structs.ContainsKey(structName) : false
+                );
+                
+                ClassDefinition k1BaseClass = null;
+                ClassDefinition k1SaveClass = null;
+                ClassDefinition tslBaseClass = null;
+                ClassDefinition tslSaveClass = null;
+                if (k1Base != null && k1Base.Structs.ContainsKey(structName))
+                {
+                    (k1BaseClass, _, _) = k1Base.Structs[structName];
+                }
+                if (k1Save != null && k1Save.Structs.ContainsKey(structName))
+                {
+                    (k1SaveClass, _, _) = k1Save.Structs[structName];
+                }
+                if (tslBase != null && tslBase.Structs.ContainsKey(structName))
+                {
+                    (tslBaseClass, _, _) = tslBase.Structs[structName];
+                }
+                if (tslSave != null && tslSave.Structs.ContainsKey(structName))
+                {
+                    (tslSaveClass, _, _) = tslSave.Structs[structName];
+                }
+
+                ClassDefinition structDef = new ClassDefinition();
+                structDef.CreateDefinition(k1BaseClass, tslBaseClass, k1SaveClass, tslSaveClass);
+                Lists[structName] = (structDef, c, e);
+            }
+        }
+
+        (Compatibility, ExistsIn) GetMetadata(string fieldName, bool k1Base,  bool tslBase, bool k1Save, bool tslSave)
+        {
+            Compatibility c;
+            ExistsIn e;
+
+            if (!k1Base && !tslBase)
+            {
+                // Field is save-only
+                e = ExistsIn.SAVE;
+            }
+            else if (!k1Save && !tslSave)
+            {
+                // Field is base-only
+                e = ExistsIn.BASE;
+            }
+            else
+            {
+                // Field is in both base and saves
+                e = ExistsIn.BOTH;
+            }
+
+
+            if (!k1Base && !k1Save)
+            {
+                // Field is k1-only
+                c = Compatibility.TSL;
+            }
+            else if (!tslBase && !tslSave)
+            {
+                // Field is tsl-only
+                c = Compatibility.KotOR;
+            }
+            else
+            {
+                // Field is in both games
+                c = Compatibility.BOTH;
+            }
+
+            return (c, e);
         }
 
         public string FormatComment(string description)
@@ -451,8 +748,9 @@ using AuroraEngine;
 
             foreach (string fieldName in Fields.Keys)
             {
-                string attribute = "[GFF(\"" + fieldName + "\")] ";
-                definition += TAB + attribute + "public " + Fields[fieldName] + " " + fieldName.Replace(" ", "")  + ";\n";
+                (string fieldType, Compatibility c, ExistsIn e) = Fields[fieldName];
+                string attribute = "[GFF(\"" + fieldName + "\", Compatibility." + c.ToString() + ", ExistsIn." + e.ToString() + ")] ";
+                definition += TAB + attribute + "public " + fieldType + " " + fieldName.Replace(" ", "")  + ";\n";
             }
 
             // Add the structs
@@ -461,8 +759,9 @@ using AuroraEngine;
 
             foreach (string structName in Structs.Keys)
             {
-                string attribute = "[GFF(\"" + structName + "\")] ";
-                definition += TAB + attribute + "public " + Structs[structName].Name + " " + structName.Replace(" ", "") + " = new " + Structs[structName].Name + "();\n";
+                (ClassDefinition structDef, Compatibility c, ExistsIn e) = Structs[structName];
+                string attribute = "[GFF(\"" + structName + "\", Compatibility." + c.ToString() + ", ExistsIn." + e.ToString() + ")] ";
+                definition += TAB + attribute + "public " + structDef.Name + " " + structName.Replace(" ", "") + " = new " + structDef.Name + "();\n";
             }
 
             // Add the lists
@@ -471,8 +770,9 @@ using AuroraEngine;
 
             foreach (string listName in Lists.Keys)
             {
-                string attribute = "[GFF(\"" + listName + "\")] ";
-                definition += TAB + attribute + "public " + "List<" + Lists[listName].Name + "> " + listName.Replace(" ", "") + " = new List<" + Lists[listName].Name + ">();\n";
+                (ClassDefinition listDef, Compatibility c, ExistsIn e) = Lists[listName];
+                string attribute = "[GFF(\"" + listName + "\", Compatibility." + c.ToString() + ", ExistsIn." + e.ToString() + ")] ";
+                definition += TAB + attribute + "public " + "List<" + listDef.Name + "> " + listName.Replace(" ", "") + " = new List<" + listDef.Name + ">();\n";
             }
 
             if (Structs.Count > 0 || Lists.Count > 0)
@@ -481,12 +781,12 @@ using AuroraEngine;
             string classDefinitions = "";
 
             // For each struct type, add its definition too
-            foreach (ClassDefinition structClass in Structs.Values)
+            foreach ((ClassDefinition structClass, _, _) in Structs.Values)
             {
                 classDefinitions += "\n" + structClass.ToString();
             }
             // For each list type, add its definition too
-            foreach (ClassDefinition listClass in Lists.Values)
+            foreach ((ClassDefinition listClass, _, _) in Lists.Values)
             {
                 classDefinitions += "\n" + listClass.ToString();
             }

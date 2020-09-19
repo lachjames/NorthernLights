@@ -6,16 +6,16 @@ using AuroraEngine;
 
 [Serializable]public class AuroraBTI : AuroraStruct {
     // Field definitions
-    [GFF("structid")] public uint structid;
-    [GFF("Charges")] public Byte Charges;
-    [GFF("TemplateResRef")] public String TemplateResRef;
-    [GFF("LocalizedName")] public CExoLocString LocalizedName;
-    [GFF("Comment")] public CExoString Comment;
-    [GFF("ModelPart1")] public Byte ModelPart1;
-    [GFF("Tag")] public CExoString Tag;
-    [GFF("BaseItem")] public Int32 BaseItem;
-    [GFF("Description")] public CExoLocString Description;
-    [GFF("DescIdentified")] public CExoLocString DescIdentified;
-    [GFF("Cost")] public UInt32 Cost;
+    [GFF("structid", Compatibility.TSL, ExistsIn.BASE)] public uint structid;
+    [GFF("Charges", Compatibility.TSL, ExistsIn.BASE)] public Byte Charges;
+    [GFF("TemplateResRef", Compatibility.TSL, ExistsIn.BASE)] public String TemplateResRef;
+    [GFF("LocalizedName", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString LocalizedName;
+    [GFF("Comment", Compatibility.TSL, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("ModelPart1", Compatibility.TSL, ExistsIn.BASE)] public Byte ModelPart1;
+    [GFF("Tag", Compatibility.TSL, ExistsIn.BASE)] public CExoString Tag;
+    [GFF("BaseItem", Compatibility.TSL, ExistsIn.BASE)] public Int32 BaseItem;
+    [GFF("Description", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString Description;
+    [GFF("DescIdentified", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString DescIdentified;
+    [GFF("Cost", Compatibility.TSL, ExistsIn.BASE)] public UInt32 Cost;
     
 }

@@ -17,7 +17,7 @@ namespace AuroraEngine
         public AuroraObject objectHeard;
 
         public ForcedAttack forcedAttack = null;
-		public static Creature Create(AuroraUTC utc)
+		public static Creature Create(AuroraUTC utc, AuroraGIT.ACreature gitData)
 		{
             //GameObject gameObject;
 			//get the resource reference for this object, which we'll use as it's in-engine name
@@ -69,6 +69,8 @@ namespace AuroraEngine
 			//add the template component to the new object
 			Creature creature = gameObject.AddComponent<Creature>();
 			creature.template = utc;
+            creature.gitData = gitData;
+
             creature.head = headObj;
 
             LookAtHook hook = gameObject.GetComponentInChildren<LookAtHook>();
