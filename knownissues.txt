@@ -1,0 +1,6 @@
+Known issues:
+ - Can only load levels with a .rim file, but some user levels will only have a .mod file
+ - Need to support override folder
+ - Let the user pick a module file (rather than populating the list automatically)
+ - Need to support creating new modules
+ - Creating lyt files from scratch is very important

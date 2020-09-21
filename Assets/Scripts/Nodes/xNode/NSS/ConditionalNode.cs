@@ -14,7 +14,6 @@ public class Conditional
 
 public class OnBeginScript : ExecutableNode
 {
-
 }
 
 [ExecuteInEditMode]

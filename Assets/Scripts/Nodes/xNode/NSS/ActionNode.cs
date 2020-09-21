@@ -36,6 +36,11 @@ public class ExecutableNode : AuroraNode
     {
 		return GetAfter();
     }
+
+	public override string GetCode()
+	{
+		return GetAfter().GetCode();
+	}
 }
 
 public abstract class ComputeNode: ExecutableNode
@@ -51,7 +56,6 @@ public abstract class ComputeNode: ExecutableNode
 	protected override void Init()
 	{
 		base.Init();
-
 	}
 
 	// Return the correct value of an output port when requested
@@ -111,6 +115,22 @@ public abstract class ComputeNode: ExecutableNode
 
 		return base.Execute();
     }
+
+	public override string GetCode ()
+    {
+		// Find the method
+		MethodInfo m = ParentClass.GetMethod(ActionName);
+
+		// Calculate the parameters of the method based on the inputs to the node
+		List<string> parameters = new List<string>();
+
+		foreach (NodePort input in DynamicInputs)
+		{
+			parameters.Add(((AuroraNode)input.node).GetCode());
+		}
+
+		return ActionName + "(" + String.Join(",", parameters) + ";";
+	}
 }
 
 [CreateNodeMenu("Functions/Custom")]

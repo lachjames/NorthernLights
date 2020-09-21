@@ -703,7 +703,7 @@ namespace AuroraEngine
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.UseShellExecute = false;
-            p.StartInfo.FileName = "D:\\KOTOR\\KOTOR1\\KotOR-Unity\\xt\\" + utility + ".exe";
+            p.StartInfo.FileName = Directory.GetParent(Application.dataPath) + "\\xt\\" + utility + ".exe";
             p.StartInfo.Arguments = arguments + " " + loc;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;

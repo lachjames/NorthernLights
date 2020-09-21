@@ -20,6 +20,11 @@ public class StringNode : AuroraNode {
 	public override object GetValue(NodePort port) {
 		return Value;
 	}
+
+    public override string GetCode()
+    {
+		return Value;
+    }
 }
 
 [CreateNodeMenu("Values/Int")]
@@ -40,6 +45,11 @@ public class IntNode : AuroraNode {
 	{
 		return int.Parse(Value);
 	}
+	public override string GetCode()
+	{
+		return Value;
+	}
+
 }
 
 [CreateNodeMenu("Values/Float")]
@@ -61,6 +71,11 @@ public class FloatNode : AuroraNode
 	{
 		return float.Parse(Value);
 	}
+	public override string GetCode()
+	{
+		return Value;
+	}
+
 }
 
 [CreateNodeMenu("Values/ObjectSelf")]
@@ -80,4 +95,9 @@ public class ObjectSelf : AuroraNode
 	{
 		return StateSystem.stateSystem.GetObjectSelf();
 	}
+	public override string GetCode()
+	{
+		return "OBJECT_SELF";
+	}
+
 }

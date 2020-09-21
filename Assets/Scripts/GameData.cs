@@ -77,7 +77,7 @@ public class AuroraData
             voLocations[filename.ToLower()] = filepath;
         }
 
-        string tlkXML = RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
+        string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
         tlk = new TLKObject(tlkXML);
 
         UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
@@ -259,77 +259,77 @@ public class AuroraData
         return resourceStream;
     }
 
-    public static string RunXoreosTools(string loc, string utility, string arguments)
-    {
-        // Then we read it using xoreos-tools's disassembler
-        Process p = new Process();
-        p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        p.StartInfo.CreateNoWindow = true;
-        p.StartInfo.UseShellExecute = false;
-        p.StartInfo.FileName = "D:\\KOTOR\\KOTOR1\\KotOR-Unity\\xt\\" + utility + ".exe";
-        p.StartInfo.Arguments = arguments + " " + loc;
-        p.StartInfo.RedirectStandardOutput = true;
-        p.StartInfo.RedirectStandardError = true;
-        p.EnableRaisingEvents = true;
+    //public static string RunXoreosTools(string loc, string utility, string arguments)
+    //{
+    //    // Then we read it using xoreos-tools's disassembler
+    //    Process p = new Process();
+    //    p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+    //    p.StartInfo.CreateNoWindow = true;
+    //    p.StartInfo.UseShellExecute = false;
+    //    p.StartInfo.FileName = Application.dataPath + "..\\xt\\" + utility + ".exe";
+    //    p.StartInfo.Arguments = arguments + " " + loc;
+    //    p.StartInfo.RedirectStandardOutput = true;
+    //    p.StartInfo.RedirectStandardError = true;
+    //    p.EnableRaisingEvents = true;
 
-        StringBuilder outputBuilder = new StringBuilder();
-        StringBuilder errorBuilder = new StringBuilder();
+    //    StringBuilder outputBuilder = new StringBuilder();
+    //    StringBuilder errorBuilder = new StringBuilder();
 
-        using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
-        using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
-        {
-            p.OutputDataReceived += (sender, e) =>
-            {
-                if (e.Data == null)
-                {
-                    outputWaitHandle.Set();
-                }
-                else
-                {
-                    outputBuilder.AppendLine(e.Data);
-                }
-            };
-            p.ErrorDataReceived += (sender, e) =>
-            {
-                if (e.Data == null)
-                {
-                    errorWaitHandle.Set();
-                }
-                else
-                {
-                    errorBuilder.AppendLine(e.Data);
-                }
-            };
+    //    using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+    //    using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+    //    {
+    //        p.OutputDataReceived += (sender, e) =>
+    //        {
+    //            if (e.Data == null)
+    //            {
+    //                outputWaitHandle.Set();
+    //            }
+    //            else
+    //            {
+    //                outputBuilder.AppendLine(e.Data);
+    //            }
+    //        };
+    //        p.ErrorDataReceived += (sender, e) =>
+    //        {
+    //            if (e.Data == null)
+    //            {
+    //                errorWaitHandle.Set();
+    //            }
+    //            else
+    //            {
+    //                errorBuilder.AppendLine(e.Data);
+    //            }
+    //        };
 
-            p.Start();
+    //        p.Start();
 
-            p.BeginOutputReadLine();
-            p.BeginErrorReadLine();
+    //        p.BeginOutputReadLine();
+    //        p.BeginErrorReadLine();
 
-            if (p.WaitForExit(2048) &&
-                outputWaitHandle.WaitOne() &&
-                errorWaitHandle.WaitOne())
-            {
-                // Process completed. Check process.ExitCode here.
-            }
-            else
-            {
-                // Timed out.
-            }
-        }
+    //        if (p.WaitForExit(2048) &&
+    //            outputWaitHandle.WaitOne() &&
+    //            errorWaitHandle.WaitOne())
+    //        {
+    //            // Process completed. Check process.ExitCode here.
+    //        }
+    //        else
+    //        {
+    //            // Timed out.
+    //        }
+    //    }
 
-        string output = outputBuilder.ToString();
-        string error = errorBuilder.ToString();
+    //    string output = outputBuilder.ToString();
+    //    string error = errorBuilder.ToString();
 
-        if (error != "")
-        {
-            UnityEngine.Debug.Log("Xoreos error output: " + error);
-        }
+    //    if (error != "")
+    //    {
+    //        UnityEngine.Debug.Log("Xoreos error output: " + error);
+    //    }
 
-        UnityEngine.Debug.Log(output);
-        UnityEngine.Debug.Log(error);
+    //    UnityEngine.Debug.Log(output);
+    //    UnityEngine.Debug.Log(error);
 
-        // Finally, we run the normal NCSScript reader on that
-        return output;
-    }
+    //    // Finally, we run the normal NCSScript reader on that
+    //    return output;
+    //}
 }
