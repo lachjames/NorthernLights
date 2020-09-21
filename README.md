@@ -5,6 +5,7 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
  - A level editor with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
 
 ## What Works
+ - The level editor is functional, and can save and load modules. It is still in (very early) private alpha, so please let me know if/when you find bugs.
  - Model loading and animations (thanks in no small part to the work of rwc4301, whose work in turn seems to be partially based on the Xoreos project) 
  - NCS scripts run natively, although performance needs to be improved
  - Many of the engine routines have been implemented, along with the corresponding systems
