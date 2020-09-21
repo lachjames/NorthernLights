@@ -4,3 +4,4 @@ Known issues:
  - Let the user pick a module file (rather than populating the list automatically)
  - Need to support creating new modules
  - Creating lyt files from scratch is very important
+ - Loading another module doesn't clear the scene
