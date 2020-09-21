@@ -32,10 +32,21 @@ public class AuroraInstance : MonoBehaviour
 
                 // Calculate orientation from bearing
                 float yRot = transform.rotation.eulerAngles.y;
+                while (yRot < 0)
+                {
+                    yRot += 360;
+                }
+
+                while (yRot > 0)
+                {
+                    yRot -= 360;
+                }
                 float bearing = yRot * Mathf.Deg2Rad * -1;
                 Debug.Log(bearing);
-                aCreature.YOrientation = Mathf.Sin(bearing);
-                aCreature.XOrientation = Mathf.Cos(bearing);
+
+                // This is an "xy vector pointing in the direction of the creature's orientation"
+                aCreature.YOrientation = Mathf.Cos(bearing);
+                aCreature.XOrientation = Mathf.Sin(bearing);
                 break;
             case "Placeables":
                 // TODO: Calculate bearing
@@ -44,7 +55,18 @@ public class AuroraInstance : MonoBehaviour
                 aPlaceable.Y = transform.position.z;
                 aPlaceable.Z = transform.position.y;
 
-                aPlaceable.Bearing = transform.rotation.y * Mathf.Deg2Rad * -1;
+                // Bearing is in radians, measured counterclockwise from North
+                float pDeg = transform.rotation.y;
+                while (pDeg < 0)
+                {
+                    pDeg += 360;
+                }
+
+                while (pDeg > 0)
+                {
+                    pDeg -= 360;
+                }
+                aPlaceable.Bearing = pDeg * Mathf.Deg2Rad * -1;
                 break;
             case "Doors":
                 // TODO: Door orientation and transform information (link, etc.)
@@ -53,7 +75,20 @@ public class AuroraInstance : MonoBehaviour
                 aDoor.Y = transform.position.z;
                 aDoor.Z = transform.position.y;
 
-                aDoor.Bearing = transform.rotation.y * Mathf.Deg2Rad * -1;
+                float dDeg = transform.rotation.y;
+                
+                // Would dDeg %= 360 work? Depends on how C# negative moduli work, but this is guaranteed 
+                // to work so we'll go with this for now
+                while (dDeg < 0)
+                {
+                    dDeg += 360;
+                }
+
+                while (dDeg > 0)
+                {
+                    dDeg -= 360;
+                }
+                aDoor.Bearing = dDeg * Mathf.Deg2Rad * -1;
                 break;
             case "Triggers":
                 AuroraGIT.ATrigger aTrigger = (AuroraGIT.ATrigger)gitData;
@@ -62,10 +97,10 @@ public class AuroraInstance : MonoBehaviour
                 aTrigger.YPosition = transform.position.z;
                 aTrigger.ZPosition = transform.position.y;
 
-                // Not convinced by this...
-                aTrigger.XOrientation = transform.rotation.eulerAngles.x;
-                aTrigger.YOrientation = transform.rotation.eulerAngles.y;
-                aTrigger.ZOrientation = transform.rotation.eulerAngles.z;
+                // This doesn't matter, and should be zero, according to BioWare documentation
+                aTrigger.XOrientation = 0f;
+                aTrigger.YOrientation = 0f;
+                aTrigger.ZOrientation = 0f;
                 break;
             case "Encounters":
                 // TODO: Encounter geometry and spawn points
@@ -80,12 +115,6 @@ public class AuroraInstance : MonoBehaviour
                 aSound.XPosition = transform.position.x;
                 aSound.YPosition = transform.position.z;
                 aSound.ZPosition = transform.position.y;
-
-                // Calculate orientation from bearing
-                float ySoundRot = transform.rotation.eulerAngles.y;
-                float soundBearing = ySoundRot * Mathf.Deg2Rad * -1;
-                aSound.YOrientation = Mathf.Sin(soundBearing);
-                aSound.XOrientation = Mathf.Cos(soundBearing);
                 break;
             case "Stores":
                 // TODO: Orientation
@@ -95,10 +124,21 @@ public class AuroraInstance : MonoBehaviour
                 aStore.ZPosition = transform.position.y;
 
                 // Calculate orientation from bearing
-                float yStoreRot = transform.rotation.eulerAngles.y;
-                float storeBearing = yStoreRot * Mathf.Deg2Rad * -1;
-                aStore.YOrientation = Mathf.Sin(storeBearing);
-                aStore.XOrientation = Mathf.Cos(storeBearing);
+                float mDeg = transform.rotation.eulerAngles.y;
+                while (mDeg < 0)
+                {
+                    mDeg += 360;
+                }
+
+                while (mDeg > 0)
+                {
+                    mDeg -= 360;
+                }
+                float mBearing = mDeg * Mathf.Deg2Rad * -1;
+
+                // This is an "xy vector pointing in the direction of the creature's orientation"
+                aStore.YOrientation = Mathf.Cos(mBearing);
+                aStore.XOrientation = Mathf.Sin(mBearing);
                 break;
             case "Waypoints":
                 AuroraGIT.AWaypoint aWaypoint = (AuroraGIT.AWaypoint)gitData;
@@ -107,10 +147,22 @@ public class AuroraInstance : MonoBehaviour
                 aWaypoint.ZPosition = transform.position.y;
 
                 // Calculate orientation from bearing
-                float yWaypointRot = transform.rotation.eulerAngles.y;
-                float waypointBearing = yWaypointRot * Mathf.Deg2Rad * -1;
-                aWaypoint.YOrientation = Mathf.Sin(waypointBearing);
-                aWaypoint.XOrientation = Mathf.Cos(waypointBearing);
+                float wRot = transform.rotation.eulerAngles.y;
+                while (wRot < 0)
+                {
+                    wRot += 360;
+                }
+
+                while (wRot > 0)
+                {
+                    wRot -= 360;
+                }
+                float wBearing = wRot * Mathf.Deg2Rad * -1;
+                Debug.Log(wBearing);
+
+                // This is an "xy vector pointing in the direction of the creature's orientation"
+                aWaypoint.YOrientation = Mathf.Cos(wBearing);
+                aWaypoint.XOrientation = Mathf.Sin(wBearing);
                 break;
             case "Cameras":
                 // TODO: Orientation (have to map the Quaternions I think)
@@ -145,34 +197,52 @@ public class AuroraInstance : MonoBehaviour
         switch (transform.parent.name)
         {
             case "Creatures":
-                git.CreatureList.Add((AuroraGIT.ACreature)gitData);
+                AuroraGIT.ACreature creature = (AuroraGIT.ACreature)gitData;
+                creature.structid = 4;
+                git.CreatureList.Add(creature);
                 break;
             case "Placeables":
-                git.PlaceableList.Add((AuroraGIT.APlaceable)gitData);
+                AuroraGIT.APlaceable placeable = (AuroraGIT.APlaceable)gitData;
+                placeable.structid = 9;
+                git.PlaceableList.Add(placeable);
                 break;
             case "Doors":
-                git.DoorList.Add((AuroraGIT.ADoor)gitData);
+                AuroraGIT.ADoor door = (AuroraGIT.ADoor)gitData;
+                door.structid = 8;
+                git.DoorList.Add(door);
                 break;
             case "Triggers":
-                git.TriggerList.Add((AuroraGIT.ATrigger)gitData);
+                AuroraGIT.ATrigger trigger = (AuroraGIT.ATrigger)gitData;
+                trigger.structid = 1;
+                git.TriggerList.Add(trigger);
                 break;
             case "Encounters":
-                git.EncounterList.Add((AuroraGIT.AEncounter)gitData);
+                AuroraGIT.AEncounter encounter = (AuroraGIT.AEncounter)gitData;
+                encounter.structid = 7;
+                git.EncounterList.Add(encounter);
                 break;
             case "Sounds":
-                git.SoundList.Add((AuroraGIT.ASound)gitData);
+                AuroraGIT.ASound sound = (AuroraGIT.ASound)gitData;
+                sound.structid = 6;
+                git.SoundList.Add(sound);
                 break;
             case "Stores":
-                git.StoreList.Add((AuroraGIT.AStore)gitData);
+                AuroraGIT.AStore store = (AuroraGIT.AStore)gitData;
+                store.structid = 11;
+                git.StoreList.Add(store);
                 break;
             case "Waypoints":
-                git.WaypointList.Add((AuroraGIT.AWaypoint)gitData);
+                AuroraGIT.AWaypoint waypoint = (AuroraGIT.AWaypoint)gitData;
+                waypoint.structid = 5;
+                git.WaypointList.Add(waypoint);
                 break;
             case "Cameras":
-                git.CameraList.Add((AuroraGIT.ACamera)gitData);
+                AuroraGIT.ACamera cam = (AuroraGIT.ACamera)gitData;
+                cam.structid = 14;
+                git.CameraList.Add(cam);
                 break;
             default:
-                break;
+                throw new System.Exception("Unknown parent " + transform.parent.name + " found.");
         }
     }
 }

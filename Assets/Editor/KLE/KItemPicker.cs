@@ -53,10 +53,10 @@ public class KItemPicker : EditorWindow
 
     List<object> tempObjects;
 
-    [MenuItem("KotOR/Item Picker")]
+    [MenuItem("KotOR/Template Picker")]
     public static void ShowWindow()
     {
-        GetWindow<KItemPicker>(false, "KotOR Object Picker", true);
+        GetWindow<KItemPicker>(false, "Template Picker", true);
     }
 
     public void OnGUI()

@@ -25,13 +25,13 @@ using AuroraEngine;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
     [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
     [GFF("ModelVariation", Compatibility.BOTH, ExistsIn.BASE)] public Byte ModelVariation;
-    [GFF("ModelPart3", Compatibility.TSL, ExistsIn.BASE)] public Byte ModelPart3;
-    [GFF("ModelPart2", Compatibility.TSL, ExistsIn.BASE)] public Byte ModelPart2;
-    [GFF("ModelPart1", Compatibility.TSL, ExistsIn.BASE)] public Byte ModelPart1;
-    [GFF("UpgradeLevel", Compatibility.KotOR, ExistsIn.BASE)] public Byte UpgradeLevel;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("ModelPart3", Compatibility.KotOR, ExistsIn.BASE)] public Byte ModelPart3;
+    [GFF("ModelPart2", Compatibility.KotOR, ExistsIn.BASE)] public Byte ModelPart2;
+    [GFF("ModelPart1", Compatibility.KotOR, ExistsIn.BASE)] public Byte ModelPart1;
+    [GFF("UpgradeLevel", Compatibility.TSL, ExistsIn.BASE)] public Byte UpgradeLevel;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
     [GFF("PropertiesList", Compatibility.BOTH, ExistsIn.BASE)] public List<AProperties> PropertiesList = new List<AProperties>();

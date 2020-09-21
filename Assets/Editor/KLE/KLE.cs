@@ -28,10 +28,10 @@ public class KLE : EditorWindow
         { typeof(AuroraUTW), "utw" }
     };
 
-    [MenuItem("KotOR/Open")]
+    [MenuItem("KotOR/Instance Editor")]
     public static void ShowWindow()
     {
-        GetWindow<KLE>(false, "KotOR Level Editor", true);
+        GetWindow<KLE>(false, "Instance Editor", true);
     }
 
     public void OnGUI()
@@ -55,7 +55,6 @@ public class KLE : EditorWindow
                 LoadModule();
             }
 
-
             GUILayout.Space(10);
             savedName = GUILayout.TextField(savedName);
 
@@ -70,7 +69,6 @@ public class KLE : EditorWindow
             {
                 GetWindow<KItemPicker>(false, "KotOR Level Editor", true);
             }
-
         }
     }
 

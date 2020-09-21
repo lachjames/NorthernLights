@@ -21,8 +21,8 @@ using AuroraEngine;
         [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
         [GFF("PlotIndex", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlotIndex;
         [GFF("PlanetID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlanetID;
-        [GFF("XP", Compatibility.TSL, ExistsIn.BASE)] public UInt32 XP;
-        [GFF("Picture", Compatibility.TSL, ExistsIn.BASE)] public UInt16 Picture;
+        [GFF("XP", Compatibility.KotOR, ExistsIn.BASE)] public UInt32 XP;
+        [GFF("Picture", Compatibility.KotOR, ExistsIn.BASE)] public UInt16 Picture;
     
         // List definitions
         [GFF("EntryList", Compatibility.BOTH, ExistsIn.BASE)] public List<AEntry> EntryList = new List<AEntry>();

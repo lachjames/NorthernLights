@@ -64,13 +64,13 @@ using AuroraEngine;
     [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
     [GFF("IsComputer", Compatibility.BOTH, ExistsIn.BASE)] public Byte IsComputer;
     [GFF("Portrait", Compatibility.BOTH, ExistsIn.BASE)] public String Portrait;
-    [GFF("NotBlastable", Compatibility.KotOR, ExistsIn.BASE)] public Byte NotBlastable;
-    [GFF("OpenLockDiff", Compatibility.KotOR, ExistsIn.BASE)] public Byte OpenLockDiff;
-    [GFF("OpenLockDiffMod", Compatibility.KotOR, ExistsIn.BASE)] public Char OpenLockDiffMod;
-    [GFF("OnFailToOpen", Compatibility.KotOR, ExistsIn.BASE)] public String OnFailToOpen;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("NotBlastable", Compatibility.TSL, ExistsIn.BASE)] public Byte NotBlastable;
+    [GFF("OpenLockDiff", Compatibility.TSL, ExistsIn.BASE)] public Byte OpenLockDiff;
+    [GFF("OpenLockDiffMod", Compatibility.TSL, ExistsIn.BASE)] public Char OpenLockDiffMod;
+    [GFF("OnFailToOpen", Compatibility.TSL, ExistsIn.BASE)] public String OnFailToOpen;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
     [GFF("ItemList", Compatibility.BOTH, ExistsIn.BASE)] public List<AItem> ItemList = new List<AItem>();
@@ -82,8 +82,8 @@ using AuroraEngine;
         [GFF("InventoryRes", Compatibility.BOTH, ExistsIn.BASE)] public String InventoryRes;
         [GFF("Repos_PosX", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_PosX;
         [GFF("Repos_Posy", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_Posy;
-        [GFF("Repos_PosY", Compatibility.KotOR, ExistsIn.BASE)] public UInt16 Repos_PosY;
-        [GFF("Dropable", Compatibility.KotOR, ExistsIn.BASE)] public Byte Dropable;
+        [GFF("Repos_PosY", Compatibility.TSL, ExistsIn.BASE)] public UInt16 Repos_PosY;
+        [GFF("Dropable", Compatibility.TSL, ExistsIn.BASE)] public Byte Dropable;
         
     }
     

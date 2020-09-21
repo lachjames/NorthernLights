@@ -31,9 +31,9 @@ using AuroraEngine;
     [GFF("VolumeVrtn", Compatibility.BOTH, ExistsIn.BASE)] public Byte VolumeVrtn;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
     [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
     [GFF("Sounds", Compatibility.BOTH, ExistsIn.BASE)] public List<ASounds> Sounds = new List<ASounds>();

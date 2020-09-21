@@ -40,6 +40,15 @@ public class AreaManager : MonoBehaviour
     {
         AuroraGIT git = new AuroraGIT();
 
+        // Use field metadata from the Metadata Editor
+        git.UseTemplates = AuroraEngine.Resources.data.module.git.UseTemplates;
+        git.KTGameVerIndex = AuroraEngine.Resources.data.module.git.KTGameVerIndex;
+        git.KTInfoDate = AuroraEngine.Resources.data.module.git.KTInfoDate;
+        git.KTInfoVersion = AuroraEngine.Resources.data.module.git.KTInfoVersion;
+
+        // Use the AreaProperties from the Metadata Editor
+        git.AreaProperties = AuroraEngine.Resources.data.module.git.AreaProperties;
+
         foreach (Transform parent in transform)
         {
             // Ignore the models parent

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.Android;
 
 public class KModuleEditor : EditorWindow
 {
@@ -587,6 +589,30 @@ public class KModuleEditor : EditorWindow
                 UnityEngine.Windows.File.Delete(tmpFile);
             }
         }
+
+        // Modify the tag at the start of the file
+        if (args == null || args == "")
+        {
+            return;
+        }
+
+        string toWrite = "ERF V1.0";
+        if (args == "--mod")
+        {
+            // WRITE "MOD v1.0" as the first 8 bytes of the array
+            toWrite = "MOD V1.0";
+        }
+
+        // Write to the array
+        using (FileStream stream = new FileStream(folder + name, FileMode.Open))
+        using (BinaryWriter binary = new BinaryWriter(stream))
+        {
+            binary.Seek(0, SeekOrigin.Begin);
+            foreach (byte b in Encoding.ASCII.GetBytes(toWrite))
+            {
+                binary.Write(b);
+            }
+        }
     }
 
     public static void UnpackArchive(string folder, string name, string type)
@@ -602,7 +628,7 @@ public class KModuleEditor : EditorWindow
     {
         // Create an XML file for the GFF template
         string xmlpath = folder + "tmp.xml";
-        string xml = template.ToXML();
+        string xml = template.ToXML(ext.ToUpper());
         Debug.Log(xml);
         File.WriteAllText(xmlpath, xml);
 
@@ -613,7 +639,7 @@ public class KModuleEditor : EditorWindow
         AuroraEngine.Resources.RunXoreosTools(
             xmlpath + " " + fullpath,
             "xml2gff",
-            "--kotor"
+            AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2"
         );
 
         // Delete the temporary XML file

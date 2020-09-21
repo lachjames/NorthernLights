@@ -1,0 +1,112 @@
+.Dd October 20, 2019
+.Dt ERF 1
+.Os
+.Sh NAME
+.Nm erf
+.Nd BioWare ERF (.erf, .mod, .nwm, .sav) archive packer
+.Sh SYNOPSIS
+.Nm erf
+.Op Ar options
+.Ar output_archive
+.Op Ar
+.Sh DESCRIPTION
+.Nm
+packs files together into a BioWare ERF archive, found in many
+BioWare Games as files with the extension .erf, .mod, .nwm or .sav.
+Moreover, in some games, a .rim file might be an ERF instead of a RIM.
+.Pp
+There's several different versions of ERFs.
+This tool supports version V1.0, as used by
+.Em Neverwinter Nights ,
+.Em Knights of the Old Republic ,
+.Em Knights of the Old Republic II ,
+.Em Jade Empire
+and
+.Em The Witcher
+and version V2.0 as used by
+.Em Dragon Age: Origins
+and version V2.2 as used by
+.Em Dragon Age: Origins
+and
+.Em Dragon Age 2
+.Pp
+Unsupported Features:
+.Bl -bullet -compact
+.It
+Generation of archives with stripped filenames.
+.It
+Generation of Blowfish-encrypted archives.
+.It
+Generation of XOR-encrypted archives.
+.It
+Setting of a description for archives.
+.It
+Usage of paths in archives.
+.El
+.Sh OPTIONS
+.Bl -tag -width xxxx -compact
+.It Fl h
+.It Fl Fl help
+Show a help text and exit.
+.It Fl Fl version
+Show version information and exit.
+.It Fl Fl erf
+Set archive ID to ERF.
+.It Fl Fl mod
+Set archive ID to MOD.
+.It Fl Fl hak
+Set archive ID to HAK.
+.It Fl Fl sav
+Set archive ID to SAV.
+.It Fl Fl v10
+Generate a V1.0 ERF file
+.It Fl Fl v20
+Generate a V2.0 ERF file
+.It Fl Fl v22
+Generate a V2.2 ERF file
+.It Fl Fl bzlib
+Compress using BioWare zlib method
+.It Fl Fl zlib
+Compress using headerless zlib method
+.It Fl Fl jade
+Unalias file types according to
+.Em Jade Empire
+rules.
+.Pp
+.Em Jade Empire
+reuses a few file extension IDs differently than other BioWare games.
+To correctly write Jade Empire ERF archives, use this flag.
+.It Ar output_archive
+The ERF archive to be written.
+.It Ar files
+One or more files to pack together.
+.El
+.Sh EXAMPLES
+Pack some files together into an ERF archive:
+.Pp
+.Dl $ erf archive.erf file1.dat file2.dat file3.dat
+.Pp
+Pack some files together into a SAV archive:
+.Pp
+.Dl $ erf --sav archive.sav file1.dat file2.dat file3.dat
+.Pp
+Pack some files together into a V2.0 archive:
+.Pp
+.Dl $ erf --v20 archive.sav file1.dat file2.dat file3.dat
+.Pp
+Pack some files together into a V2.2 archive with headerless zlib compression:
+.Pp
+.Dl $ erf --v22 --zlib archive.sav file1.dat file2.dat file3.dat
+.Sh SEE ALSO
+.Xr unerf 1 ,
+.Xr unherf 1
+.Pp
+More information about the xoreos project can be found on
+.Lk https://xoreos.org/ "its website"
+.Ns .
+.Sh AUTHORS
+This program is part of the xoreos-tools package, which in turn is
+part of the xoreos project, and was written by the xoreos team.
+Please see the
+.Pa AUTHORS
+file for details.

@@ -195,10 +195,10 @@ using AuroraEngine;
 
                 // Load the SAV (in ERF format)
                 LoadGFFsFromERF(subFolder + "\\SAVEGAME.sav", defs, compat, ExistsIn.SAVE);
-                if (i >= 2)
-                {
-                    break;
-                }
+                //if (i >= 2)
+                //{
+                //    break;
+                //}
                 //break;
             }
         }
@@ -679,7 +679,7 @@ using AuroraEngine;
 
                 ClassDefinition structDef = new ClassDefinition();
                 structDef.CreateDefinition(k1BaseClass, tslBaseClass, k1SaveClass, tslSaveClass);
-                Lists[structName] = (structDef, c, e);
+                Structs[structName] = (structDef, c, e);
             }
         }
 

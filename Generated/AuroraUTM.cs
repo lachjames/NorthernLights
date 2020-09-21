@@ -16,9 +16,9 @@ using AuroraEngine;
     [GFF("BuySellFlag", Compatibility.BOTH, ExistsIn.BASE)] public Byte BuySellFlag;
     [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte ID;
     [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
     [GFF("ItemList", Compatibility.BOTH, ExistsIn.BASE)] public List<AItem> ItemList = new List<AItem>();
@@ -31,8 +31,8 @@ using AuroraEngine;
         [GFF("Repos_PosX", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_PosX;
         [GFF("Repos_Posy", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_Posy;
         [GFF("Infinite", Compatibility.BOTH, ExistsIn.BASE)] public Byte Infinite;
-        [GFF("Repos_PosY", Compatibility.KotOR, ExistsIn.BASE)] public UInt16 Repos_PosY;
-        [GFF("Dropable", Compatibility.KotOR, ExistsIn.BASE)] public Byte Dropable;
+        [GFF("Repos_PosY", Compatibility.TSL, ExistsIn.BASE)] public UInt16 Repos_PosY;
+        [GFF("Dropable", Compatibility.TSL, ExistsIn.BASE)] public Byte Dropable;
         
     }
     

@@ -19,13 +19,16 @@ using AuroraEngine;
     [GFF("PT_TUT_WND_SHOWN", Compatibility.BOTH, ExistsIn.SAVE)] public Byte[] PT_TUT_WND_SHOWN;
     [GFF("PT_LAST_GUI_PNL", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 PT_LAST_GUI_PNL;
     [GFF("JNL_SortOrder", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 JNL_SortOrder;
-    [GFF("PT_PCNAME", Compatibility.KotOR, ExistsIn.SAVE)] public CExoString PT_PCNAME;
-    [GFF("PT_ITEM_COMPONEN", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_ITEM_COMPONEN;
-    [GFF("PT_ITEM_CHEMICAL", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_ITEM_CHEMICAL;
-    [GFF("PT_SWOOP1", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_SWOOP1;
-    [GFF("PT_SWOOP2", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_SWOOP2;
-    [GFF("PT_SWOOP3", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_SWOOP3;
-    [GFF("PT_NUM_PUPPETS", Compatibility.KotOR, ExistsIn.SAVE)] public Byte PT_NUM_PUPPETS;
+    [GFF("PT_PCNAME", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_PCNAME;
+    [GFF("PT_ITEM_COMPONEN", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_ITEM_COMPONEN;
+    [GFF("PT_ITEM_CHEMICAL", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_ITEM_CHEMICAL;
+    [GFF("PT_SWOOP1", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_SWOOP1;
+    [GFF("PT_SWOOP2", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_SWOOP2;
+    [GFF("PT_SWOOP3", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_SWOOP3;
+    [GFF("PT_NUM_PUPPETS", Compatibility.TSL, ExistsIn.SAVE)] public Byte PT_NUM_PUPPETS;
+
+    // Struct definitions
+    [GFF("GlxyMap", Compatibility.BOTH, ExistsIn.SAVE)] public AGlxyMap GlxyMap = new AGlxyMap();
 
     // List definitions
     [GFF("PT_AVAIL_NPCS", Compatibility.BOTH, ExistsIn.SAVE)] public List<APT_AVAIL_NPCS> PT_AVAIL_NPCS = new List<APT_AVAIL_NPCS>();
@@ -36,13 +39,21 @@ using AuroraEngine;
     [GFF("PT_COST_MULT_LIS", Compatibility.BOTH, ExistsIn.SAVE)] public List<APT_COST_MULT_LIS> PT_COST_MULT_LIS = new List<APT_COST_MULT_LIS>();
     [GFF("JNL_Entries", Compatibility.BOTH, ExistsIn.SAVE)] public List<AJNL_Entries> JNL_Entries = new List<AJNL_Entries>();
     [GFF("PT_MEMBERS", Compatibility.BOTH, ExistsIn.SAVE)] public List<APT_MEMBERS> PT_MEMBERS = new List<APT_MEMBERS>();
-    [GFF("PT_AVAIL_PUPS", Compatibility.KotOR, ExistsIn.SAVE)] public List<APT_AVAIL_PUPS> PT_AVAIL_PUPS = new List<APT_AVAIL_PUPS>();
-    [GFF("PT_INFLUENCE", Compatibility.KotOR, ExistsIn.SAVE)] public List<APT_INFLUENCE> PT_INFLUENCE = new List<APT_INFLUENCE>();
-    [GFF("PT_COM_MSG_LIST", Compatibility.KotOR, ExistsIn.SAVE)] public List<APT_COM_MSG_LIST> PT_COM_MSG_LIST = new List<APT_COM_MSG_LIST>();
-    [GFF("PT_PUPPETS", Compatibility.KotOR, ExistsIn.SAVE)] public List<APT_PUPPETS> PT_PUPPETS = new List<APT_PUPPETS>();
-    [GFF("GlxyMap", Compatibility.BOTH, ExistsIn.SAVE)] public List<AGlxyMap> GlxyMap = new List<AGlxyMap>();
+    [GFF("PT_AVAIL_PUPS", Compatibility.TSL, ExistsIn.SAVE)] public List<APT_AVAIL_PUPS> PT_AVAIL_PUPS = new List<APT_AVAIL_PUPS>();
+    [GFF("PT_INFLUENCE", Compatibility.TSL, ExistsIn.SAVE)] public List<APT_INFLUENCE> PT_INFLUENCE = new List<APT_INFLUENCE>();
+    [GFF("PT_COM_MSG_LIST", Compatibility.TSL, ExistsIn.SAVE)] public List<APT_COM_MSG_LIST> PT_COM_MSG_LIST = new List<APT_COM_MSG_LIST>();
+    [GFF("PT_PUPPETS", Compatibility.TSL, ExistsIn.SAVE)] public List<APT_PUPPETS> PT_PUPPETS = new List<APT_PUPPETS>();
 
     // Class definitions    
+    [Serializable]public class AGlxyMap : AuroraStruct {
+        // Field definitions
+        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+        [GFF("GlxyMapNumPnts", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 GlxyMapNumPnts;
+        [GFF("GlxyMapPlntMsk", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 GlxyMapPlntMsk;
+        [GFF("GlxyMapSelPnt", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 GlxyMapSelPnt;
+        
+    }
+    
     [Serializable]public class APT_AVAIL_NPCS : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
@@ -62,8 +73,8 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
         [GFF("PT_PAZSIDECARD", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 PT_PAZSIDECARD;
-        [GFF("FORFEITVIOL", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 FORFEITVIOL;
-        [GFF("FORFEITCONDS", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 FORFEITCONDS;
+        [GFF("FORFEITVIOL", Compatibility.TSL, ExistsIn.SAVE)] public Int32 FORFEITVIOL;
+        [GFF("FORFEITCONDS", Compatibility.TSL, ExistsIn.SAVE)] public Int32 FORFEITCONDS;
         
     }
     
@@ -88,29 +99,29 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
         [GFF("PT_COST_MULT_VAL", Compatibility.BOTH, ExistsIn.SAVE)] public Single PT_COST_MULT_VAL;
-        [GFF("PT_DISABLEMAP", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 PT_DISABLEMAP;
-        [GFF("PT_DISABLEREGEN", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 PT_DISABLEREGEN;
-        [GFF("DISPLAYSPENDING", Compatibility.KotOR, ExistsIn.SAVE)] public Byte DISPLAYSPENDING;
-        [GFF("ITEMRECEIVED", Compatibility.KotOR, ExistsIn.SAVE)] public Byte ITEMRECEIVED;
-        [GFF("ITEMLOST", Compatibility.KotOR, ExistsIn.SAVE)] public Byte ITEMLOST;
-        [GFF("JOURNAL", Compatibility.KotOR, ExistsIn.SAVE)] public Byte JOURNAL;
-        [GFF("LIGHTSHIFT", Compatibility.KotOR, ExistsIn.SAVE)] public Byte LIGHTSHIFT;
-        [GFF("DARKSHIFT", Compatibility.KotOR, ExistsIn.SAVE)] public Byte DARKSHIFT;
-        [GFF("CREDITS", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 CREDITS;
-        [GFF("CREDITSNET", Compatibility.KotOR, ExistsIn.SAVE)] public Byte CREDITSNET;
-        [GFF("XP", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 XP;
-        [GFF("STEALTHXP", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 STEALTHXP;
-        [GFF("SOUNDPENDING", Compatibility.KotOR, ExistsIn.SAVE)] public Byte SOUNDPENDING;
-        [GFF("LEVELUPSOUND", Compatibility.KotOR, ExistsIn.SAVE)] public Byte LEVELUPSOUND;
-        [GFF("NEWQUESTSOUND", Compatibility.KotOR, ExistsIn.SAVE)] public Byte NEWQUESTSOUND;
-        [GFF("COMPLETESOUND", Compatibility.KotOR, ExistsIn.SAVE)] public Byte COMPLETESOUND;
-        [GFF("DARKALIGNSOUND", Compatibility.KotOR, ExistsIn.SAVE)] public Byte DARKALIGNSOUND;
-        [GFF("LIGHTALIGNSOUND", Compatibility.KotOR, ExistsIn.SAVE)] public Byte LIGHTALIGNSOUND;
-        [GFF("SUPPRESSED", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 SUPPRESSED;
-        [GFF("INFGAIN", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 INFGAIN;
-        [GFF("INFLOST", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 INFLOST;
-        [GFF("MAXFPGAIN", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 MAXFPGAIN;
-        [GFF("MAXFPLOST", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 MAXFPLOST;
+        [GFF("PT_DISABLEMAP", Compatibility.TSL, ExistsIn.SAVE)] public Int32 PT_DISABLEMAP;
+        [GFF("PT_DISABLEREGEN", Compatibility.TSL, ExistsIn.SAVE)] public Int32 PT_DISABLEREGEN;
+        [GFF("DISPLAYSPENDING", Compatibility.TSL, ExistsIn.SAVE)] public Byte DISPLAYSPENDING;
+        [GFF("ITEMRECEIVED", Compatibility.TSL, ExistsIn.SAVE)] public Byte ITEMRECEIVED;
+        [GFF("ITEMLOST", Compatibility.TSL, ExistsIn.SAVE)] public Byte ITEMLOST;
+        [GFF("JOURNAL", Compatibility.TSL, ExistsIn.SAVE)] public Byte JOURNAL;
+        [GFF("LIGHTSHIFT", Compatibility.TSL, ExistsIn.SAVE)] public Byte LIGHTSHIFT;
+        [GFF("DARKSHIFT", Compatibility.TSL, ExistsIn.SAVE)] public Byte DARKSHIFT;
+        [GFF("CREDITS", Compatibility.TSL, ExistsIn.SAVE)] public Int32 CREDITS;
+        [GFF("CREDITSNET", Compatibility.TSL, ExistsIn.SAVE)] public Byte CREDITSNET;
+        [GFF("XP", Compatibility.TSL, ExistsIn.SAVE)] public Int32 XP;
+        [GFF("STEALTHXP", Compatibility.TSL, ExistsIn.SAVE)] public Int32 STEALTHXP;
+        [GFF("SOUNDPENDING", Compatibility.TSL, ExistsIn.SAVE)] public Byte SOUNDPENDING;
+        [GFF("LEVELUPSOUND", Compatibility.TSL, ExistsIn.SAVE)] public Byte LEVELUPSOUND;
+        [GFF("NEWQUESTSOUND", Compatibility.TSL, ExistsIn.SAVE)] public Byte NEWQUESTSOUND;
+        [GFF("COMPLETESOUND", Compatibility.TSL, ExistsIn.SAVE)] public Byte COMPLETESOUND;
+        [GFF("DARKALIGNSOUND", Compatibility.TSL, ExistsIn.SAVE)] public Byte DARKALIGNSOUND;
+        [GFF("LIGHTALIGNSOUND", Compatibility.TSL, ExistsIn.SAVE)] public Byte LIGHTALIGNSOUND;
+        [GFF("SUPPRESSED", Compatibility.TSL, ExistsIn.SAVE)] public Int32 SUPPRESSED;
+        [GFF("INFGAIN", Compatibility.TSL, ExistsIn.SAVE)] public Int32 INFGAIN;
+        [GFF("INFLOST", Compatibility.TSL, ExistsIn.SAVE)] public Int32 INFLOST;
+        [GFF("MAXFPGAIN", Compatibility.TSL, ExistsIn.SAVE)] public Int32 MAXFPGAIN;
+        [GFF("MAXFPLOST", Compatibility.TSL, ExistsIn.SAVE)] public Int32 MAXFPLOST;
         
     }
     
@@ -134,41 +145,32 @@ using AuroraEngine;
     
     [Serializable]public class APT_AVAIL_PUPS : AuroraStruct {
         // Field definitions
-        [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_PUP_AVAIL", Compatibility.KotOR, ExistsIn.SAVE)] public Byte PT_PUP_AVAIL;
-        [GFF("PT_PUP_SELECT", Compatibility.KotOR, ExistsIn.SAVE)] public Byte PT_PUP_SELECT;
+        [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+        [GFF("PT_PUP_AVAIL", Compatibility.TSL, ExistsIn.SAVE)] public Byte PT_PUP_AVAIL;
+        [GFF("PT_PUP_SELECT", Compatibility.TSL, ExistsIn.SAVE)] public Byte PT_PUP_SELECT;
         
     }
     
     [Serializable]public class APT_INFLUENCE : AuroraStruct {
         // Field definitions
-        [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_NPC_INFLUENCE", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 PT_NPC_INFLUENCE;
+        [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+        [GFF("PT_NPC_INFLUENCE", Compatibility.TSL, ExistsIn.SAVE)] public Int32 PT_NPC_INFLUENCE;
         
     }
     
     [Serializable]public class APT_COM_MSG_LIST : AuroraStruct {
         // Field definitions
-        [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_COM_MSG_MSG", Compatibility.KotOR, ExistsIn.SAVE)] public CExoString PT_COM_MSG_MSG;
-        [GFF("PT_COM_MSG_TYPE", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 PT_COM_MSG_TYPE;
-        [GFF("PT_COM_MSG_COOR", Compatibility.KotOR, ExistsIn.SAVE)] public Byte PT_COM_MSG_COOR;
+        [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+        [GFF("PT_COM_MSG_MSG", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_COM_MSG_MSG;
+        [GFF("PT_COM_MSG_TYPE", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_COM_MSG_TYPE;
+        [GFF("PT_COM_MSG_COOR", Compatibility.TSL, ExistsIn.SAVE)] public Byte PT_COM_MSG_COOR;
         
     }
     
     [Serializable]public class APT_PUPPETS : AuroraStruct {
         // Field definitions
-        [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_PUPPET_ID", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 PT_PUPPET_ID;
-        
-    }
-    
-    [Serializable]public class AGlxyMap : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("GlxyMapNumPnts", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 GlxyMapNumPnts;
-        [GFF("GlxyMapPlntMsk", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 GlxyMapPlntMsk;
-        [GFF("GlxyMapSelPnt", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 GlxyMapSelPnt;
+        [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+        [GFF("PT_PUPPET_ID", Compatibility.TSL, ExistsIn.SAVE)] public Int32 PT_PUPPET_ID;
         
     }
     

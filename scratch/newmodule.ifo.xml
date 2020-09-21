@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<gff3 type="IFO">
+  <struct id="4294967295">
+    <byte label="Mod_IsSaveGame">0</byte>
+    <resref label="Mod_Entry_Area">001ebo</resref>
+    <float label="Mod_Entry_X">54.650848</float>
+    <float label="Mod_Entry_Y">79.620392</float>
+    <float label="Mod_Entry_Z">1.800000</float>
+    <float label="Mod_Entry_Dir_X">-0.555571</float>
+    <float label="Mod_Entry_Dir_Y">-0.831469</float>
+    <byte label="Mod_DawnHour">6</byte>
+    <byte label="Mod_DuskHour">18</byte>
+    <byte label="Mod_MinPerHour">2</byte>
+    <byte label="Mod_StartMonth">6</byte>
+    <byte label="Mod_StartDay">1</byte>
+    <byte label="Mod_StartHour">13</byte>
+    <byte label="Mod_XPScale">10</byte>
+    <resref label="Mod_OnHeartbeat">k_activate_med</resref>
+    <resref label="Mod_OnModLoad"></resref>
+    <resref label="Mod_OnModStart"></resref>
+    <resref label="Mod_OnClientEntr"></resref>
+    <resref label="Mod_OnClientLeav"></resref>
+    <resref label="Mod_OnActvtItem"></resref>
+    <resref label="Mod_OnAcquirItem">k_getitem</resref>
+    <resref label="Mod_OnUsrDefined"></resref>
+    <resref label="Mod_OnUnAqreItem">a_no_mines</resref>
+    <resref label="Mod_OnPlrDeath"></resref>
+    <resref label="Mod_OnPlrDying"></resref>
+    <resref label="Mod_OnPlrLvlUp"></resref>
+    <resref label="Mod_OnSpawnBtnDn"></resref>
+    <resref label="Mod_OnPlrRest"></resref>
+    <resref label="Mod_StartMovie"></resref>
+    <data label="Mod_ID">Xg3lnrt0cR0P8H5dCSpPyQ==</data>
+    <sint32 label="Mod_Creator_ID">2</sint32>
+    <uint32 label="Mod_Version">3</uint32>
+    <exostring label="Mod_VO_ID">001</exostring>
+    <uint16 label="Expansion_Pack">0</uint16>
+    <locstring label="Mod_Name" strref="75000"/>
+    <exostring label="Mod_Tag">ImTraskUlgoensignwiththeRepublic</exostring>
+    <exostring label="Mod_Hak"></exostring>
+    <locstring label="Mod_Description" strref="4294967295"/>
+    <uint32 label="Mod_StartYear">1372</uint32>
+    <exostring label="KTInfoVersion"></exostring>
+    <exostring label="KTInfoDate"></exostring>
+    <sint32 label="KTGameVerIndex">0</sint32>
+    <list label="Mod_Area_list">
+      <struct id="6">
+        <resref label="Area_Name">001ebo</resref>
+      </struct>
+    </list>
+  </struct>
+</gff3>

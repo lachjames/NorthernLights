@@ -70,30 +70,30 @@ using AuroraEngine;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
     [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
     [GFF("NotReorienting", Compatibility.BOTH, ExistsIn.BOTH)] public Byte NotReorienting;
-    [GFF("Portrait", Compatibility.TSL, ExistsIn.BASE)] public String Portrait;
-    [GFF("SaveReflex", Compatibility.TSL, ExistsIn.BASE)] public Byte SaveReflex;
+    [GFF("Portrait", Compatibility.KotOR, ExistsIn.BASE)] public String Portrait;
+    [GFF("SaveReflex", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveReflex;
     [GFF("Wings", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Wings;
-    [GFF("MoraleRecovery", Compatibility.TSL, ExistsIn.BASE)] public Byte MoraleRecovery;
-    [GFF("Morale", Compatibility.TSL, ExistsIn.BASE)] public Byte Morale;
-    [GFF("MoraleBreakpoint", Compatibility.TSL, ExistsIn.BASE)] public Byte MoraleBreakpoint;
+    [GFF("MoraleRecovery", Compatibility.KotOR, ExistsIn.BASE)] public Byte MoraleRecovery;
+    [GFF("Morale", Compatibility.KotOR, ExistsIn.BASE)] public Byte Morale;
+    [GFF("MoraleBreakpoint", Compatibility.KotOR, ExistsIn.BASE)] public Byte MoraleBreakpoint;
     [GFF("Tail", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Tail;
-    [GFF("SaveWill", Compatibility.TSL, ExistsIn.BASE)] public Byte SaveWill;
-    [GFF("SaveFortitude", Compatibility.TSL, ExistsIn.BASE)] public Byte SaveFortitude;
-    [GFF("SubRace", Compatibility.TSL, ExistsIn.BASE)] public CExoString SubRace;
-    [GFF("CRAdjust", Compatibility.TSL, ExistsIn.BASE)] public Int32 CRAdjust;
-    [GFF("SoundSet", Compatibility.TSL, ExistsIn.BASE)] public UInt32 SoundSet;
+    [GFF("SaveWill", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveWill;
+    [GFF("SaveFortitude", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveFortitude;
+    [GFF("SubRace", Compatibility.KotOR, ExistsIn.BASE)] public CExoString SubRace;
+    [GFF("CRAdjust", Compatibility.KotOR, ExistsIn.BASE)] public Int32 CRAdjust;
+    [GFF("SoundSet", Compatibility.KotOR, ExistsIn.BASE)] public UInt32 SoundSet;
     [GFF("Appearance_Head", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Appearance_Head;
-    [GFF("RefBonus", Compatibility.TSL, ExistsIn.BASE)] public Int16 RefBonus;
-    [GFF("WillBonus", Compatibility.TSL, ExistsIn.BASE)] public Int16 WillBonus;
-    [GFF("FortBonus", Compatibility.TSL, ExistsIn.BASE)] public Int16 FortBonus;
-    [GFF("BlindSpot", Compatibility.KotOR, ExistsIn.BOTH)] public Single BlindSpot;
-    [GFF("Hologram", Compatibility.KotOR, ExistsIn.BOTH)] public Byte Hologram;
-    [GFF("IgnoreCrePath", Compatibility.KotOR, ExistsIn.BOTH)] public Byte IgnoreCrePath;
-    [GFF("MultiplierSet", Compatibility.KotOR, ExistsIn.BOTH)] public Byte MultiplierSet;
-    [GFF("WillNotRender", Compatibility.KotOR, ExistsIn.BOTH)] public Byte WillNotRender;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("RefBonus", Compatibility.KotOR, ExistsIn.BASE)] public Int16 RefBonus;
+    [GFF("WillBonus", Compatibility.KotOR, ExistsIn.BASE)] public Int16 WillBonus;
+    [GFF("FortBonus", Compatibility.KotOR, ExistsIn.BASE)] public Int16 FortBonus;
+    [GFF("BlindSpot", Compatibility.TSL, ExistsIn.BOTH)] public Single BlindSpot;
+    [GFF("Hologram", Compatibility.TSL, ExistsIn.BOTH)] public Byte Hologram;
+    [GFF("IgnoreCrePath", Compatibility.TSL, ExistsIn.BOTH)] public Byte IgnoreCrePath;
+    [GFF("MultiplierSet", Compatibility.TSL, ExistsIn.BOTH)] public Byte MultiplierSet;
+    [GFF("WillNotRender", Compatibility.TSL, ExistsIn.BOTH)] public Byte WillNotRender;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
     [GFF("Age", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 Age;
     [GFF("StartingPackage", Compatibility.BOTH, ExistsIn.SAVE)] public Byte StartingPackage;
     [GFF("MClassLevUpIn", Compatibility.BOTH, ExistsIn.SAVE)] public Byte MClassLevUpIn;
@@ -134,18 +134,24 @@ using AuroraEngine;
     [GFF("ZOrientation", Compatibility.BOTH, ExistsIn.SAVE)] public Single ZOrientation;
     [GFF("JoiningXP", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 JoiningXP;
     [GFF("Commandable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Commandable;
-    [GFF("PM_Appearance", Compatibility.TSL, ExistsIn.SAVE)] public UInt16 PM_Appearance;
-    [GFF("ItemComponent", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 ItemComponent;
-    [GFF("Chemicals", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 Chemicals;
-    [GFF("PCLevelAtSpawn", Compatibility.KotOR, ExistsIn.SAVE)] public Byte PCLevelAtSpawn;
-    [GFF("Confused", Compatibility.KotOR, ExistsIn.SAVE)] public Byte Confused;
-    [GFF("BonusForcePoints", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 BonusForcePoints;
-    [GFF("AssignedPup", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 AssignedPup;
-    [GFF("PlayerCreated", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 PlayerCreated;
-    [GFF("BaseCNPCAlignmen", Compatibility.KotOR, ExistsIn.SAVE)] public Char BaseCNPCAlignmen;
-    [GFF("FuryDamageBonus", Compatibility.KotOR, ExistsIn.SAVE)] public Char FuryDamageBonus;
-    [GFF("CurrentForm", Compatibility.KotOR, ExistsIn.SAVE)] public UInt32 CurrentForm;
-    [GFF("ForceAlwaysUpdat", Compatibility.KotOR, ExistsIn.SAVE)] public Byte ForceAlwaysUpdat;
+    [GFF("PM_Appearance", Compatibility.KotOR, ExistsIn.SAVE)] public UInt16 PM_Appearance;
+    [GFF("ItemComponent", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 ItemComponent;
+    [GFF("Chemicals", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 Chemicals;
+    [GFF("PCLevelAtSpawn", Compatibility.TSL, ExistsIn.SAVE)] public Byte PCLevelAtSpawn;
+    [GFF("Confused", Compatibility.TSL, ExistsIn.SAVE)] public Byte Confused;
+    [GFF("BonusForcePoints", Compatibility.TSL, ExistsIn.SAVE)] public Int32 BonusForcePoints;
+    [GFF("AssignedPup", Compatibility.TSL, ExistsIn.SAVE)] public Int32 AssignedPup;
+    [GFF("PlayerCreated", Compatibility.TSL, ExistsIn.SAVE)] public Int32 PlayerCreated;
+    [GFF("BaseCNPCAlignmen", Compatibility.TSL, ExistsIn.SAVE)] public Char BaseCNPCAlignmen;
+    [GFF("FuryDamageBonus", Compatibility.TSL, ExistsIn.SAVE)] public Char FuryDamageBonus;
+    [GFF("CurrentForm", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 CurrentForm;
+    [GFF("ForceAlwaysUpdat", Compatibility.TSL, ExistsIn.SAVE)] public Byte ForceAlwaysUpdat;
+
+    // Struct definitions
+    [GFF("CombatInfo", Compatibility.BOTH, ExistsIn.SAVE)] public ACombatInfo CombatInfo = new ACombatInfo();
+    [GFF("CombatRoundData", Compatibility.BOTH, ExistsIn.SAVE)] public ACombatRoundData CombatRoundData = new ACombatRoundData();
+    [GFF("FollowInfo", Compatibility.BOTH, ExistsIn.SAVE)] public AFollowInfo FollowInfo = new AFollowInfo();
+    [GFF("SWVarTable", Compatibility.BOTH, ExistsIn.SAVE)] public ASWVarTable SWVarTable = new ASWVarTable();
 
     // List definitions
     [GFF("SkillList", Compatibility.BOTH, ExistsIn.BOTH)] public List<ASkill> SkillList = new List<ASkill>();
@@ -159,12 +165,107 @@ using AuroraEngine;
     [GFF("EffectList", Compatibility.BOTH, ExistsIn.SAVE)] public List<AEffect> EffectList = new List<AEffect>();
     [GFF("ActionList", Compatibility.BOTH, ExistsIn.SAVE)] public List<AAction> ActionList = new List<AAction>();
     [GFF("LvlStatList", Compatibility.BOTH, ExistsIn.SAVE)] public List<ALvlStat> LvlStatList = new List<ALvlStat>();
-    [GFF("CombatInfo", Compatibility.BOTH, ExistsIn.SAVE)] public List<ACombatInfo> CombatInfo = new List<ACombatInfo>();
-    [GFF("CombatRoundData", Compatibility.BOTH, ExistsIn.SAVE)] public List<ACombatRoundData> CombatRoundData = new List<ACombatRoundData>();
-    [GFF("FollowInfo", Compatibility.BOTH, ExistsIn.SAVE)] public List<AFollowInfo> FollowInfo = new List<AFollowInfo>();
-    [GFF("SWVarTable", Compatibility.BOTH, ExistsIn.SAVE)] public List<ASWVarTable> SWVarTable = new List<ASWVarTable>();
 
     // Class definitions    
+    [Serializable]public class ACombatInfo : AuroraStruct {
+        // Field definitions
+        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+        [GFF("NumAttacks", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NumAttacks;
+        [GFF("OnHandAttackMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OnHandAttackMod;
+        [GFF("OnHandDamageMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OnHandDamageMod;
+        [GFF("OffHandAttackMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OffHandAttackMod;
+        [GFF("OffHandDamageMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OffHandDamageMod;
+        [GFF("ForceResistance", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ForceResistance;
+        [GFF("ArcaneSpellFail", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ArcaneSpellFail;
+        [GFF("ArmorCheckPen", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ArmorCheckPen;
+        [GFF("UnarmedDamDice", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UnarmedDamDice;
+        [GFF("UnarmedDamDie", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UnarmedDamDie;
+        [GFF("OnHandCritRng", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OnHandCritRng;
+        [GFF("OnHandCritMult", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OnHandCritMult;
+        [GFF("OffHandWeaponEq", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandWeaponEq;
+        [GFF("OffHandCritRng", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandCritRng;
+        [GFF("OffHandCritMult", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandCritMult;
+        [GFF("LeftEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 LeftEquip;
+        [GFF("RightEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 RightEquip;
+        [GFF("LeftString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LeftString;
+        [GFF("RightString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString RightString;
+        [GFF("DamageDice", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDice;
+        [GFF("DamageDie", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDie;
+    
+        // List definitions
+        [GFF("AttackList", Compatibility.TSL, ExistsIn.SAVE)] public List<AAttack> AttackList = new List<AAttack>();
+        [GFF("DamageList", Compatibility.TSL, ExistsIn.SAVE)] public List<ADamage> DamageList = new List<ADamage>();
+    
+        // Class definitions    
+        [Serializable]public class AAttack : AuroraStruct {
+            // Field definitions
+            [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+            [GFF("Modifier", Compatibility.TSL, ExistsIn.SAVE)] public Char Modifier;
+            [GFF("WeaponWield", Compatibility.TSL, ExistsIn.SAVE)] public Byte WeaponWield;
+            [GFF("VersusGoodEvil", Compatibility.TSL, ExistsIn.SAVE)] public Byte VersusGoodEvil;
+            [GFF("VersusRace", Compatibility.TSL, ExistsIn.SAVE)] public Byte VersusRace;
+            
+        }
+        
+        [Serializable]public class ADamage : AuroraStruct {
+            // Field definitions
+            [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
+            [GFF("Modifier", Compatibility.TSL, ExistsIn.SAVE)] public Char Modifier;
+            [GFF("ModifierType", Compatibility.TSL, ExistsIn.SAVE)] public Byte ModifierType;
+            [GFF("WeaponWield", Compatibility.TSL, ExistsIn.SAVE)] public Byte WeaponWield;
+            [GFF("VersusGoodEvil", Compatibility.TSL, ExistsIn.SAVE)] public Byte VersusGoodEvil;
+            [GFF("VersusRace", Compatibility.TSL, ExistsIn.SAVE)] public Byte VersusRace;
+            
+        }
+        
+    }
+    
+    [Serializable]public class ACombatRoundData : AuroraStruct {
+        // Field definitions
+        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+        
+    }
+    
+    [Serializable]public class AFollowInfo : AuroraStruct {
+        // Field definitions
+        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+        [GFF("FollowObject", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 FollowObject;
+        [GFF("FollowLocation", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 FollowLocation;
+        [GFF("LastLeaderPos", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 LastLeaderPos;
+        [GFF("LastFollowerPos", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 LastFollowerPos;
+        [GFF("MaxSpeed", Compatibility.BOTH, ExistsIn.SAVE)] public Single MaxSpeed;
+        [GFF("StickToPos", Compatibility.BOTH, ExistsIn.SAVE)] public Byte StickToPos;
+        [GFF("Result", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Result;
+        [GFF("TimeElapsed", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 TimeElapsed;
+        [GFF("InSafetyRange", Compatibility.BOTH, ExistsIn.SAVE)] public Byte InSafetyRange;
+        
+    }
+    
+    [Serializable]public class ASWVarTable : AuroraStruct {
+        // Field definitions
+        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+    
+        // List definitions
+        [GFF("BitArray", Compatibility.BOTH, ExistsIn.SAVE)] public List<ABitArray> BitArray = new List<ABitArray>();
+        [GFF("ByteArray", Compatibility.BOTH, ExistsIn.SAVE)] public List<AByteArray> ByteArray = new List<AByteArray>();
+    
+        // Class definitions    
+        [Serializable]public class ABitArray : AuroraStruct {
+            // Field definitions
+            [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+            [GFF("Variable", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Variable;
+            
+        }
+        
+        [Serializable]public class AByteArray : AuroraStruct {
+            // Field definitions
+            [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
+            [GFF("Variable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Variable;
+            
+        }
+        
+    }
+    
     [Serializable]public class ASkill : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BOTH)] public uint structid;
@@ -234,13 +335,13 @@ using AuroraEngine;
         [GFF("NonEquippable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NonEquippable;
         [GFF("NewItem", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NewItem;
         [GFF("DELETING", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DELETING;
-        [GFF("UpgradeLevel", Compatibility.KotOR, ExistsIn.SAVE)] public Byte UpgradeLevel;
-        [GFF("UpgradeSlot0", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
-        [GFF("UpgradeSlot1", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
-        [GFF("UpgradeSlot2", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
-        [GFF("UpgradeSlot3", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
-        [GFF("UpgradeSlot4", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
-        [GFF("UpgradeSlot5", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
+        [GFF("UpgradeLevel", Compatibility.TSL, ExistsIn.SAVE)] public Byte UpgradeLevel;
+        [GFF("UpgradeSlot0", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
+        [GFF("UpgradeSlot1", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
+        [GFF("UpgradeSlot2", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
+        [GFF("UpgradeSlot3", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
+        [GFF("UpgradeSlot4", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
+        [GFF("UpgradeSlot5", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
     
         // List definitions
         [GFF("PropertiesList", Compatibility.BOTH, ExistsIn.SAVE)] public List<AProperties> PropertiesList = new List<AProperties>();
@@ -259,7 +360,7 @@ using AuroraEngine;
             [GFF("UsesPerDay", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UsesPerDay;
             [GFF("Useable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Useable;
             [GFF("UpgradeType", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UpgradeType;
-            [GFF("PropUpgrade", Compatibility.KotOR, ExistsIn.SAVE)] public UInt16 PropUpgrade;
+            [GFF("PropUpgrade", Compatibility.TSL, ExistsIn.SAVE)] public UInt16 PropUpgrade;
             
         }
         
@@ -279,7 +380,7 @@ using AuroraEngine;
         [GFF("Repos_PosX", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_PosX;
         [GFF("Repos_Posy", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Repos_Posy;
         [GFF("Dropable", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Dropable;
-        [GFF("Repos_PosY", Compatibility.KotOR, ExistsIn.BASE)] public UInt16 Repos_PosY;
+        [GFF("Repos_PosY", Compatibility.TSL, ExistsIn.BASE)] public UInt16 Repos_PosY;
         [GFF("ObjectId", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 ObjectId;
         [GFF("BaseItem", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 BaseItem;
         [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag;
@@ -306,13 +407,13 @@ using AuroraEngine;
         [GFF("NonEquippable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NonEquippable;
         [GFF("NewItem", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NewItem;
         [GFF("DELETING", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DELETING;
-        [GFF("UpgradeLevel", Compatibility.KotOR, ExistsIn.SAVE)] public Byte UpgradeLevel;
-        [GFF("UpgradeSlot0", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
-        [GFF("UpgradeSlot1", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
-        [GFF("UpgradeSlot2", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
-        [GFF("UpgradeSlot3", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
-        [GFF("UpgradeSlot4", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
-        [GFF("UpgradeSlot5", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
+        [GFF("UpgradeLevel", Compatibility.TSL, ExistsIn.SAVE)] public Byte UpgradeLevel;
+        [GFF("UpgradeSlot0", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
+        [GFF("UpgradeSlot1", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
+        [GFF("UpgradeSlot2", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
+        [GFF("UpgradeSlot3", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
+        [GFF("UpgradeSlot4", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
+        [GFF("UpgradeSlot5", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
     
         // List definitions
         [GFF("PropertiesList", Compatibility.BOTH, ExistsIn.SAVE)] public List<AProperties> PropertiesList = new List<AProperties>();
@@ -331,7 +432,7 @@ using AuroraEngine;
             [GFF("UsesPerDay", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UsesPerDay;
             [GFF("Useable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Useable;
             [GFF("UpgradeType", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UpgradeType;
-            [GFF("PropUpgrade", Compatibility.KotOR, ExistsIn.SAVE)] public UInt16 PropUpgrade;
+            [GFF("PropUpgrade", Compatibility.TSL, ExistsIn.SAVE)] public UInt16 PropUpgrade;
             
         }
         
@@ -431,8 +532,8 @@ using AuroraEngine;
             [GFF("Type", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Type;
             [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public Single Value;
         
-            // List definitions
-            [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public List<AValue> Value1 = new List<AValue>();
+            // Struct definitions
+            [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public AValue Value2 = new AValue();
         
             // Class definitions    
             [Serializable]public class AValue : AuroraStruct {
@@ -446,8 +547,8 @@ using AuroraEngine;
                 [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
                 [GFF("StackSize", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 StackSize;
             
-                // List definitions
-                [GFF("Stack", Compatibility.BOTH, ExistsIn.SAVE)] public List<AStack> Stack = new List<AStack>();
+                // Struct definitions
+                [GFF("Stack", Compatibility.BOTH, ExistsIn.SAVE)] public AStack Stack = new AStack();
             
                 // Class definitions    
                 [Serializable]public class AStack : AuroraStruct {
@@ -458,23 +559,18 @@ using AuroraEngine;
                     [GFF("TotalSize", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 TotalSize;
                 
                     // List definitions
-                    [GFF("Stack", Compatibility.BOTH, ExistsIn.SAVE)] public List<AStack1> Stack = new List<AStack1>();
+                    [GFF("Stack", Compatibility.BOTH, ExistsIn.SAVE)] public List<AStack2> Stack = new List<AStack2>();
                 
                     // Class definitions    
-                    [Serializable]public class AStack1 : AuroraStruct {
+                    [Serializable]public class AStack2 : AuroraStruct {
                         // Field definitions
                         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
                         [GFF("Type", Compatibility.BOTH, ExistsIn.SAVE)] public Char Type;
                         [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 Value;
-                        
                     }
-                    
                 }
-                
             }
-            
         }
-        
     }
     
     [Serializable]public class ALvlStat : AuroraStruct {
@@ -510,105 +606,6 @@ using AuroraEngine;
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
             [GFF("Spell", Compatibility.BOTH, ExistsIn.SAVE)] public UInt16 Spell;
-            
-        }
-        
-    }
-    
-    [Serializable]public class ACombatInfo : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("NumAttacks", Compatibility.BOTH, ExistsIn.SAVE)] public Byte NumAttacks;
-        [GFF("OnHandAttackMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OnHandAttackMod;
-        [GFF("OnHandDamageMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OnHandDamageMod;
-        [GFF("OffHandAttackMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OffHandAttackMod;
-        [GFF("OffHandDamageMod", Compatibility.BOTH, ExistsIn.SAVE)] public Char OffHandDamageMod;
-        [GFF("ForceResistance", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ForceResistance;
-        [GFF("ArcaneSpellFail", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ArcaneSpellFail;
-        [GFF("ArmorCheckPen", Compatibility.BOTH, ExistsIn.SAVE)] public Byte ArmorCheckPen;
-        [GFF("UnarmedDamDice", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UnarmedDamDice;
-        [GFF("UnarmedDamDie", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UnarmedDamDie;
-        [GFF("OnHandCritRng", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OnHandCritRng;
-        [GFF("OnHandCritMult", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OnHandCritMult;
-        [GFF("OffHandWeaponEq", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandWeaponEq;
-        [GFF("OffHandCritRng", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandCritRng;
-        [GFF("OffHandCritMult", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandCritMult;
-        [GFF("LeftEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 LeftEquip;
-        [GFF("RightEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 RightEquip;
-        [GFF("LeftString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LeftString;
-        [GFF("RightString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString RightString;
-        [GFF("DamageDice", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDice;
-        [GFF("DamageDie", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDie;
-    
-        // List definitions
-        [GFF("AttackList", Compatibility.KotOR, ExistsIn.SAVE)] public List<AAttack> AttackList = new List<AAttack>();
-        [GFF("DamageList", Compatibility.KotOR, ExistsIn.SAVE)] public List<ADamage> DamageList = new List<ADamage>();
-    
-        // Class definitions    
-        [Serializable]public class AAttack : AuroraStruct {
-            // Field definitions
-            [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-            [GFF("Modifier", Compatibility.KotOR, ExistsIn.SAVE)] public Char Modifier;
-            [GFF("WeaponWield", Compatibility.KotOR, ExistsIn.SAVE)] public Byte WeaponWield;
-            [GFF("VersusGoodEvil", Compatibility.KotOR, ExistsIn.SAVE)] public Byte VersusGoodEvil;
-            [GFF("VersusRace", Compatibility.KotOR, ExistsIn.SAVE)] public Byte VersusRace;
-            
-        }
-        
-        [Serializable]public class ADamage : AuroraStruct {
-            // Field definitions
-            [GFF("structid", Compatibility.KotOR, ExistsIn.SAVE)] public uint structid;
-            [GFF("Modifier", Compatibility.KotOR, ExistsIn.SAVE)] public Char Modifier;
-            [GFF("ModifierType", Compatibility.KotOR, ExistsIn.SAVE)] public Byte ModifierType;
-            [GFF("WeaponWield", Compatibility.KotOR, ExistsIn.SAVE)] public Byte WeaponWield;
-            [GFF("VersusGoodEvil", Compatibility.KotOR, ExistsIn.SAVE)] public Byte VersusGoodEvil;
-            [GFF("VersusRace", Compatibility.KotOR, ExistsIn.SAVE)] public Byte VersusRace;
-            
-        }
-        
-    }
-    
-    [Serializable]public class ACombatRoundData : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        
-    }
-    
-    [Serializable]public class AFollowInfo : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("FollowObject", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 FollowObject;
-        [GFF("FollowLocation", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 FollowLocation;
-        [GFF("LastLeaderPos", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 LastLeaderPos;
-        [GFF("LastFollowerPos", Compatibility.BOTH, ExistsIn.SAVE)] public Vector3 LastFollowerPos;
-        [GFF("MaxSpeed", Compatibility.BOTH, ExistsIn.SAVE)] public Single MaxSpeed;
-        [GFF("StickToPos", Compatibility.BOTH, ExistsIn.SAVE)] public Byte StickToPos;
-        [GFF("Result", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Result;
-        [GFF("TimeElapsed", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 TimeElapsed;
-        [GFF("InSafetyRange", Compatibility.BOTH, ExistsIn.SAVE)] public Byte InSafetyRange;
-        
-    }
-    
-    [Serializable]public class ASWVarTable : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-    
-        // List definitions
-        [GFF("BitArray", Compatibility.BOTH, ExistsIn.SAVE)] public List<ABitArray> BitArray = new List<ABitArray>();
-        [GFF("ByteArray", Compatibility.BOTH, ExistsIn.SAVE)] public List<AByteArray> ByteArray = new List<AByteArray>();
-    
-        // Class definitions    
-        [Serializable]public class ABitArray : AuroraStruct {
-            // Field definitions
-            [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-            [GFF("Variable", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Variable;
-            
-        }
-        
-        [Serializable]public class AByteArray : AuroraStruct {
-            // Field definitions
-            [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-            [GFF("Variable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Variable;
             
         }
         

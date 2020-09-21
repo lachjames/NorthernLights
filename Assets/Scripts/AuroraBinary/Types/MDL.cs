@@ -923,8 +923,8 @@ public class TrimeshHeader : BinaryStructure
     public uint unk7;
 
     // These two fields are only used in TSL models, not for K1 models
-    //[BinaryTSL()] public uint unk8;
-    //[BinaryTSL()] public uint unk9;
+    [BinaryTSL()] public ConstUInt unk8;
+    [BinaryTSL()] public ConstUInt unk9;
 
     public uint mdxDataOffset;
     public uint verticesOffset;
@@ -1135,6 +1135,11 @@ public class Const : BinaryStructure
 public class ConstInt : BinaryStructure
 {
     public int c;
+}
+
+public class ConstUInt : BinaryStructure
+{
+    public uint c;
 }
 
 [BinaryFixedSize(12)]

@@ -43,13 +43,13 @@ using AuroraEngine;
         [GFF("DELETING", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DELETING;
         [GFF("BodyVariation", Compatibility.BOTH, ExistsIn.SAVE)] public Byte BodyVariation;
         [GFF("TextureVar", Compatibility.BOTH, ExistsIn.SAVE)] public Byte TextureVar;
-        [GFF("UpgradeLevel", Compatibility.KotOR, ExistsIn.SAVE)] public Byte UpgradeLevel;
-        [GFF("UpgradeSlot0", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
-        [GFF("UpgradeSlot1", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
-        [GFF("UpgradeSlot2", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
-        [GFF("UpgradeSlot3", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
-        [GFF("UpgradeSlot4", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
-        [GFF("UpgradeSlot5", Compatibility.KotOR, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
+        [GFF("UpgradeLevel", Compatibility.TSL, ExistsIn.SAVE)] public Byte UpgradeLevel;
+        [GFF("UpgradeSlot0", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot0;
+        [GFF("UpgradeSlot1", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot1;
+        [GFF("UpgradeSlot2", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot2;
+        [GFF("UpgradeSlot3", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot3;
+        [GFF("UpgradeSlot4", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot4;
+        [GFF("UpgradeSlot5", Compatibility.TSL, ExistsIn.SAVE)] public Int32 UpgradeSlot5;
     
         // List definitions
         [GFF("PropertiesList", Compatibility.BOTH, ExistsIn.SAVE)] public List<AProperties> PropertiesList = new List<AProperties>();
@@ -68,7 +68,7 @@ using AuroraEngine;
             [GFF("UsesPerDay", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UsesPerDay;
             [GFF("Useable", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Useable;
             [GFF("UpgradeType", Compatibility.BOTH, ExistsIn.SAVE)] public Byte UpgradeType;
-            [GFF("PropUpgrade", Compatibility.KotOR, ExistsIn.SAVE)] public UInt16 PropUpgrade;
+            [GFF("PropUpgrade", Compatibility.TSL, ExistsIn.SAVE)] public UInt16 PropUpgrade;
             
         }
         

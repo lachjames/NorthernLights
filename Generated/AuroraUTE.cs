@@ -40,7 +40,7 @@ using AuroraEngine;
         [GFF("CR", Compatibility.BOTH, ExistsIn.BASE)] public Single CR;
         [GFF("ResRef", Compatibility.BOTH, ExistsIn.BASE)] public String ResRef;
         [GFF("SingleSpawn", Compatibility.BOTH, ExistsIn.BASE)] public Byte SingleSpawn;
-        [GFF("GuaranteedCount", Compatibility.KotOR, ExistsIn.BASE)] public Int32 GuaranteedCount;
+        [GFF("GuaranteedCount", Compatibility.TSL, ExistsIn.BASE)] public Int32 GuaranteedCount;
         
     }
     

@@ -425,6 +425,10 @@ namespace AuroraEngine
 
         public static Texture2D LoadNormal(string resref)
         {
+            if (!loadedTextures.ContainsKey(resref))
+            {
+                return new Texture2D(1, 1);
+            }
             if (!loadedNormals.ContainsKey(resref))
             //if (!loadedNormals.ContainsKey(resref + "_base"))
             {
@@ -483,11 +487,11 @@ namespace AuroraEngine
             return _2da[idx, row];
         }
 
-        public static TLKObject LoadTLK()
-        {
-            string xml = RunXoreosTools(AuroraPrefs.GetKotorLocation() + "/dialog.tlk", "tlk2xml", "--kotor");
-            return new TLKObject(xml);
-        }
+        //public static TLKObject LoadTLK()
+        //{
+        //    string xml = RunXoreosTools(AuroraPrefs.GetKotorLocation() + "/dialog.tlk", "tlk2xml", "--kotor");
+        //    return new TLKObject(xml);
+        //}
 
         public static string GetString (int strref)
         {
@@ -529,7 +533,7 @@ namespace AuroraEngine
             //mat.SetFloat("_Metallic.Second", 1f);
 
             Texture2D tDiffuse = LoadTexture2D(diffuse);
-            Texture2D tNormal = LoadNormal(diffuse);
+            //Texture2D tNormal = LoadNormal(diffuse);
             //Texture2D tSpecular = LoadSpecular(diffuse);
             //Texture2D tNormal = NormalGeneration.Diff2Normal(tDiffuse);
             if (tDiffuse) {
@@ -537,9 +541,9 @@ namespace AuroraEngine
 				mat.SetTexture("_MainTex", tDiffuse);
                 
                 // Normal map
-                mat.EnableKeyword("_NORMALMAP");
-                mat.SetTexture("_BumpMap", tNormal);
-                mat.SetFloat("_BumpScale", 0.5f);
+                //mat.EnableKeyword("_NORMALMAP");
+                //mat.SetTexture("_BumpMap", tNormal);
+                //mat.SetFloat("_BumpScale", 0.5f);
 
                 // Specular map
                 //mat.EnableKeyword("_SPECGLOSSMAP");

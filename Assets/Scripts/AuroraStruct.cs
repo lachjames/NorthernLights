@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
@@ -12,31 +13,52 @@ public class AuroraStruct
     {
         { typeof(char), "char" },
         { typeof(byte), "byte" },
-        { typeof(UInt16), "word"},
-        { typeof(Int16), "short"},
-        { typeof(UInt32), "dword"},
-        { typeof(Int32), "int"},
-        { typeof(UInt64), "dword64"},
+        { typeof(UInt16), "uint16"},
+        { typeof(Int16), "sint16"},
+        { typeof(UInt32), "uint32"},
+        { typeof(Int32), "sint32"},
+        { typeof(UInt64), "uint64"},
         { typeof(Int64), "int64"},
         { typeof(float), "float" },
         { typeof(double), "double" },
         { typeof(string), "resref"},
-        { typeof(byte[]), "void" }
     };
-    public string ToXML(bool isRecursive = false)
+    public string ToXML(string gffType, bool isRecursive = false, string structLabel = "")
     {
         // Writes this object in GFF format
 
         // Convert the object to XML
-        string xml = !isRecursive ? "<gff3>" : "";
+        string xml = !isRecursive ? "<gff3 type=\"" + gffType + "\">" : "";
         bool hasStructID = false;
-        int structid = 0;
+        uint structid = 0;
 
         List<string> values = new List<string>();
         foreach (FieldInfo f in GetType().GetFields())
         {
             GFFAttribute attr = f.GetCustomAttribute<GFFAttribute>();
+            
             string label = attr.name;
+            Compatibility compat = attr.compatibility;
+            ExistsIn existsIn = attr.existsIn;
+
+            //Debug.Log("Compat: " + compat + "; exists: " + existsIn);
+
+            // Make sure we only write fields compatible with the target game
+            if (compat == Compatibility.KotOR && AuroraPrefs.TargetGame() == Game.TSL)
+            {
+                continue;
+            }
+            if (compat == Compatibility.TSL && AuroraPrefs.TargetGame() == Game.KotOR)
+            {
+                continue;
+            }
+
+            // Don't write save-only fields when writing modules
+            // TODO: Allow an override for this in case mods need it?
+            if (existsIn == ExistsIn.SAVE)
+            {
+                continue;
+            }
 
             object value = f.GetValue(this);
             if (value == null)
@@ -44,18 +66,20 @@ public class AuroraStruct
                 continue;
             }
 
-            if (f.FieldType.Name == "structid")
+            if (label == "structid")
             {
                 // The struct ID should be dealt with separately
-                structid = (int)f.GetValue(this);
+                structid = (uint)f.GetValue(this);
+                Debug.Log("Struct id " + structid + " found");
                 hasStructID = true;
+                continue;
             }
 
             if (f.FieldType.IsSubclassOf(typeof(AuroraStruct)))
             {
                 AuroraStruct structVal = (AuroraStruct)value;
                 // This is a nested AuroraStruct
-                values.Add(structVal.ToXML(true));
+                values.Add(structVal.ToXML(gffType, true, label));
             }
             else if (f.FieldType.IsGenericType && (f.FieldType.GetGenericTypeDefinition() == typeof(List<>)))
             {
@@ -78,7 +102,7 @@ public class AuroraStruct
 
                     foreach (AuroraStruct item in list)
                     {
-                        listXML += item.ToXML(true);
+                        listXML += item.ToXML(gffType, true);
                     }
 
                     listXML += "</list>";
@@ -118,6 +142,25 @@ public class AuroraStruct
 
                 vecXML += "</vector>";
                 values.Add(vecXML);
+            } else if (f.FieldType == typeof(Byte[]))
+            {
+                // Source: https://stackoverflow.com/questions/311165/how-do-you-convert-a-byte-array-to-a-hexadecimal-string-and-vice-versa
+                string b64 = Convert.ToBase64String((byte[])value, Base64FormattingOptions.InsertLineBreaks);
+
+                values.Add("<data label=\"" + label + "\">" + b64 + "</data>");
+            } else if (f.FieldType == typeof(Byte))
+            {
+                byte b = (byte)f.GetValue(this);
+                Debug.Log("Byte: " + b + " with label " + label + " has value " + b.ToString());
+                string byteXML = "<" + TypeNames[f.FieldType];
+
+                if (label != null)
+                {
+                    byteXML += " label=\"" + label + "\"";
+                }
+                byteXML += ">" + b.ToString() + "</" + TypeNames[f.FieldType] + ">";
+
+                values.Add(byteXML);
             }
             else
             {
@@ -139,18 +182,23 @@ public class AuroraStruct
             }
         }
 
+        string structLabelXML = "";
+
+        if (structLabel != null && structLabel != "") {
+            structLabelXML = " label=\"" + structLabel + "\"";
+        }
+
         if (!isRecursive)
         {
-            xml += "<struct id=\"4294967295\">";
+            xml += "<struct id=\"4294967295\"" + structLabelXML + ">";
         }
         else if (hasStructID)
         {
-            xml += "<struct id=\"" + structid + "\">";
-
+            xml += "<struct id=\"" + structid + "\"" + structLabelXML + ">";
         }
         else
         {
-            xml += "<struct id = \"0\">";
+            xml += "<struct id = \"0\"" + structLabelXML + ">";
         }
 
         foreach (string s in values)

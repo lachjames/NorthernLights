@@ -2446,7 +2446,7 @@ namespace AuroraEngine
         public static void MusicBackgroundPlay (AuroraObject oArea)
         {
             AuroraGIT moduleGit = stateManager.currentModule.git;
-            int musicIdx = moduleGit.AreaProperties[0].AmbientSndDay;
+            int musicIdx = moduleGit.AreaProperties.AmbientSndDay;
             musicSystem.StartBackgroundMusic(Resources.From2DA("ambientmusic", musicIdx, "resource"));
         }
         public static void MusicBackgroundStop (AuroraObject oArea)
@@ -2471,7 +2471,7 @@ namespace AuroraEngine
         public static void MusicBattlePlay (AuroraObject oArea)
         {
             AuroraGIT moduleGit = stateManager.currentModule.git;
-            int musicIdx = moduleGit.AreaProperties[0].MusicBattle;
+            int musicIdx = moduleGit.AreaProperties.MusicBattle;
             musicSystem.StartBackgroundMusic(Resources.From2DA("ambientmusic", musicIdx, "resource"));
         }
         public static void MusicBattleStop (AuroraObject oArea)

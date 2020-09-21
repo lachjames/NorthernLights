@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<gff3 type="ARE">
+  <struct id="4294967295">
+    <float label="AlphaTest">0.200000</float>
+    <resref label="DefaultEnvMap"></resref>
+    <resref label="Grass_TexName"></resref>
+    <float label="Grass_Density">0.000000</float>
+    <float label="Grass_QuadSize">0.000000</float>
+    <float label="Grass_Prob_LL">0.250000</float>
+    <float label="Grass_Prob_LR">0.250000</float>
+    <float label="Grass_Prob_UL">0.250000</float>
+    <float label="Grass_Prob_UR">0.250000</float>
+    <byte label="MoonFogOn">0</byte>
+    <float label="MoonFogNear">99.000000</float>
+    <float label="MoonFogFar">100.000000</float>
+    <byte label="MoonShadows">0</byte>
+    <byte label="SunFogOn">0</byte>
+    <float label="SunFogNear">99.000000</float>
+    <float label="SunFogFar">100.000000</float>
+    <byte label="SunShadows">0</byte>
+    <byte label="IsNight">0</byte>
+    <byte label="LightingScheme">0</byte>
+    <byte label="ShadowOpacity">205</byte>
+    <byte label="DayNightCycle">0</byte>
+    <byte label="PlayerVsPlayer">3</byte>
+    <byte label="NoRest">0</byte>
+    <byte label="NoHangBack">0</byte>
+    <byte label="PlayerOnly">0</byte>
+    <byte label="Unescapable">1</byte>
+    <byte label="StealthXPEnabled">0</byte>
+    <resref label="OnEnter">a_bet3m4</resref>
+    <resref label="OnExit"></resref>
+    <resref label="OnHeartbeat"></resref>
+    <resref label="OnUserDefined"></resref>
+    <byte label="DisableTransit">0</byte>
+    <sint32 label="ID">0</sint32>
+    <sint32 label="Creator_ID">0</sint32>
+    <uint32 label="Version">293</uint32>
+    <exostring label="Tag">Untitled</exostring>
+    <locstring label="Name" strref="74951"/>
+    <exostring label="Comments"></exostring>
+    <uint32 label="Flags">0</uint32>
+    <sint32 label="ModSpotCheck">0</sint32>
+    <sint32 label="ModListenCheck">0</sint32>
+    <sint32 label="CameraStyle">0</sint32>
+    <uint32 label="Grass_Ambient">0</uint32>
+    <uint32 label="Grass_Diffuse">0</uint32>
+    <uint32 label="MoonAmbientColor">0</uint32>
+    <uint32 label="MoonDiffuseColor">0</uint32>
+    <uint32 label="MoonFogColor">0</uint32>
+    <uint32 label="SunAmbientColor">0</uint32>
+    <uint32 label="SunDiffuseColor">0</uint32>
+    <uint32 label="SunFogColor">0</uint32>
+    <uint32 label="DynAmbientColor">2958115</uint32>
+    <sint32 label="ChanceRain">0</sint32>
+    <sint32 label="ChanceSnow">0</sint32>
+    <sint32 label="ChanceLightning">0</sint32>
+    <sint32 label="WindPower">0</sint32>
+    <uint16 label="LoadScreenID">0</uint16>
+    <uint32 label="StealthXPLoss">0</uint32>
+    <uint32 label="StealthXPMax">0</uint32>
+    <uint32 label="Grass_Emissive">0</uint32>
+    <sint32 label="DirtyARGBOne">0</sint32>
+    <sint32 label="DirtySizeOne">0</sint32>
+    <sint32 label="DirtyFormulaOne">0</sint32>
+    <sint32 label="DirtyFuncOne">0</sint32>
+    <sint32 label="DirtyARGBTwo">0</sint32>
+    <sint32 label="DirtySizeTwo">0</sint32>
+    <sint32 label="DirtyFormulaTwo">0</sint32>
+    <sint32 label="DirtyFuncTwo">0</sint32>
+    <sint32 label="DirtyARGBThree">0</sint32>
+    <sint32 label="DirtySizeThree">0</sint32>
+    <sint32 label="DirtyFormulaThre">0</sint32>
+    <sint32 label="DirtyFuncThree">0</sint32>
+    <exostring label="KTInfoVersion"></exostring>
+    <exostring label="KTInfoDate"></exostring>
+    <sint32 label="KTGameVerIndex">0</sint32>
+    <struct label="" id="0">
+      <uint32 label="Type">0</uint32>
+      <float label="Near_Clip">0.000000</float>
+      <float label="Far_Clip">0.000000</float>
+      <float label="CameraViewAngle">0.000000</float>
+      <uint32 label="Bump_Plane">0</uint32>
+      <byte label="UseInertia">0</byte>
+      <byte label="DoBumping">0</byte>
+      <uint32 label="DOF">0</uint32>
+      <float label="MovementPerSec">0.000000</float>
+      <float label="LateralAccel">0.000000</float>
+      <struct label="" id="0">
+        <sint32 label="Num_Loops">0</sint32>
+        <float label="Sphere_Radius">0.000000</float>
+        <float label="Invince_Period">0.000000</float>
+        <uint32 label="Hit_Points">0</uint32>
+        <uint32 label="Max_HPs">0</uint32>
+        <sint32 label="Bump_Damage">0</sint32>
+        <byte label="CameraRotate">0</byte>
+        <float label="Minimum_Speed">0.000000</float>
+        <float label="Maximum_Speed">0.000000</float>
+        <float label="Accel_Secs">0.000000</float>
+        <float label="Start_Offset_X">0.000000</float>
+        <float label="Start_Offset_Y">0.000000</float>
+        <float label="Start_Offset_Z">0.000000</float>
+        <vector label="TunnelInfinite">
+          <double>0.000000</double>
+          <double>0.000000</double>
+          <double>0.000000</double>
+        </vector>
+        <float label="TunnelXPos">0.000000</float>
+        <float label="TunnelYPos">0.000000</float>
+        <float label="TunnelZPos">0.000000</float>
+        <float label="TunnelXNeg">0.000000</float>
+        <float label="TunnelYNeg">0.000000</float>
+        <float label="TunnelZNeg">0.000000</float>
+        <float label="Target_Offset_X">0.000000</float>
+        <float label="Target_Offset_Y">0.000000</float>
+        <float label="Target_Offset_Z">0.000000</float>
+        <struct label="" id="0"/>
+        <struct label="" id="0"/>
+        <list label="Models"/>
+        <list label="Gun_Banks"/>
+      </struct>
+      <struct label="" id="0">
+        <sint32 label="Num_Loops">0</sint32>
+        <float label="Sphere_Radius">0.000000</float>
+        <float label="Invince_Period">0.000000</float>
+        <uint32 label="Hit_Points">0</uint32>
+        <uint32 label="Max_HPs">0</uint32>
+        <sint32 label="Bump_Damage">0</sint32>
+        <byte label="CameraRotate">0</byte>
+        <float label="Minimum_Speed">0.000000</float>
+        <float label="Maximum_Speed">0.000000</float>
+        <float label="Accel_Secs">0.000000</float>
+        <float label="Start_Offset_X">0.000000</float>
+        <float label="Start_Offset_Y">0.000000</float>
+        <float label="Start_Offset_Z">0.000000</float>
+        <vector label="TunnelInfinite">
+          <double>0.000000</double>
+          <double>0.000000</double>
+          <double>0.000000</double>
+        </vector>
+        <float label="TunnelXPos">0.000000</float>
+        <float label="TunnelYPos">0.000000</float>
+        <float label="TunnelZPos">0.000000</float>
+        <float label="TunnelXNeg">0.000000</float>
+        <float label="TunnelYNeg">0.000000</float>
+        <float label="TunnelZNeg">0.000000</float>
+        <float label="Target_Offset_X">0.000000</float>
+        <float label="Target_Offset_Y">0.000000</float>
+        <float label="Target_Offset_Z">0.000000</float>
+        <struct label="" id="0"/>
+        <struct label="" id="0"/>
+        <list label="Models"/>
+        <list label="Gun_Banks"/>
+      </struct>
+      <list label="Enemies"/>
+      <list label="Obstacles"/>
+    </struct>
+    <struct label="" id="0">
+      <uint32 label="Type">0</uint32>
+      <float label="Near_Clip">0.000000</float>
+      <float label="Far_Clip">0.000000</float>
+      <float label="CameraViewAngle">0.000000</float>
+      <uint32 label="Bump_Plane">0</uint32>
+      <byte label="UseInertia">0</byte>
+      <byte label="DoBumping">0</byte>
+      <uint32 label="DOF">0</uint32>
+      <float label="MovementPerSec">0.000000</float>
+      <float label="LateralAccel">0.000000</float>
+      <struct label="" id="0">
+        <sint32 label="Num_Loops">0</sint32>
+        <float label="Sphere_Radius">0.000000</float>
+        <float label="Invince_Period">0.000000</float>
+        <uint32 label="Hit_Points">0</uint32>
+        <uint32 label="Max_HPs">0</uint32>
+        <sint32 label="Bump_Damage">0</sint32>
+        <byte label="CameraRotate">0</byte>
+        <float label="Minimum_Speed">0.000000</float>
+        <float label="Maximum_Speed">0.000000</float>
+        <float label="Accel_Secs">0.000000</float>
+        <float label="Start_Offset_X">0.000000</float>
+        <float label="Start_Offset_Y">0.000000</float>
+        <float label="Start_Offset_Z">0.000000</float>
+        <vector label="TunnelInfinite">
+          <double>0.000000</double>
+          <double>0.000000</double>
+          <double>0.000000</double>
+        </vector>
+        <float label="TunnelXPos">0.000000</float>
+        <float label="TunnelYPos">0.000000</float>
+        <float label="TunnelZPos">0.000000</float>
+        <float label="TunnelXNeg">0.000000</float>
+        <float label="TunnelYNeg">0.000000</float>
+        <float label="TunnelZNeg">0.000000</float>
+        <float label="Target_Offset_X">0.000000</float>
+        <float label="Target_Offset_Y">0.000000</float>
+        <float label="Target_Offset_Z">0.000000</float>
+        <struct label="" id="0"/>
+        <struct label="" id="0"/>
+        <list label="Models"/>
+        <list label="Gun_Banks"/>
+      </struct>
+      <struct label="" id="0">
+        <sint32 label="Num_Loops">0</sint32>
+        <float label="Sphere_Radius">0.000000</float>
+        <float label="Invince_Period">0.000000</float>
+        <uint32 label="Hit_Points">0</uint32>
+        <uint32 label="Max_HPs">0</uint32>
+        <sint32 label="Bump_Damage">0</sint32>
+        <byte label="CameraRotate">0</byte>
+        <float label="Minimum_Speed">0.000000</float>
+        <float label="Maximum_Speed">0.000000</float>
+        <float label="Accel_Secs">0.000000</float>
+        <float label="Start_Offset_X">0.000000</float>
+        <float label="Start_Offset_Y">0.000000</float>
+        <float label="Start_Offset_Z">0.000000</float>
+        <vector label="TunnelInfinite">
+          <double>0.000000</double>
+          <double>0.000000</double>
+          <double>0.000000</double>
+        </vector>
+        <float label="TunnelXPos">0.000000</float>
+        <float label="TunnelYPos">0.000000</float>
+        <float label="TunnelZPos">0.000000</float>
+        <float label="TunnelXNeg">0.000000</float>
+        <float label="TunnelYNeg">0.000000</float>
+        <float label="TunnelZNeg">0.000000</float>
+        <float label="Target_Offset_X">0.000000</float>
+        <float label="Target_Offset_Y">0.000000</float>
+        <float label="Target_Offset_Z">0.000000</float>
+        <struct label="" id="0"/>
+        <struct label="" id="0"/>
+        <list label="Models"/>
+        <list label="Gun_Banks"/>
+      </struct>
+      <list label="Enemies"/>
+      <list label="Obstacles"/>
+    </struct>
+    <list label="Rooms">
+      <struct id="0">
+        <float label="AmbientScale">0.500000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo1</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.660000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo2</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.750000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo3</exostring>
+        <sint32 label="EnvAudio">12</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.750000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo4</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.790000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo5</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.680000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo6</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.910000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo7</exostring>
+        <sint32 label="EnvAudio">12</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.620000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo8</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.680000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo9</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.930000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo10</exostring>
+        <sint32 label="EnvAudio">22</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.810000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo11</exostring>
+        <sint32 label="EnvAudio">8</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.860000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo12</exostring>
+        <sint32 label="EnvAudio">12</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.800000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo13</exostring>
+        <sint32 label="EnvAudio">12</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.400000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo14</exostring>
+        <sint32 label="EnvAudio">12</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">0.930000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo15</exostring>
+        <sint32 label="EnvAudio">2</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">1.000000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo16</exostring>
+        <sint32 label="EnvAudio">0</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">1.000000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo17</exostring>
+        <sint32 label="EnvAudio">0</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+      <struct id="0">
+        <float label="AmbientScale">1.000000</float>
+        <byte label="DisableWeather">0</byte>
+        <exostring label="RoomName">001ebo18</exostring>
+        <sint32 label="EnvAudio">0</sint32>
+        <sint32 label="ForceRating">0</sint32>
+        <list label="PartSounds"/>
+      </struct>
+    </list>
+  </struct>
+</gff3>

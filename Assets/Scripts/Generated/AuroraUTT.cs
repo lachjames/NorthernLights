@@ -38,9 +38,9 @@ using AuroraEngine;
     [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo;
     [GFF("PartyRequired", Compatibility.BOTH, ExistsIn.BASE)] public Byte PartyRequired;
     [GFF("LinkedToFlags", Compatibility.BOTH, ExistsIn.BASE)] public Byte LinkedToFlags;
-    [GFF("LinkedToModule", Compatibility.TSL, ExistsIn.BASE)] public String LinkedToModule;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("LinkedToModule", Compatibility.KotOR, ExistsIn.BASE)] public String LinkedToModule;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
     
 }

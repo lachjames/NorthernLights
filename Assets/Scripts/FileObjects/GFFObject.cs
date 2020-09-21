@@ -74,7 +74,7 @@ namespace AuroraEngine
 
             public string ToXML (string label)
             {
-                return "<resref label=\"" + label + "\" strref=\"" + str + "\"/>";
+                return "<exostring label=\"" + label + "\">"+ str + "</exostring>";
             }
 
             public override string ToString ()
@@ -99,12 +99,12 @@ namespace AuroraEngine
 
             public string ToXML(string label)
             {
-                if (strings.Length >= 0)
+                if (strings != null && strings.Length >= 0)
                 {
                     Debug.LogWarning("Warning, CExoLocString XML conversion not yet implemented for non-strref");
                 }
 
-                return "<resref label=\"" + label + "\" strref=\"" + stringref + "\"/>";
+                return "<locstring label=\"" + label + "\" strref=\"" + stringref + "\"/>";
             }
 
             public CExoLocString Parse (string s)

@@ -86,10 +86,25 @@ public class AuroraData
     void LoadModule()
     {
         rim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim");
-        srim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim");
-
         UnityEngine.Debug.Log("Loaded " + rim.resources.Keys.Count + " items from " + moduleName + ".rim");
+        
+        srim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim");
         UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
+
+        if (AuroraPrefs.TargetGame() == Game.TSL)
+        {
+            if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf"))
+            {
+                dlg = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf");
+                UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
+            }
+
+            if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod"))
+            {
+                mod = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod");
+                UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
+            }
+        }
 
         module = new Module(moduleName, this);
     }
@@ -160,21 +175,21 @@ public class AuroraData
 
         Stream stream = null;
 
-        if (stream == null && rim != null)
+        if (stream == null && mod != null)
         {
-            stream = rim.GetResource(resref, rt);
-        }
-        if (stream == null && srim != null)
-        {
-            stream = srim.GetResource(resref, rt);
+            stream = mod.GetResource(resref, rt);
         }
         if (stream == null && dlg != null)
         {
             stream = dlg.GetResource(resref, rt);
         }
-        if (stream == null && mod != null)
+        if (stream == null && srim != null)
         {
-            stream = mod.GetResource(resref, rt);
+            stream = srim.GetResource(resref, rt);
+        }
+        if (stream == null && rim != null)
+        {
+            stream = rim.GetResource(resref, rt);
         }
 
         if (stream == null)
@@ -291,7 +306,7 @@ public class AuroraData
             p.BeginOutputReadLine();
             p.BeginErrorReadLine();
 
-            if (p.WaitForExit(1000) &&
+            if (p.WaitForExit(2048) &&
                 outputWaitHandle.WaitOne() &&
                 errorWaitHandle.WaitOne())
             {

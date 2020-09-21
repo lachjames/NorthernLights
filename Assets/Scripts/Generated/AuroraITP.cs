@@ -37,10 +37,10 @@ using AuroraEngine;
             [GFF("Type", Compatibility.BOTH, ExistsIn.BASE)] public Byte Type;
         
             // List definitions
-            [GFF("LIST", Compatibility.BOTH, ExistsIn.BASE)] public List<ALIST1> LIST = new List<ALIST1>();
+            [GFF("LIST", Compatibility.BOTH, ExistsIn.BASE)] public List<ALIST2> LIST = new List<ALIST2>();
         
             // Class definitions    
-            [Serializable]public class ALIST1 : AuroraStruct {
+            [Serializable]public class ALIST2 : AuroraStruct {
                 // Field definitions
                 [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
                 [GFF("NAME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString NAME;

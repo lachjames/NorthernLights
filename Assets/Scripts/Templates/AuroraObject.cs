@@ -400,7 +400,7 @@ namespace AuroraEngine
         public GFFAttribute (string name, Compatibility compat = Compatibility.BOTH, ExistsIn exists = ExistsIn.BOTH)
         {
             this.name = name;
-            this.compatibility = compatibility;
+            this.compatibility = compat;
             this.existsIn = exists;
         }
     }

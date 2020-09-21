@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuroraEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -428,16 +429,9 @@ public class BinaryLoadFrom : BinaryAttribute
 
 public class BinaryTSL : BinaryAttribute
 {
-    static bool printed = false;
     public override int ReadAttribute(byte[] data, int offset, FieldInfo f, object target, Dictionary<string, byte[]> other)
     {
-        //if (!printed)
-        //{
-        //    printed = true;
-        //    Debug.Log(AuroraPrefs.TargetGame());
-        //}
-
-        if (AuroraPrefs.TargetGame() == AuroraEngine.Game.KotOR)
+        if (AuroraPrefs.TargetGame() == Game.KotOR)
         {
             return offset;
         }

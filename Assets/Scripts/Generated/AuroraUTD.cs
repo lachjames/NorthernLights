@@ -61,12 +61,12 @@ using AuroraEngine;
     [GFF("Ref", Compatibility.BOTH, ExistsIn.BASE)] public Byte Ref;
     [GFF("LoadScreenID", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 LoadScreenID;
     [GFF("Static", Compatibility.BOTH, ExistsIn.BASE)] public Byte Static;
-    [GFF("NotBlastable", Compatibility.KotOR, ExistsIn.BASE)] public Byte NotBlastable;
-    [GFF("OpenLockDiff", Compatibility.KotOR, ExistsIn.BASE)] public Byte OpenLockDiff;
-    [GFF("OpenLockDiffMod", Compatibility.KotOR, ExistsIn.BASE)] public Char OpenLockDiffMod;
-    [GFF("OpenState", Compatibility.KotOR, ExistsIn.BASE)] public Byte OpenState;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("NotBlastable", Compatibility.TSL, ExistsIn.BASE)] public Byte NotBlastable;
+    [GFF("OpenLockDiff", Compatibility.TSL, ExistsIn.BASE)] public Byte OpenLockDiff;
+    [GFF("OpenLockDiffMod", Compatibility.TSL, ExistsIn.BASE)] public Char OpenLockDiffMod;
+    [GFF("OpenState", Compatibility.TSL, ExistsIn.BASE)] public Byte OpenState;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
     
 }

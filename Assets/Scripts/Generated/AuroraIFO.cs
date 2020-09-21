@@ -7,15 +7,6 @@ using AuroraEngine;
 [Serializable]public class AuroraIFO : AuroraStruct {
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-    [GFF("Mod_ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte[] Mod_ID;
-    [GFF("Mod_Creator_ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Mod_Creator_ID;
-    [GFF("Mod_Version", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_Version;
-    [GFF("Mod_VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_VO_ID;
-    [GFF("Expansion_Pack", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Expansion_Pack;
-    [GFF("Mod_Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Name;
-    [GFF("Mod_Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Tag;
-    [GFF("Mod_Hak", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Hak;
-    [GFF("Mod_Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Description;
     [GFF("Mod_IsSaveGame", Compatibility.BOTH, ExistsIn.BASE)] public Byte Mod_IsSaveGame;
     [GFF("Mod_Entry_Area", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_Entry_Area;
     [GFF("Mod_Entry_X", Compatibility.BOTH, ExistsIn.BASE)] public Single Mod_Entry_X;
@@ -29,7 +20,6 @@ using AuroraEngine;
     [GFF("Mod_StartMonth", Compatibility.BOTH, ExistsIn.BASE)] public Byte Mod_StartMonth;
     [GFF("Mod_StartDay", Compatibility.BOTH, ExistsIn.BASE)] public Byte Mod_StartDay;
     [GFF("Mod_StartHour", Compatibility.BOTH, ExistsIn.BASE)] public Byte Mod_StartHour;
-    [GFF("Mod_StartYear", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_StartYear;
     [GFF("Mod_XPScale", Compatibility.BOTH, ExistsIn.BASE)] public Byte Mod_XPScale;
     [GFF("Mod_OnHeartbeat", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_OnHeartbeat;
     [GFF("Mod_OnModLoad", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_OnModLoad;
@@ -46,9 +36,19 @@ using AuroraEngine;
     [GFF("Mod_OnSpawnBtnDn", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_OnSpawnBtnDn;
     [GFF("Mod_OnPlrRest", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_OnPlrRest;
     [GFF("Mod_StartMovie", Compatibility.BOTH, ExistsIn.BASE)] public String Mod_StartMovie;
-    [GFF("KTInfoVersion", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.KotOR, ExistsIn.BASE)] public CExoString KTInfoDate;
-    [GFF("KTGameVerIndex", Compatibility.KotOR, ExistsIn.BASE)] public Int32 KTGameVerIndex;
+    [GFF("Mod_ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte[] Mod_ID;
+    [GFF("Mod_Creator_ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Mod_Creator_ID;
+    [GFF("Mod_Version", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_Version;
+    [GFF("Mod_VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_VO_ID;
+    [GFF("Expansion_Pack", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Expansion_Pack;
+    [GFF("Mod_Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Name;
+    [GFF("Mod_Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Tag;
+    [GFF("Mod_Hak", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Hak;
+    [GFF("Mod_Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Description;
+    [GFF("Mod_StartYear", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_StartYear;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions
     [GFF("Mod_Area_list", Compatibility.BOTH, ExistsIn.BASE)] public List<AMod_Area_list> Mod_Area_list = new List<AMod_Area_list>();
