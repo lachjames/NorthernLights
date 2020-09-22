@@ -248,16 +248,14 @@ public class KItemPicker : EditorWindow
     {
         List<string> objects = new List<string>();
         // Get all files in the override folder, as well as all sub-directories (recursively)
-        foreach (string path in AuroraEngine.Resources.data.overrideFiles)
+        foreach ((string resref, ResourceType rt) in AuroraEngine.Resources.data.overridePaths.Keys)
         {
-            string name = Path.GetFileNameWithoutExtension(path);
-            string ext = Path.GetExtension(path).Replace(".", "");
             //Debug.Log(path + ", " + name + ", " + ext);
-            if (ext.ToLower() != NameMap[curItemType])
+            if (rt != TypeMap[curItemType])
             {
                 continue;
             }
-            objects.Add(name);
+            objects.Add(resref);
         }
         overItems = objects.ToArray();
     }

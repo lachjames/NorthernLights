@@ -1,4 +1,5 @@
 ﻿using AuroraEngine;
+using NAudio.MediaFoundation;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -31,6 +32,7 @@ public class AuroraData
     public TLKObject tlk;
 
     public List<string> overrideFiles = new List<string>();
+    public Dictionary<(string, ResourceType), string> overridePaths = new Dictionary<(string, ResourceType), string>();
 
     public static Dictionary<ResourceType, string> ExtMap = new Dictionary<ResourceType, string>()
     {
@@ -46,6 +48,19 @@ public class AuroraData
         { ResourceType.CAM, "cam" },
     };
 
+    public static Dictionary<string, ResourceType> Ext2RTMap = new Dictionary<string, ResourceType>()
+    {
+        { "mdl", ResourceType.MDL },
+        { "utc", ResourceType.UTC },
+        { "utd", ResourceType.UTD },
+        { "utp", ResourceType.UTP },
+        { "utt", ResourceType.UTT },
+        { "ute", ResourceType.UTE },
+        { "uts", ResourceType.UTS },
+        { "utm", ResourceType.UTM },
+        { "utw", ResourceType.UTW },
+        { "cam", ResourceType.CAM },
+    };
 
     public AuroraData(Game game, string moduleName)
     {
@@ -68,7 +83,16 @@ public class AuroraData
     {
         foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
         {
-            overrideFiles.Add(path);
+            string name = Path.GetFileNameWithoutExtension(path);
+            string ext = Path.GetExtension(path).Replace(".", "");
+
+            if (!Ext2RTMap.ContainsKey(ext))
+            {
+                continue;
+            }
+
+            ResourceType rt = Ext2RTMap[ext];
+            overridePaths[(name, rt)] = path;
         }
     }
 
@@ -210,26 +234,9 @@ public class AuroraData
 
     public Stream GetStreamFromOverride(string resref, ResourceType rt)
     {
-        if (!ExtMap.ContainsKey(rt))
+        if (overridePaths.ContainsKey((resref, rt)))
         {
-            return null;
-        }
-        string reqExt = ExtMap[rt];
-        // TODO: Cache this information
-        foreach (string path in overrideFiles)
-        {
-            string name = Path.GetFileNameWithoutExtension(path);
-            string ext = Path.GetExtension(path).Replace(".", "");
-
-            if (ext.ToLower() != reqExt.ToLower())
-            {
-                continue;
-            }
-            if (name.ToLower() != resref.ToLower())
-            {
-                continue;
-            }
-            return new FileStream(path, FileMode.Open);
+            return new FileStream(overridePaths[(resref, rt)], FileMode.Open);
         }
         return null;
     }
