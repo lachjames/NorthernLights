@@ -87,7 +87,7 @@ public class KLE : EditorWindow
             {
                 continue;
             }
-            string name = mod.Split('\\').Last().Replace(".rim", "").Replace(".mod", "");
+            string name = mod.ToUpper().Split('\\').Last().Replace(".rim", "").Replace(".mod", "");
             if (!names.Contains(name))
             {
                 names.Add(name);

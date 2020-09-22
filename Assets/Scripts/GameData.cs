@@ -30,6 +30,8 @@ public class AuroraData
     public Dictionary<string, _2DAObject> loaded2das = new Dictionary<string, _2DAObject>();
     public TLKObject tlk;
 
+    public List<string> overrideFiles = new List<string>();
+
     public static Dictionary<ResourceType, string> ExtMap = new Dictionary<ResourceType, string>()
     {
         { ResourceType.MDL, "mdl" },
@@ -56,8 +58,18 @@ public class AuroraData
 
         LoadBase();
 
+        LoadOverride();
+
         if (moduleName != null)
             LoadModule();
+    }
+
+    void LoadOverride ()
+    {
+        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        {
+            overrideFiles.Add(path);
+        }
     }
 
     void LoadBase()
@@ -204,7 +216,7 @@ public class AuroraData
         }
         string reqExt = ExtMap[rt];
         // TODO: Cache this information
-        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        foreach (string path in overrideFiles)
         {
             string name = Path.GetFileNameWithoutExtension(path);
             string ext = Path.GetExtension(path).Replace(".", "");

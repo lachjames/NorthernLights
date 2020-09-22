@@ -247,9 +247,8 @@ public class KItemPicker : EditorWindow
     void OverrideItems ()
     {
         List<string> objects = new List<string>();
-        Debug.Log("Loading override items");
         // Get all files in the override folder, as well as all sub-directories (recursively)
-        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        foreach (string path in AuroraEngine.Resources.data.overrideFiles)
         {
             string name = Path.GetFileNameWithoutExtension(path);
             string ext = Path.GetExtension(path).Replace(".", "");
