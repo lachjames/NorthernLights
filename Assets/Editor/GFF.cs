@@ -233,12 +233,8 @@ public class GFFEditor : Editor
         {
             // Show the resref
 
-            string newRef = Draw("resref", cur.stringref.ToString());
-            try
-            {
-                cur.stringref = uint.Parse(newRef);
-            }
-            catch { }
+            string newRef = Draw(f.Name + " (resref)", cur.stringref.ToString());
+            cur.stringref = uint.Parse(newRef);
 
             if (cur.strings == null)
             {

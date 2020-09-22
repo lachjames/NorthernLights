@@ -10,7 +10,7 @@ public class KItemPicker : EditorWindow
 {
     public enum ItemType
     {
-        MODEL, CREATURE, DOOR, PLACEABLE, TRIGGER, ENCOUNTER, SOUND, STORE, WAYPOINT, CAMERA
+        MODEL, CREATURE, DOOR, PLACEABLE, TRIGGER, ENCOUNTER, SOUND, STORE, WAYPOINT, CAMERA, NSS, NCS, DIALOG
     }
     
     public static Dictionary<ItemType, string> NameMap = new Dictionary<ItemType, string>()
@@ -25,6 +25,9 @@ public class KItemPicker : EditorWindow
         { ItemType.STORE, "utm" },
         { ItemType.WAYPOINT, "utw" },
         { ItemType.CAMERA, "cam" },
+        { ItemType.NSS, "nss" },
+        { ItemType.NCS, "ncs" },
+        { ItemType.DIALOG, "dlg" }
     };
 
     public static Dictionary<ItemType, AuroraEngine.ResourceType> TypeMap = new Dictionary<ItemType, AuroraEngine.ResourceType>()
@@ -39,6 +42,9 @@ public class KItemPicker : EditorWindow
         { ItemType.STORE, AuroraEngine.ResourceType.UTM },
         { ItemType.WAYPOINT, AuroraEngine.ResourceType.UTW },
         { ItemType.CAMERA, AuroraEngine.ResourceType.CAM },
+        { ItemType.NSS, AuroraEngine.ResourceType.NSS },
+        { ItemType.NCS, AuroraEngine.ResourceType.NCS },
+        { ItemType.DIALOG, AuroraEngine.ResourceType.DLG }
     };
 
     ItemType curItemType;

@@ -34,19 +34,19 @@ public class AuroraData
     public List<string> overrideFiles = new List<string>();
     public Dictionary<(string, ResourceType), string> overridePaths = new Dictionary<(string, ResourceType), string>();
 
-    public static Dictionary<ResourceType, string> ExtMap = new Dictionary<ResourceType, string>()
-    {
-        { ResourceType.MDL, "mdl" },
-        { ResourceType.UTC, "utc" },
-        { ResourceType.UTD, "utd" },
-        { ResourceType.UTP, "utp" },
-        { ResourceType.UTT, "utt" },
-        { ResourceType.UTE, "ute" },
-        { ResourceType.UTS, "uts" },
-        { ResourceType.UTM, "utm" },
-        { ResourceType.UTW, "utw" },
-        { ResourceType.CAM, "cam" },
-    };
+    //public static Dictionary<ResourceType, string> ExtMap = new Dictionary<ResourceType, string>()
+    //{
+    //    { ResourceType.MDL, "mdl" },
+    //    { ResourceType.UTC, "utc" },
+    //    { ResourceType.UTD, "utd" },
+    //    { ResourceType.UTP, "utp" },
+    //    { ResourceType.UTT, "utt" },
+    //    { ResourceType.UTE, "ute" },
+    //    { ResourceType.UTS, "uts" },
+    //    { ResourceType.UTM, "utm" },
+    //    { ResourceType.UTW, "utw" },
+    //    { ResourceType.CAM, "cam" },
+    //};
 
     public static Dictionary<string, ResourceType> Ext2RTMap = new Dictionary<string, ResourceType>()
     {

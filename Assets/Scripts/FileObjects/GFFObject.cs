@@ -52,9 +52,9 @@ namespace AuroraEngine
         }
 
         [Serializable]
-        public struct CExoString
+        public class CExoString
         {
-            public string str;
+            public string str = "";
 
             public static implicit operator string(CExoString c) => c.str;
             public static implicit operator CExoString(string s)
@@ -84,18 +84,18 @@ namespace AuroraEngine
         }
 
         [Serializable]
-        public struct CExoLocString
+        public class CExoLocString
         {
             [Serializable]
-            public struct SubString
+            public class SubString
             {
-                public int strid;
-                public string str;
+                public int strid = 0;
+                public string str = "";
             }
 
-            public uint stringref;
-            public uint stringcount;
-            public SubString[] strings;
+            public uint stringref = 0;
+            public uint stringcount = 0;
+            public SubString[] strings = new SubString[] { };
 
             public string ToXML(string label)
             {

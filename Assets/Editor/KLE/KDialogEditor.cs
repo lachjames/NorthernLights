@@ -86,14 +86,12 @@ public class KDialogEditor : EditorWindow
                 UnlinkResponse();
             if (GUILayout.Button("Copy selected"))
                 CopySelected();
-            //if (GUILayout.Button("Paste into selected"))
-            //    PasteIntoSelected();
-            //if (GUILayout.Button("Paste into start"))
-            //    PasteIntoStart();
-            //if (GUILayout.Button("Move selected up"))
-            //    MoveSelectedUp();
-            //if (GUILayout.Button("Move selected down"))
-            //    MoveSelectedDown();
+            if (GUILayout.Button("Paste into selected"))
+                PasteIntoSelected();
+            if (GUILayout.Button("Move selected up"))
+                MoveSelectedUp();
+            if (GUILayout.Button("Move selected down"))
+                MoveSelectedDown();
 
             // Debug information, for now
             if (curEntry != null)
@@ -124,10 +122,16 @@ public class KDialogEditor : EditorWindow
         switch (mode)
         {
             case DialogState.STARTING:
-                // Create a new starting entry
+                // Create a new starting node, and a corresponding entry
+                int idx = dlg.EntryList.Count;
+                dlg.EntryList.Add(new AuroraDLG.AEntry()
+                {
+                    structid = (uint)idx
+                });
+                
                 dlg.StartingList.Add(new AuroraDLG.AStarting()
                 {
-
+                    Index = (uint)idx
                 });
                 break;
             case DialogState.CHOOSING_ENTRY:
@@ -176,7 +180,85 @@ public class KDialogEditor : EditorWindow
                 break;
         }
     }
-    
+
+    void PasteIntoSelected()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                dlg.StartingList.Add((AuroraDLG.AStarting)curEditingLink);
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                curReply.EntriesList.Add((AuroraDLG.AReply.AEntries)curEditingLink);
+                break;
+            case DialogState.CHOOSING_REPLY:
+                curEntry.RepliesList.Add((AuroraDLG.AEntry.AReplies)curEditingLink);
+                break;
+        }
+    }
+
+    void MoveSelectedUp ()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                int selectedIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (selectedIdx < dlg.StartingList.Count - 1)
+                {
+                    dlg.StartingList.RemoveAt(selectedIdx);
+                    dlg.StartingList.Insert(selectedIdx + 1, (AuroraDLG.AStarting)curEditingLink);
+                }
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                int entryIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (entryIdx < dlg.StartingList.Count - 1)
+                {
+                    curReply.EntriesList.RemoveAt(entryIdx);
+                    curReply.EntriesList.Insert(entryIdx + 1, (AuroraDLG.AReply.AEntries)curEditingLink);
+                }
+                break;
+            case DialogState.CHOOSING_REPLY:
+                int replyIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (replyIdx < dlg.StartingList.Count - 1)
+                {
+                    curEntry.RepliesList.RemoveAt(replyIdx);
+                    curEntry.RepliesList.Insert(replyIdx + 1, (AuroraDLG.AEntry.AReplies)curEditingLink);
+                }
+                break;
+        }
+    }
+
+    void MoveSelectedDown ()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                int selectedIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (selectedIdx > 0)
+                {
+                    dlg.StartingList.RemoveAt(selectedIdx);
+                    dlg.StartingList.Insert(selectedIdx - 1, (AuroraDLG.AStarting)curEditingLink);
+                }
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                int entryIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (entryIdx > 0)
+                {
+                    curReply.EntriesList.RemoveAt(entryIdx);
+                    curReply.EntriesList.Insert(entryIdx - 1, (AuroraDLG.AReply.AEntries)curEditingLink);
+                }
+                break;
+            case DialogState.CHOOSING_REPLY:
+                int replyIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                if (replyIdx > 0)
+                {
+                    curEntry.RepliesList.RemoveAt(replyIdx);
+                    curEntry.RepliesList.Insert(replyIdx - 1, (AuroraDLG.AEntry.AReplies)curEditingLink);
+                }
+                break;
+        }
+    }
+
     void DialogViewer ()
     {
         GUISkin old = GUI.skin;
@@ -219,7 +301,8 @@ public class KDialogEditor : EditorWindow
                 foreach (AuroraDLG.AStarting start in dlg.StartingList)
                 {
                     AuroraDLG.AEntry entry = GetEntry((int)start.Index);
-                    string startLine = AuroraEngine.Resources.GetString((int)entry.Text.stringref);
+                    string startLine = "null";
+                    startLine = AuroraEngine.Resources.GetString((int)entry.Text.stringref);
                     if (GUILayout.Button(startLine))
                     {
                         if (Event.current.button == 1)
@@ -350,6 +433,7 @@ public class KDialogEditor : EditorWindow
     void SelectedStart (AuroraDLG.AStarting start)
     {
         curEditingLink = start;
+        curEditing = GetEntry((int)start.Index);
     }
 
     void SelectedEntry (AuroraDLG.AEntry entry)

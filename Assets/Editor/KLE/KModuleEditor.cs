@@ -97,17 +97,17 @@ public class KModuleEditor : EditorWindow
                 templateType = (KItemPicker.ItemType)EditorGUILayout.Popup((int)templateType, Enum.GetNames(typeof(KItemPicker.ItemType)));
                 templateName = EditorGUILayout.TextField(templateName);
 
-                if (GUILayout.Button("Create Template"))
+                if (GUILayout.Button("Create Object"))
                 {
                     CreateGFF();
                 }
 
-                if (GUILayout.Button("Duplicate Current Template"))
+                if (GUILayout.Button("Duplicate Current Object"))
                 {
                     DuplicateTemplate();
                 }
 
-                if (GUILayout.Button("Delete Current Template"))
+                if (GUILayout.Button("Delete Current Object"))
                 {
                     DeleteTemplate();
                 }
@@ -174,11 +174,20 @@ public class KModuleEditor : EditorWindow
             // Get all items that we've added
             foreach ((string name, AuroraStruct str, KItemPicker.ItemType it) in newTemplates)
             {
+                Color col = GUI.color;
+
+                if (name != "" && name == selectedName)
+                {
+                    GUI.color = Color.green;
+                }
+
                 ResourceType rt = KItemPicker.TypeMap[it];
                 if (GUILayout.Button(name + " (" + rt + ")"))
                 {
-                    selected = str;
+                    SelectedItem(name, rt);
                 }
+
+                GUI.color = col;
             }
 
             // Get all items in the rim
@@ -191,9 +200,7 @@ public class KModuleEditor : EditorWindow
 
                 if (GUILayout.Button(name + " (" + rt + ")"))
                 {
-                    RIMObject.Resource resource = rim.resources[(name, rt)];
-                    Stream stream = rim.GetResource(resource.ResRef, resource.ResType);
-                    SelectedItem(stream, resource.ResType);
+                    SelectedItem(name, rt);
                 }
             }
 
@@ -214,24 +221,7 @@ public class KModuleEditor : EditorWindow
 
                 if (GUILayout.Button(name + " (" + rt + ")"))
                 {
-                    if (rt == ResourceType.DLG)
-                    {
-                        RIMObject.Resource resource = srim.resources[(name, rt)];
-                        Stream stream = srim.GetResource(resource.ResRef, resource.ResType);
-                        AuroraDLG selectedDLG = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
-                        GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(selectedDLG);
-                    }
-                    else if (rt == ResourceType.NCS)
-                    {
-                        Debug.LogWarning("Please edit NCS files using their respective editors");
-                    }
-                    else
-                    {
-                        RIMObject.Resource resource = srim.resources[(name, rt)];
-                        Stream stream = srim.GetResource(resource.ResRef, resource.ResType);
-                        SelectedItem(stream, resource.ResType);
-                        selectedName = name;
-                    }
+                    SelectedItem(name, rt);
                 }
 
                 GUI.color = col;
@@ -261,26 +251,52 @@ public class KModuleEditor : EditorWindow
 
                 if (GUILayout.Button(name + " (" + rt + ")"))
                 {
-                    if (rt == ResourceType.DLG)
-                    {
-                        Stream stream = dlg.GetResource(name, rt);
-                        AuroraDLG selectedDLG = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
-                        GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(selectedDLG);
-                    }
-                    else if (rt == ResourceType.NCS)
-                    {
-                        Debug.LogWarning("Please edit NCS files using their respective editors");
-                    }
-                    else
-                    {
-                        Stream stream = dlg.GetResource(name, rt);
-                        SelectedItem(stream, rt);
-                        selectedName = name;
-                    }
+                    SelectedItem(name, rt);
                 }
 
                 GUI.color = col;
             }
+        }
+    }
+
+    void SelectedItem(string name, ResourceType rt)
+    {
+        foreach ((string tName, AuroraStruct str, KItemPicker.ItemType itemType) in newTemplates)
+        {
+            ResourceType tRt = KItemPicker.TypeMap[itemType];
+            if (name == tName && tRt == rt)
+            {
+                if (rt == ResourceType.DLG)
+                {
+                    AuroraDLG dlg = (AuroraDLG)str;
+                    GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(dlg);
+                }
+                else if (rt == ResourceType.NCS)
+                {
+                    Debug.LogWarning("Please edit NCS files using their respective editors");
+                }
+                else
+                {
+                    selected = str;
+                }
+            }
+        }
+
+        if (rt == ResourceType.DLG)
+        {
+            Stream stream = dlg.GetResource(name, rt);
+            AuroraDLG selectedDLG = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
+            GetWindow<KDialogEditor>(false, "Dialog Editor", true).LoadDLG(selectedDLG);
+        }
+        else if (rt == ResourceType.NCS)
+        {
+            Debug.LogWarning("Please edit NCS files using their respective editors");
+        }
+        else
+        {
+            Stream stream = dlg.GetResource(name, rt);
+            SelectedItem(stream, rt);
+            selectedName = name;
         }
     }
 
@@ -416,6 +432,11 @@ public class KModuleEditor : EditorWindow
 
     void CreateGFF()
     {
+        if (templateName == "" || templateName == null)
+        {
+            throw new Exception("Template name must not be empty or null");
+        }
+
         switch (templateType)
         {
             case KItemPicker.ItemType.MODEL:
@@ -452,6 +473,10 @@ public class KModuleEditor : EditorWindow
             case KItemPicker.ItemType.WAYPOINT:
                 AuroraUTW utw = new AuroraUTW();
                 AddItem(templateName, utw, templateType);
+                break;
+            case KItemPicker.ItemType.DIALOG:
+                AuroraDLG dlg = new AuroraDLG();
+                AddItem(templateName, dlg, templateType);
                 break;
             case KItemPicker.ItemType.CAMERA:
                 Debug.LogWarning("Creating new cameras not yet supported");
@@ -499,6 +524,8 @@ public class KModuleEditor : EditorWindow
             itemType = KItemPicker.ItemType.STORE;
         else if (selected.GetType() == typeof(AuroraUTW))
             itemType = KItemPicker.ItemType.WAYPOINT;
+        else if (selected.GetType() == typeof(AuroraDLG))
+            itemType = KItemPicker.ItemType.DIALOG;
         else
             itemType = KItemPicker.ItemType.CREATURE;
 
