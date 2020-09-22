@@ -51,6 +51,7 @@ public class AuroraData
     public static Dictionary<string, ResourceType> Ext2RTMap = new Dictionary<string, ResourceType>()
     {
         { "mdl", ResourceType.MDL },
+        { "mdx", ResourceType.MDX },
         { "utc", ResourceType.UTC },
         { "utd", ResourceType.UTD },
         { "utp", ResourceType.UTP },
@@ -62,7 +63,8 @@ public class AuroraData
         { "cam", ResourceType.CAM },
         { "lyt", ResourceType.LYT },
         { "tga", ResourceType.TGA },
-        { "tpc", ResourceType.TPC }
+        { "tpc", ResourceType.TPC },
+        { "2da", ResourceType.TDA }
     };
 
     public AuroraData(Game game, string moduleName)
