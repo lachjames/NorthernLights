@@ -76,16 +76,22 @@ public class KLE : EditorWindow
     {
         AuroraEngine.Resources.Load(null);
 
-        modules = Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\modules", "*.rim");
+        modules = Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\modules", "*");
+        
         names = new List<string>();
 
         foreach (string mod in modules)
         {
-            if (mod.Contains("_s"))
+            // Skip _s and DLG files
+            if (mod.Contains("_s") || mod.Contains("dlg"))
             {
                 continue;
             }
-            names.Add(mod.Split('\\').Last().Replace(".rim", ""));
+            string name = mod.Split('\\').Last().Replace(".rim", "").Replace(".mod", "");
+            if (!names.Contains(name))
+            {
+                names.Add(name);
+            }
         }
     }
 

@@ -747,7 +747,7 @@ namespace AuroraEngine
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
 
-                if (p.WaitForExit(1000) &&
+                if (p.WaitForExit(2000) &&
                     outputWaitHandle.WaitOne() &&
                     errorWaitHandle.WaitOne())
                 {
