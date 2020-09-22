@@ -60,6 +60,9 @@ public class AuroraData
         { "utm", ResourceType.UTM },
         { "utw", ResourceType.UTW },
         { "cam", ResourceType.CAM },
+        { "lyt", ResourceType.LYT },
+        { "tga", ResourceType.TGA },
+        { "tpc", ResourceType.TPC }
     };
 
     public AuroraData(Game game, string moduleName)
