@@ -170,9 +170,9 @@ public class LoadingSystem : MonoBehaviour
             try
             {
                 action.Invoke();
-            } catch
+            } catch (Exception e)
             {
-                Debug.Log("Action failed");
+                Debug.LogError(e);
             }
         }
 
