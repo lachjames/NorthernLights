@@ -190,7 +190,7 @@ public class AuroraData
             return _2da;
         }
 
-        Stream stream = GetStreamFromBase(resref, ResourceType.TDA);
+        Stream stream = GetStream(resref, ResourceType.TDA);
         if (stream == null)
         {
             UnityEngine.Debug.LogWarning("Missing 2da: " + resref);
@@ -227,7 +227,7 @@ public class AuroraData
         return default;
     }
 
-    public T GetFromOverride<T>(string resref, ResourceType rt)
+    T GetFromOverride<T>(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromOverride(resref, rt);
         if (stream == null)
@@ -237,7 +237,7 @@ public class AuroraData
         return (T)obj.Serialize<T>();
     }
 
-    public Stream GetStreamFromOverride(string resref, ResourceType rt)
+    Stream GetStreamFromOverride(string resref, ResourceType rt)
     {
         if (overridePaths.ContainsKey((resref, rt)))
         {
@@ -259,7 +259,7 @@ public class AuroraData
         return GetStreamFromBase(resref, rt);
     }
 
-    public Stream GetStreamFromModule(string resref, ResourceType rt)
+    Stream GetStreamFromModule(string resref, ResourceType rt)
     {
         // Check if the item is in the rim
 
@@ -290,7 +290,7 @@ public class AuroraData
         return stream;
     }
 
-    public T GetFromModule<T>(string resref, ResourceType rt)
+    T GetFromModule<T>(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromModule(resref, rt);
 
@@ -302,7 +302,7 @@ public class AuroraData
         return (T)obj.Serialize<T>();
     }
 
-    public T GetFromBase<T>(string resref, ResourceType rt)
+    T GetFromBase<T>(string resref, ResourceType rt)
     {
         Stream stream = GetStreamFromBase(resref, rt);
 
@@ -313,7 +313,7 @@ public class AuroraData
         return (T)gff.Serialize<T>();
     }
 
-    public Stream GetStreamFromBase(string resref, ResourceType type)
+    Stream GetStreamFromBase(string resref, ResourceType type)
     {
         Stream resourceStream;
         uint id;
