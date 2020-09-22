@@ -241,23 +241,33 @@ public class KItemPicker : EditorWindow
             }
         }
 
-        // Get items from the override folder
-
-        // Save all items as a string[] array
         modItems = objects.ToArray();
     }
 
-    void OverItems ()
+    void OverrideItems ()
     {
-        overItems = new string[] { };
+        List<string> objects = new List<string>();
+        Debug.Log("Loading override items");
+        // Get all files in the override folder, as well as all sub-directories (recursively)
+        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        {
+            string name = Path.GetFileNameWithoutExtension(path);
+            string ext = Path.GetExtension(path).Replace(".", "");
+            //Debug.Log(path + ", " + name + ", " + ext);
+            if (ext.ToLower() != NameMap[curItemType])
+            {
+                continue;
+            }
+            objects.Add(name);
+        }
+        overItems = objects.ToArray();
     }
-
 
     void GetItems ()
     {
+        OverrideItems();
         BIFItems();
         MODItems();
-        OverItems();
     }
 
     Vector3 FindSpawnPoint()

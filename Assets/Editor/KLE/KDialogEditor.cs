@@ -1,6 +1,7 @@
 ﻿using AuroraEngine;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -78,19 +79,21 @@ public class KDialogEditor : EditorWindow
         using (new EditorGUILayout.VerticalScope(GUILayout.Width(300)))
         {
             if (GUILayout.Button("Back to start"))
-                Debug.Log("Back to start");
+                BackToStart();
             if (GUILayout.Button("New Response"))
-                Debug.Log("New Response");
+                NewResponse();
             if (GUILayout.Button("Unlink response"))
-                Debug.Log("Unlink response");
-            if (GUILayout.Button("Copy selected"))
-                Debug.Log("Copy selected");
-            if (GUILayout.Button("Paste into start"))
-                Debug.Log("Paste into start");
-            if (GUILayout.Button("Move selected up"))
-                Debug.Log("Move selected up");
-            if (GUILayout.Button("Move selected down"))
-                Debug.Log("Move selected down");
+                UnlinkResponse();
+            //if (GUILayout.Button("Copy selected"))
+            //    CopySelected();
+            //if (GUILayout.Button("Paste into selected"))
+            //    PasteIntoSelected();
+            //if (GUILayout.Button("Paste into start"))
+            //    PasteIntoStart();
+            //if (GUILayout.Button("Move selected up"))
+            //    MoveSelectedUp();
+            //if (GUILayout.Button("Move selected down"))
+            //    MoveSelectedDown();
 
             // Debug information, for now
             if (curEntry != null)
@@ -109,6 +112,55 @@ public class KDialogEditor : EditorWindow
         }
     }
 
+    void BackToStart ()
+    {
+        curEntry = null;
+        curReply = null;
+        mode = DialogState.STARTING;
+    }
+
+    void NewResponse()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                // Create a new starting entry
+                dlg.StartingList.Add(new AuroraDLG.AStarting()
+                {
+
+                });
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                dlg.EntryList.Add(new AuroraDLG.AEntry() {
+
+                });
+                break;
+            case DialogState.CHOOSING_REPLY:
+                dlg.ReplyList.Add(new AuroraDLG.AReply()
+                {
+
+                });
+                break;
+        }
+    }
+
+    void UnlinkResponse ()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                // Create a new starting entry
+                dlg.StartingList.Remove((AuroraDLG.AStarting)curEditingLink);
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                curReply.EntriesList.Remove((AuroraDLG.AReply.AEntries)curEditingLink);
+                break;
+            case DialogState.CHOOSING_REPLY:
+                curEntry.RepliesList.Remove((AuroraDLG.AEntry.AReplies)curEditingLink);
+                break;
+        }
+    }
+    
     void DialogViewer ()
     {
         GUISkin old = GUI.skin;

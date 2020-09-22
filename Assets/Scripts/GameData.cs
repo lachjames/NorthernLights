@@ -30,6 +30,21 @@ public class AuroraData
     public Dictionary<string, _2DAObject> loaded2das = new Dictionary<string, _2DAObject>();
     public TLKObject tlk;
 
+    public static Dictionary<ResourceType, string> ExtMap = new Dictionary<ResourceType, string>()
+    {
+        { ResourceType.MDL, "mdl" },
+        { ResourceType.UTC, "utc" },
+        { ResourceType.UTD, "utd" },
+        { ResourceType.UTP, "utp" },
+        { ResourceType.UTT, "utt" },
+        { ResourceType.UTE, "ute" },
+        { ResourceType.UTS, "uts" },
+        { ResourceType.UTM, "utm" },
+        { ResourceType.UTW, "utw" },
+        { ResourceType.CAM, "cam" },
+    };
+
+
     public AuroraData(Game game, string moduleName)
     {
         this.game = game;
@@ -146,9 +161,14 @@ public class AuroraData
     public T Get<T>(string resref, ResourceType rt)
     {
         // Check the override folder
+        T obj = GetFromOverride<T>(resref, rt);
+        if (obj != null)
+        {
+            return obj;
+        }
 
         // Check the module
-        T obj = GetFromModule<T>(resref, rt);
+        obj = GetFromModule<T>(resref, rt);
         if (obj != null)
             return obj;
 
@@ -158,6 +178,42 @@ public class AuroraData
             return obj;
 
         return default;
+    }
+
+    public T GetFromOverride<T>(string resref, ResourceType rt)
+    {
+        Stream stream = GetStreamFromOverride(resref, rt);
+        if (stream == null)
+            return default;
+
+        GFFObject obj = new GFFLoader(stream).GetObject();
+        return (T)obj.Serialize<T>();
+    }
+
+    public Stream GetStreamFromOverride(string resref, ResourceType rt)
+    {
+        if (!ExtMap.ContainsKey(rt))
+        {
+            return null;
+        }
+        string reqExt = ExtMap[rt];
+        // TODO: Cache this information
+        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        {
+            string name = Path.GetFileNameWithoutExtension(path);
+            string ext = Path.GetExtension(path).Replace(".", "");
+
+            if (ext.ToLower() != reqExt.ToLower())
+            {
+                continue;
+            }
+            if (name.ToLower() != resref.ToLower())
+            {
+                continue;
+            }
+            return new FileStream(path, FileMode.Open);
+        }
+        return null;
     }
 
     public Stream GetStream(string resref, ResourceType rt)
