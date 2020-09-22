@@ -138,16 +138,4 @@ public class KLE : EditorWindow
             KModuleEditor.CreateArchive(folder, moduleName + ".mod", "erf", "--mod");
         }
     }
-
-    void SaveK1 ()
-    {
-        // For KotOR 1, save the files to a .rim file
-
-    }
-
-    void SaveK2 ()
-    {
-        // For KotOR 2, save the files to a .mod file
-
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using AuroraEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,6 +13,20 @@ public class AuroraInstance : MonoBehaviour
     void Start()
     {
         
+    }
+
+    float CalculateBearing (Transform t)
+    {
+        // This is an angle between 0-360 degrees
+        float yRot = t.rotation.eulerAngles.y;
+
+        // Need to map between -180 to 180
+        if (yRot > 180)
+        {
+            yRot -= 360;
+        }
+
+        return yRot * Mathf.Deg2Rad * -1;
     }
 
     // Update is called once per frame
@@ -31,22 +46,9 @@ public class AuroraInstance : MonoBehaviour
                 aCreature.ZPosition = transform.position.y;
 
                 // Calculate orientation from bearing
-                float yRot = transform.rotation.eulerAngles.y;
-                while (yRot < 0)
-                {
-                    yRot += 360;
-                }
-
-                while (yRot > 0)
-                {
-                    yRot -= 360;
-                }
-                float bearing = yRot * Mathf.Deg2Rad * -1;
-                Debug.Log(bearing);
-
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aCreature.YOrientation = Mathf.Cos(bearing);
-                aCreature.XOrientation = Mathf.Sin(bearing);
+                aCreature.YOrientation = Mathf.Cos(CalculateBearing(transform));
+                aCreature.XOrientation = Mathf.Sin(CalculateBearing(transform));
                 break;
             case "Placeables":
                 // TODO: Calculate bearing
@@ -56,17 +58,7 @@ public class AuroraInstance : MonoBehaviour
                 aPlaceable.Z = transform.position.y;
 
                 // Bearing is in radians, measured counterclockwise from North
-                float pDeg = transform.rotation.y;
-                while (pDeg < 0)
-                {
-                    pDeg += 360;
-                }
-
-                while (pDeg > 0)
-                {
-                    pDeg -= 360;
-                }
-                aPlaceable.Bearing = pDeg * Mathf.Deg2Rad * -1;
+                aPlaceable.Bearing = CalculateBearing(transform);
                 break;
             case "Doors":
                 // TODO: Door orientation and transform information (link, etc.)
@@ -75,20 +67,7 @@ public class AuroraInstance : MonoBehaviour
                 aDoor.Y = transform.position.z;
                 aDoor.Z = transform.position.y;
 
-                float dDeg = transform.rotation.y;
-                
-                // Would dDeg %= 360 work? Depends on how C# negative moduli work, but this is guaranteed 
-                // to work so we'll go with this for now
-                while (dDeg < 0)
-                {
-                    dDeg += 360;
-                }
-
-                while (dDeg > 0)
-                {
-                    dDeg -= 360;
-                }
-                aDoor.Bearing = dDeg * Mathf.Deg2Rad * -1;
+                aDoor.Bearing = CalculateBearing(transform);
                 break;
             case "Triggers":
                 AuroraGIT.ATrigger aTrigger = (AuroraGIT.ATrigger)gitData;
@@ -123,22 +102,9 @@ public class AuroraInstance : MonoBehaviour
                 aStore.YPosition = transform.position.z;
                 aStore.ZPosition = transform.position.y;
 
-                // Calculate orientation from bearing
-                float mDeg = transform.rotation.eulerAngles.y;
-                while (mDeg < 0)
-                {
-                    mDeg += 360;
-                }
-
-                while (mDeg > 0)
-                {
-                    mDeg -= 360;
-                }
-                float mBearing = mDeg * Mathf.Deg2Rad * -1;
-
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aStore.YOrientation = Mathf.Cos(mBearing);
-                aStore.XOrientation = Mathf.Sin(mBearing);
+                aStore.YOrientation = Mathf.Cos(CalculateBearing(transform));
+                aStore.XOrientation = Mathf.Sin(CalculateBearing(transform));
                 break;
             case "Waypoints":
                 AuroraGIT.AWaypoint aWaypoint = (AuroraGIT.AWaypoint)gitData;
@@ -146,31 +112,17 @@ public class AuroraInstance : MonoBehaviour
                 aWaypoint.YPosition = transform.position.z;
                 aWaypoint.ZPosition = transform.position.y;
 
-                // Calculate orientation from bearing
-                float wRot = transform.rotation.eulerAngles.y;
-                while (wRot < 0)
-                {
-                    wRot += 360;
-                }
-
-                while (wRot > 0)
-                {
-                    wRot -= 360;
-                }
-                float wBearing = wRot * Mathf.Deg2Rad * -1;
-                Debug.Log(wBearing);
-
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aWaypoint.YOrientation = Mathf.Cos(wBearing);
-                aWaypoint.XOrientation = Mathf.Sin(wBearing);
+                aWaypoint.YOrientation = Mathf.Cos(CalculateBearing(transform));
+                aWaypoint.XOrientation = Mathf.Sin(CalculateBearing(transform));
                 break;
             case "Cameras":
-                // TODO: Orientation (have to map the Quaternions I think)
                 AuroraGIT.ACamera aCamera = (AuroraGIT.ACamera)gitData;
+                // Don't ask me why we don't flip y and z here, I don't know :P
                 aCamera.Position = new Vector3(
                     transform.position.x,
-                    transform.position.z,
-                    transform.position.y
+                    transform.position.y,
+                    transform.position.z
                 );
 
                 // To reverse the quaternion map, we do the
