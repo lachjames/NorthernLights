@@ -20,7 +20,7 @@ public class KDialogEditor : EditorWindow
     AuroraDLG.AEntry curEntry;
     AuroraDLG.AReply curReply;
 
-    AuroraStruct curEditing, curEditingLink;
+    AuroraStruct curEditing, curEditingLink, curCopied;
 
     AuroraDLG.AEntry.AReplies curEntryReplyLink;
     AuroraDLG.AReply.AEntries curReplyEntryLink;
@@ -84,8 +84,8 @@ public class KDialogEditor : EditorWindow
                 NewResponse();
             if (GUILayout.Button("Unlink response"))
                 UnlinkResponse();
-            //if (GUILayout.Button("Copy selected"))
-            //    CopySelected();
+            if (GUILayout.Button("Copy selected"))
+                CopySelected();
             //if (GUILayout.Button("Paste into selected"))
             //    PasteIntoSelected();
             //if (GUILayout.Button("Paste into start"))
@@ -157,6 +157,22 @@ public class KDialogEditor : EditorWindow
                 break;
             case DialogState.CHOOSING_REPLY:
                 curEntry.RepliesList.Remove((AuroraDLG.AEntry.AReplies)curEditingLink);
+                break;
+        }
+    }
+
+    void CopySelected ()
+    {
+        switch (mode)
+        {
+            case DialogState.STARTING:
+                curCopied = (AuroraDLG.AStarting)curEditingLink;
+                break;
+            case DialogState.CHOOSING_ENTRY:
+                curCopied = (AuroraDLG.AReply.AEntries)curEditingLink;
+                break;
+            case DialogState.CHOOSING_REPLY:
+                curCopied = (AuroraDLG.AEntry.AReplies)curEditingLink;
                 break;
         }
     }

@@ -167,7 +167,13 @@ public class LoadingSystem : MonoBehaviour
         Debug.Log("Loading actions");
         foreach (Action action in actions)
         {
-            action.Invoke();
+            try
+            {
+                action.Invoke();
+            } catch
+            {
+                Debug.Log("Action failed");
+            }
         }
 
         actions.Clear();
