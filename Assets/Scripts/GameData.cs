@@ -67,7 +67,7 @@ public class AuroraData
         { "2da", ResourceType.TDA }
     };
 
-    public AuroraData(Game game, string moduleName)
+    public AuroraData(Game game, string moduleName, bool instantiateModule = true)
     {
         this.game = game;
         this.moduleName = moduleName;
@@ -81,7 +81,7 @@ public class AuroraData
         LoadOverride();
 
         if (moduleName != null)
-            LoadModule();
+            LoadModule(instantiateModule);
     }
 
     void LoadOverride ()
@@ -139,7 +139,7 @@ public class AuroraData
         UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
     }
 
-    void LoadModule()
+    void LoadModule(bool instantiateModule)
     {
         if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim"))
         {
@@ -168,7 +168,7 @@ public class AuroraData
             }
         }
 
-        module = new Module(moduleName, this);
+        module = new Module(moduleName, this, instantiateModule);
     }
 
     public string From2DA(string name, int idx, string row)
@@ -347,5 +347,47 @@ public class AuroraData
         }
 
         return resourceStream;
+    }
+
+    public HashSet<(string, ResourceType)> ModuleResources()
+    {
+        HashSet<(string, ResourceType)> resources = new HashSet<(string, ResourceType)>();
+
+        // List items from .rim
+        if (rim != null)
+        {
+            foreach ((string resref, ResourceType rt) in rim.resources.Keys)
+            {
+                resources.Add((resref, rt));
+            }
+        }
+
+        // List items from _s.rim
+        if (srim != null)
+        {
+            foreach ((string resref, ResourceType rt) in srim.resources.Keys)
+            {
+                resources.Add((resref, rt));
+            }
+        }
+
+        // List items from _dlg.erf
+        if (dlg != null)
+        {
+            foreach ((string resref, ResourceType rt) in dlg.resourceKeys.Keys)
+            {
+                resources.Add((resref, rt));
+            }
+        }
+
+        // List items from .mod
+        if (mod != null)
+        {
+            foreach ((string resref, ResourceType rt) in mod.resourceKeys.Keys)
+            {
+                resources.Add((resref, rt));
+            }
+        }
+        return resources;
     }
 }

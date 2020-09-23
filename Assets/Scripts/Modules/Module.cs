@@ -74,10 +74,16 @@ namespace AuroraEngine
             return bounds;
         }
 
-        public Module(string name, AuroraData data)
+        public Module(string name, AuroraData data, bool instantiateModule)
         {
             this.moduleName = name;
             this.data = data;
+
+            if (!instantiateModule)
+            {
+                return;
+            }
+
             if (stateManager == null)
             {
                 stateManager = GameObject.Find("State System").GetComponent<StateSystem>();

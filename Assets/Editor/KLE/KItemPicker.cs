@@ -47,6 +47,23 @@ public class KItemPicker : EditorWindow
         { ItemType.DIALOG, AuroraEngine.ResourceType.DLG }
     };
 
+    public static Dictionary<AuroraEngine.ResourceType, ItemType> ReverseTypeMap = new Dictionary<AuroraEngine.ResourceType, ItemType>()
+    {
+        { AuroraEngine.ResourceType.MDL, ItemType.MODEL},
+        { AuroraEngine.ResourceType.UTC, ItemType.CREATURE },
+        { AuroraEngine.ResourceType.UTD, ItemType.DOOR},
+        { AuroraEngine.ResourceType.UTP, ItemType.PLACEABLE },
+        { AuroraEngine.ResourceType.UTT, ItemType.TRIGGER },
+        { AuroraEngine.ResourceType.UTE, ItemType.ENCOUNTER },
+        { AuroraEngine.ResourceType.UTS, ItemType.SOUND },
+        { AuroraEngine.ResourceType.UTM, ItemType.STORE },
+        { AuroraEngine.ResourceType.UTW, ItemType.WAYPOINT },
+        { AuroraEngine.ResourceType.CAM, ItemType.CAMERA },
+        { AuroraEngine.ResourceType.NSS, ItemType.NSS },
+        { AuroraEngine.ResourceType.NCS, ItemType.NCS },
+        { AuroraEngine.ResourceType.DLG, ItemType.DIALOG }
+    };
+
     ItemType curItemType;
 
     Vector2 modScroll, bifScroll;
@@ -239,7 +256,7 @@ public class KItemPicker : EditorWindow
         List<string> objects = new List<string>();
 
         // Get items from the current module
-        foreach ((string name, AuroraEngine.ResourceType rt) in AuroraEngine.Resources.data.module.data.srim.resources.Keys)
+        foreach ((string name, AuroraEngine.ResourceType rt) in AuroraEngine.Resources.data.ModuleResources())
         {
             if (rt == curType)
             {

@@ -64,7 +64,7 @@ namespace AuroraEngine
                 return c;
             }
 
-            public CExoString Parse (string s)
+            public static CExoString Parse (string s)
             {
                 return new CExoString()
                 {
@@ -107,7 +107,7 @@ namespace AuroraEngine
                 return "<locstring label=\"" + label + "\" strref=\"" + stringref + "\"/>";
             }
 
-            public CExoLocString Parse (string s)
+            public static CExoLocString Parse (string s)
             {
                 return new CExoLocString()
                 {

@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -151,7 +153,6 @@ public class AuroraStruct
             } else if (f.FieldType == typeof(Byte))
             {
                 byte b = (byte)f.GetValue(this);
-                Debug.Log("Byte: " + b + " with label " + label + " has value " + b.ToString());
                 string byteXML = "<" + TypeNames[f.FieldType];
 
                 if (label != null)
@@ -161,6 +162,25 @@ public class AuroraStruct
                 byteXML += ">" + b.ToString() + "</" + TypeNames[f.FieldType] + ">";
 
                 values.Add(byteXML);
+            } else if (f.FieldType == typeof(Char))
+            {
+                char c = (char)f.GetValue(this);
+                string charXML = "<" + TypeNames[f.FieldType];
+
+                if (label != null)
+                {
+                    charXML += " label=\"" + label + "\"";
+                }
+
+                if ((int)c == 0)
+                {
+                    charXML += "/>";
+                } else
+                {
+                    charXML += ">" + c.ToString() + "</" + TypeNames[f.FieldType] + ">";
+                }
+
+                values.Add(charXML);
             }
             else
             {
@@ -215,4 +235,53 @@ public class AuroraStruct
 
         return xml;
     }
+    
+    public AuroraStruct DeepCopy ()
+    {
+        Type myType = GetType();
+        AuroraStruct copy = (AuroraStruct)Activator.CreateInstance(myType);
+
+        foreach (FieldInfo f in myType.GetFields())
+        {
+            if (f.FieldType.IsSubclassOf(typeof(AuroraStruct)))
+            {
+                AuroraStruct fCopy = ((AuroraStruct)f.GetValue(this)).DeepCopy();
+                f.SetValue(copy, fCopy);
+            } else if (f.FieldType == typeof(Vector3))
+            {
+                Vector3 v = (Vector3)f.GetValue(this);
+                Vector3 vCopy = new Vector3(v.x, v.y, v.z);
+                f.SetValue(copy, vCopy);
+            } else if (f.FieldType == typeof(Quaternion))
+            {
+                Quaternion q = (Quaternion)f.GetValue(this);
+                Quaternion qCopy = new Quaternion(q.x, q.y, q.z, q.w);
+                f.SetValue(copy, qCopy);
+            } else if (f.GetValue(this) == null)
+            {
+                f.SetValue(copy, null);
+            } else 
+            {
+                // Use the DeepClone method
+                object fClone = DeepClone(f.GetValue(this));
+                f.SetValue(copy, fClone);
+            }
+        }
+
+        return copy;
+    }
+
+    // Source: https://stackoverflow.com/questions/11074381/deep-copy-of-a-c-sharp-object
+    public static T DeepClone<T>(T obj)
+    {
+        using (var ms = new MemoryStream())
+        {
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
+            return (T)formatter.Deserialize(ms);
+        }
+    }
+
+
 }

@@ -321,6 +321,8 @@ namespace AuroraEngine
             int stringLength;
             for (int i = 0, j = 8; i < count; i++)
             {
+                strings[i] = new GFFObject.CExoLocString.SubString();
+
                 //string id = (2 x language id) + gender
                 strings[i].strid = BitConverter.ToInt32(buffer, j + 0);
 

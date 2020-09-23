@@ -229,6 +229,12 @@ public class GFFEditor : Editor
     {
         GFFObject.CExoLocString cur = (GFFObject.CExoLocString)f.GetValue(owner);
 
+        if (cur == null)
+        {
+            cur = new GFFObject.CExoLocString();
+            f.SetValue(owner, cur);
+        }
+
         using (new EditorGUILayout.VerticalScope())
         {
             // Show the resref

@@ -380,9 +380,9 @@ namespace AuroraEngine
         static Dictionary<string, Texture2D> loadedSpeculars = new Dictionary<string, Texture2D>();
         static Dictionary<string, NCSScript> scriptCache = new Dictionary<string, NCSScript>();
 
-        public static void Load (string moduleName)
+        public static void Load (string moduleName, bool instantiateModule = true)
         {
-            data = new AuroraData(targetGame, moduleName);
+            data = new AuroraData(targetGame, moduleName, instantiateModule);
         }
 
 		public static Texture2D LoadTexture2D(string resref)
@@ -747,7 +747,7 @@ namespace AuroraEngine
                 p.BeginOutputReadLine();
                 p.BeginErrorReadLine();
 
-                if (p.WaitForExit(2000) &&
+                if (p.WaitForExit(2048) &&
                     outputWaitHandle.WaitOne() &&
                     errorWaitHandle.WaitOne())
                 {
