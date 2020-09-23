@@ -19,7 +19,7 @@ using AuroraEngine;
     [GFF("PT_TUT_WND_SHOWN", Compatibility.BOTH, ExistsIn.SAVE)] public Byte[] PT_TUT_WND_SHOWN;
     [GFF("PT_LAST_GUI_PNL", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 PT_LAST_GUI_PNL;
     [GFF("JNL_SortOrder", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 JNL_SortOrder;
-    [GFF("PT_PCNAME", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_PCNAME;
+    [GFF("PT_PCNAME", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_PCNAME = new CExoString();
     [GFF("PT_ITEM_COMPONEN", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_ITEM_COMPONEN;
     [GFF("PT_ITEM_CHEMICAL", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_ITEM_CHEMICAL;
     [GFF("PT_SWOOP1", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_SWOOP1;
@@ -81,7 +81,7 @@ using AuroraEngine;
     [Serializable]public class APT_FB_MSG_LIST : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_FB_MSG_MSG", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_FB_MSG_MSG;
+        [GFF("PT_FB_MSG_MSG", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_FB_MSG_MSG = new CExoString();
         [GFF("PT_FB_MSG_TYPE", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 PT_FB_MSG_TYPE;
         [GFF("PT_FB_MSG_COLOR", Compatibility.BOTH, ExistsIn.SAVE)] public Byte PT_FB_MSG_COLOR;
         
@@ -90,8 +90,8 @@ using AuroraEngine;
     [Serializable]public class APT_DLG_MSG_LIST : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_DLG_MSG_SPKR", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_DLG_MSG_SPKR;
-        [GFF("PT_DLG_MSG_MSG", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_DLG_MSG_MSG;
+        [GFF("PT_DLG_MSG_SPKR", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_DLG_MSG_SPKR = new CExoString();
+        [GFF("PT_DLG_MSG_MSG", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString PT_DLG_MSG_MSG = new CExoString();
         
     }
     
@@ -128,7 +128,7 @@ using AuroraEngine;
     [Serializable]public class AJNL_Entries : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("JNL_PlotID", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString JNL_PlotID;
+        [GFF("JNL_PlotID", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString JNL_PlotID = new CExoString();
         [GFF("JNL_State", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 JNL_State;
         [GFF("JNL_Date", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 JNL_Date;
         [GFF("JNL_Time", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 JNL_Time;
@@ -161,7 +161,7 @@ using AuroraEngine;
     [Serializable]public class APT_COM_MSG_LIST : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
-        [GFF("PT_COM_MSG_MSG", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_COM_MSG_MSG;
+        [GFF("PT_COM_MSG_MSG", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PT_COM_MSG_MSG = new CExoString();
         [GFF("PT_COM_MSG_TYPE", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 PT_COM_MSG_TYPE;
         [GFF("PT_COM_MSG_COOR", Compatibility.TSL, ExistsIn.SAVE)] public Byte PT_COM_MSG_COOR;
         

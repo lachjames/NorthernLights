@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Xml.Serialization;
 using UnityEditor;
 using UnityEngine;
 using XNode;
@@ -20,6 +21,7 @@ namespace XNodeEditor {
         private static readonly Vector3[] polyLineTempArray = new Vector3[2];
 
         XNode.AuroraNode curNode;
+        string code = "";
 
         protected virtual void OnGUI() {
             Event e = Event.current;
@@ -56,7 +58,7 @@ namespace XNodeEditor {
 
         void DrawControls ()
         {
-            using (new GUILayout.AreaScope(new Rect(0, 0, 128, 192)))
+            using (new GUILayout.AreaScope(new Rect(0, 0, 256, 384)))
             {
                 using (new GUILayout.VerticalScope())
                 {
@@ -72,9 +74,12 @@ namespace XNodeEditor {
                     {
                         ExecuteGraph();
                     }
-                    if (GUILayout.Button("Convert to NSS", GUILayout.Height(30)))
+
+                    code = ConvertToNSS();
+
+                    if (code != "" && code != null)
                     {
-                        ConvertToNSS();
+                        GUILayout.TextArea(code);
                     }
 
                     if (curNode == null)
@@ -122,9 +127,10 @@ namespace XNodeEditor {
 
         }
 
-        void ConvertToNSS ()
+        string ConvertToNSS ()
         {
-            Debug.Log(GetStartNode().GetCode());
+            ExecutableNode.traversed.Clear();
+            return GetStartNode().GetCode();
         }
 
         void UpdateActions ()

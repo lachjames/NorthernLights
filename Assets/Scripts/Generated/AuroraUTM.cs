@@ -8,16 +8,16 @@ using AuroraEngine;
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
     [GFF("ResRef", Compatibility.BOTH, ExistsIn.BASE)] public String ResRef;
-    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
+    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName = new CExoLocString();
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
     [GFF("MarkUp", Compatibility.BOTH, ExistsIn.BASE)] public Int32 MarkUp;
     [GFF("MarkDown", Compatibility.BOTH, ExistsIn.BASE)] public Int32 MarkDown;
     [GFF("OnOpenStore", Compatibility.BOTH, ExistsIn.BASE)] public String OnOpenStore;
     [GFF("BuySellFlag", Compatibility.BOTH, ExistsIn.BASE)] public Byte BuySellFlag;
     [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte ID;
-    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions

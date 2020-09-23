@@ -11,6 +11,13 @@ using Newtonsoft.Json;
 using UnityEngine.Networking.NetworkSystem;
 using System.Net.Configuration;
 
+/* Some general post-generation manual changes are required.
+ *  - Renaming some classes with the same names as their parents
+ *  - Renaming two different typed variables with the same name
+ * 
+ * Some specific corrections must also be made:
+ *  - In AuroraDLG, VOTextChanged's type must be set to Int32, not Byte
+*/
 public class CodeGenerator : EditorWindow
 {
     const string TAB = "    ";
@@ -750,7 +757,16 @@ using AuroraEngine;
             {
                 (string fieldType, Compatibility c, ExistsIn e) = Fields[fieldName];
                 string attribute = "[GFF(\"" + fieldName + "\", Compatibility." + c.ToString() + ", ExistsIn." + e.ToString() + ")] ";
-                definition += TAB + attribute + "public " + fieldType + " " + fieldName.Replace(" ", "")  + ";\n";
+                definition += TAB + attribute + "public " + fieldType + " " + fieldName.Replace(" ", "");
+                if (fieldType == "CExoLocString")
+                {
+                    definition += " = new CExoLocString()";
+                } else if (fieldType == "CExoString")
+                {
+                    definition += " = new CExoString()";
+                }
+
+                definition += ";\n";
             }
 
             // Add the structs

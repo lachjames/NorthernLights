@@ -375,7 +375,7 @@ public abstract class AuroraUI
                 tex = Texture2D.blackTexture;
             }
 
-            name = AuroraEngine.Resources.GetString((int)template.LocalizedName.stringref);
+            name = AuroraEngine.Resources.GetString(template.LocalizedName);
 
             button = new Button(w, h, name);
         }
@@ -623,17 +623,17 @@ public class TooltipWindow : AuroraUI
         objName = "Object";
         if (obj.GetType() == typeof(Creature))
         {
-            string firstName = AuroraEngine.Resources.GetString((int)((AuroraUTC)obj.template).FirstName.stringref);
-            string lastName = AuroraEngine.Resources.GetString((int)((AuroraUTC)obj.template).LastName.stringref);
+            string firstName = AuroraEngine.Resources.GetString(((AuroraUTC)obj.template).FirstName);
+            string lastName = AuroraEngine.Resources.GetString(((AuroraUTC)obj.template).LastName);
             objName = firstName + (lastName != "" ? (" " + lastName) : "");
         }
         else if (obj.GetType() == typeof(Door))
         {
-            objName = AuroraEngine.Resources.GetString((int)((AuroraUTD)obj.template).LocName.stringref);
+            objName = AuroraEngine.Resources.GetString(((AuroraUTD)obj.template).LocName);
         }
         else if (obj.GetType() == typeof(Placeable))
         {
-            objName = AuroraEngine.Resources.GetString((int)((AuroraUTP)obj.template).LocName.stringref);
+            objName = AuroraEngine.Resources.GetString(((AuroraUTP)obj.template).LocName);
 
             // Check if the placeable is empty; if so, append " (Empty)" to the name
             if (((AuroraUTP)obj.template).ItemList.Count == 0)

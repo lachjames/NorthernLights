@@ -39,15 +39,15 @@ using AuroraEngine;
     [GFF("Mod_ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte[] Mod_ID;
     [GFF("Mod_Creator_ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Mod_Creator_ID;
     [GFF("Mod_Version", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_Version;
-    [GFF("Mod_VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_VO_ID;
+    [GFF("Mod_VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_VO_ID = new CExoString();
     [GFF("Expansion_Pack", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Expansion_Pack;
-    [GFF("Mod_Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Name;
-    [GFF("Mod_Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Tag;
-    [GFF("Mod_Hak", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Hak;
-    [GFF("Mod_Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Description;
+    [GFF("Mod_Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Name = new CExoLocString();
+    [GFF("Mod_Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Tag = new CExoString();
+    [GFF("Mod_Hak", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Mod_Hak = new CExoString();
+    [GFF("Mod_Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Mod_Description = new CExoLocString();
     [GFF("Mod_StartYear", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Mod_StartYear;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions

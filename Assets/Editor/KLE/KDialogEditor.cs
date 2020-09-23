@@ -119,11 +119,12 @@ public class KDialogEditor : EditorWindow
 
     void NewResponse()
     {
+        int idx;
         switch (mode)
         {
             case DialogState.STARTING:
                 // Create a new starting node, and a corresponding entry
-                int idx = dlg.EntryList.Count;
+                idx = dlg.EntryList.Count;
                 dlg.EntryList.Add(new AuroraDLG.AEntry()
                 {
                     structid = (uint)idx
@@ -135,14 +136,24 @@ public class KDialogEditor : EditorWindow
                 });
                 break;
             case DialogState.CHOOSING_ENTRY:
+                idx = dlg.EntryList.Count;
                 dlg.EntryList.Add(new AuroraDLG.AEntry() {
-
+                    structid = (uint)idx
+                });
+                curReply.EntriesList.Add(new AuroraDLG.AReply.AEntries()
+                {
+                    Index = (uint)idx
                 });
                 break;
             case DialogState.CHOOSING_REPLY:
+                idx = dlg.ReplyList.Count;
                 dlg.ReplyList.Add(new AuroraDLG.AReply()
                 {
-
+                    structid = (uint)idx
+                });
+                curEntry.RepliesList.Add(new AuroraDLG.AEntry.AReplies()
+                {
+                    Index = (uint)idx
                 });
                 break;
         }
@@ -186,18 +197,18 @@ public class KDialogEditor : EditorWindow
         switch (mode)
         {
             case DialogState.STARTING:
-                dlg.StartingList.Add((AuroraDLG.AStarting)curEditingLink);
+                dlg.StartingList.Add((AuroraDLG.AStarting)curEditingLink.DeepCopy());
                 break;
             case DialogState.CHOOSING_ENTRY:
-                curReply.EntriesList.Add((AuroraDLG.AReply.AEntries)curEditingLink);
+                curReply.EntriesList.Add((AuroraDLG.AReply.AEntries)curEditingLink.DeepCopy());
                 break;
             case DialogState.CHOOSING_REPLY:
-                curEntry.RepliesList.Add((AuroraDLG.AEntry.AReplies)curEditingLink);
+                curEntry.RepliesList.Add((AuroraDLG.AEntry.AReplies)curEditingLink.DeepCopy());
                 break;
         }
     }
 
-    void MoveSelectedUp ()
+    void MoveSelectedDown ()
     {
         switch (mode)
         {
@@ -210,16 +221,16 @@ public class KDialogEditor : EditorWindow
                 }
                 break;
             case DialogState.CHOOSING_ENTRY:
-                int entryIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
-                if (entryIdx < dlg.StartingList.Count - 1)
+                int entryIdx = curReply.EntriesList.IndexOf((AuroraDLG.AReply.AEntries)curEditingLink);
+                if (entryIdx < dlg.EntryList.Count - 1)
                 {
                     curReply.EntriesList.RemoveAt(entryIdx);
                     curReply.EntriesList.Insert(entryIdx + 1, (AuroraDLG.AReply.AEntries)curEditingLink);
                 }
                 break;
             case DialogState.CHOOSING_REPLY:
-                int replyIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
-                if (replyIdx < dlg.StartingList.Count - 1)
+                int replyIdx = curEntry.RepliesList.IndexOf((AuroraDLG.AEntry.AReplies)curEditingLink);
+                if (replyIdx < dlg.ReplyList.Count - 1)
                 {
                     curEntry.RepliesList.RemoveAt(replyIdx);
                     curEntry.RepliesList.Insert(replyIdx + 1, (AuroraDLG.AEntry.AReplies)curEditingLink);
@@ -228,7 +239,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void MoveSelectedDown ()
+    void MoveSelectedUp ()
     {
         switch (mode)
         {
@@ -241,7 +252,7 @@ public class KDialogEditor : EditorWindow
                 }
                 break;
             case DialogState.CHOOSING_ENTRY:
-                int entryIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                int entryIdx = curReply.EntriesList.IndexOf((AuroraDLG.AReply.AEntries)curEditingLink);
                 if (entryIdx > 0)
                 {
                     curReply.EntriesList.RemoveAt(entryIdx);
@@ -249,7 +260,7 @@ public class KDialogEditor : EditorWindow
                 }
                 break;
             case DialogState.CHOOSING_REPLY:
-                int replyIdx = dlg.StartingList.IndexOf((AuroraDLG.AStarting)curEditingLink);
+                int replyIdx = curEntry.RepliesList.IndexOf((AuroraDLG.AEntry.AReplies)curEditingLink);
                 if (replyIdx > 0)
                 {
                     curEntry.RepliesList.RemoveAt(replyIdx);
@@ -262,7 +273,7 @@ public class KDialogEditor : EditorWindow
     void DialogViewer ()
     {
         GUISkin old = GUI.skin;
-        GUI.skin = new GUISkin();
+        GUI.skin = (GUISkin)CreateInstance("GUISkin");
         GUI.skin.button.fontSize = 24;
         GUI.skin.button.normal.textColor = new Color32(0x00, 0xA4, 0xF4, 0xFF);
         GUI.skin.button.hover.textColor = new Color32(0xF4, 0xF9, 0x00, 0xFF);
@@ -302,7 +313,7 @@ public class KDialogEditor : EditorWindow
                 {
                     AuroraDLG.AEntry entry = GetEntry((int)start.Index);
                     string startLine = "null";
-                    startLine = AuroraEngine.Resources.GetString((int)entry.Text.stringref);
+                    startLine = AuroraEngine.Resources.GetString(entry.Text);
                     if (GUILayout.Button(startLine))
                     {
                         if (Event.current.button == 1)
@@ -318,7 +329,7 @@ public class KDialogEditor : EditorWindow
                 break;
             case DialogState.CHOOSING_REPLY:
                 // Show the last line of dialog said by the PC
-                string line = AuroraEngine.Resources.GetString((int)curEntry.Text.stringref);
+                string line = AuroraEngine.Resources.GetString(curEntry.Text);
                 GUILayout.Label(line);
                 break;
             case DialogState.CHOOSING_ENTRY:
@@ -330,7 +341,7 @@ public class KDialogEditor : EditorWindow
                 foreach (AuroraDLG.AReply.AEntries link in curReply.EntriesList)
                 {
                     AuroraDLG.AEntry entry = GetEntry((int)link.Index);
-                    string linkLine = AuroraEngine.Resources.GetString((int)entry.Text.stringref);
+                    string linkLine = AuroraEngine.Resources.GetString(entry.Text);
                     if (GUILayout.Button(linkLine))
                     {
                         if (Event.current.button == 1)
@@ -362,7 +373,7 @@ public class KDialogEditor : EditorWindow
                 foreach (AuroraDLG.AEntry.AReplies link in curEntry.RepliesList)
                 {
                     AuroraDLG.AReply reply = GetReply((int)link.Index);
-                    string line = AuroraEngine.Resources.GetString((int)reply.Text.stringref);
+                    string line = AuroraEngine.Resources.GetString(reply.Text);
                     if (GUILayout.Button(line))
                     {
                         if (Event.current.button == 1)

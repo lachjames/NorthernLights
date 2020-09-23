@@ -95,13 +95,20 @@ namespace AuroraEngine
 
             public uint stringref = 0;
             public uint stringcount = 0;
-            public SubString[] strings = new SubString[] { };
+            public List<SubString> strings = new List<SubString>();
 
             public string ToXML(string label)
             {
-                if (strings != null && strings.Length >= 0)
+                if (strings != null && strings.Count >= 0)
                 {
-                    Debug.LogWarning("Warning, CExoLocString XML conversion not yet implemented for non-strref");
+                    string s = "<locstring label=\"" + label + "\" strref=\"" + stringref + "\">";
+                    foreach (SubString substr in strings)
+                    {
+                        s += "<string language=\"" + substr.strid + "\">" + substr.str + "</string>";
+                    }
+                    s += "</locstring>";
+
+                    return s;
                 }
 
                 return "<locstring label=\"" + label + "\" strref=\"" + stringref + "\"/>";
@@ -113,7 +120,7 @@ namespace AuroraEngine
                 {
                     stringref = 0,
                     stringcount = 1,
-                    strings = new SubString[]
+                    strings = new List<SubString>()
                     {
                         new SubString ()
                         {
@@ -265,7 +272,14 @@ namespace AuroraEngine
                         object serialized = serializer.Invoke(dict[name], null);
 
                         // Set the value in the instance
-                        p.SetValue(return_obj, serialized);
+                        try
+                        {
+                            p.SetValue(return_obj, serialized);
+                        } catch (Exception e)
+                        {
+                            Debug.LogError("Failed to serialize value " + name + " of type " + serialized.GetType() + "; expected " + p.FieldType);
+                            throw e;
+                        }
                     }
 
                     //foreach (string k in dict.Keys)

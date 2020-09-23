@@ -9,7 +9,7 @@ using AuroraEngine;
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
     [GFF("CONTROLTYPE", Compatibility.BOTH, ExistsIn.BASE)] public Int32 CONTROLTYPE;
     [GFF("Obj_Locked", Compatibility.BOTH, ExistsIn.BASE)] public Byte Obj_Locked;
-    [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG;
+    [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG = new CExoString();
     [GFF("Obj_ParentID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Obj_ParentID;
     [GFF("ALPHA", Compatibility.BOTH, ExistsIn.BASE)] public Single ALPHA;
     [GFF("COLOR", Compatibility.BOTH, ExistsIn.BASE)] public Vector3 COLOR;
@@ -54,8 +54,8 @@ using AuroraEngine;
         [GFF("CONTROLTYPE", Compatibility.BOTH, ExistsIn.BASE)] public Int32 CONTROLTYPE;
         [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ID;
         [GFF("Obj_Locked", Compatibility.BOTH, ExistsIn.BASE)] public Byte Obj_Locked;
-        [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent;
-        [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG;
+        [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent = new CExoString();
+        [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG = new CExoString();
         [GFF("Obj_ParentID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Obj_ParentID;
         [GFF("COLOR", Compatibility.BOTH, ExistsIn.BASE)] public Vector3 COLOR;
         [GFF("LOOPING", Compatibility.BOTH, ExistsIn.BASE)] public Byte LOOPING;
@@ -115,7 +115,7 @@ using AuroraEngine;
             [GFF("FONT", Compatibility.BOTH, ExistsIn.BASE)] public String FONT;
             [GFF("STRREF", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 STRREF;
             [GFF("PULSING", Compatibility.BOTH, ExistsIn.BASE)] public Byte PULSING;
-            [GFF("TEXT", Compatibility.TSL, ExistsIn.BASE)] public CExoString TEXT;
+            [GFF("TEXT", Compatibility.TSL, ExistsIn.BASE)] public CExoString TEXT = new CExoString();
             
         }
         
@@ -148,8 +148,8 @@ using AuroraEngine;
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
             [GFF("CONTROLTYPE", Compatibility.BOTH, ExistsIn.BASE)] public Int32 CONTROLTYPE;
-            [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent;
-            [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG;
+            [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent = new CExoString();
+            [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG = new CExoString();
             [GFF("Obj_ParentID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Obj_ParentID;
         
             // Struct definitions
@@ -189,7 +189,7 @@ using AuroraEngine;
                 [GFF("ALIGNMENT", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ALIGNMENT;
                 [GFF("COLOR", Compatibility.BOTH, ExistsIn.BASE)] public Vector3 COLOR;
                 [GFF("FONT", Compatibility.BOTH, ExistsIn.BASE)] public String FONT;
-                [GFF("TEXT", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TEXT;
+                [GFF("TEXT", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TEXT = new CExoString();
                 [GFF("STRREF", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 STRREF;
                 [GFF("PULSING", Compatibility.BOTH, ExistsIn.BASE)] public Byte PULSING;
                 
@@ -201,8 +201,8 @@ using AuroraEngine;
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
             [GFF("CONTROLTYPE", Compatibility.BOTH, ExistsIn.BASE)] public Int32 CONTROLTYPE;
-            [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent;
-            [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG;
+            [GFF("Obj_Parent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Obj_Parent = new CExoString();
+            [GFF("TAG", Compatibility.BOTH, ExistsIn.BASE)] public CExoString TAG = new CExoString();
             [GFF("Obj_ParentID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Obj_ParentID;
             [GFF("DRAWMODE", Compatibility.BOTH, ExistsIn.BASE)] public Byte DRAWMODE;
             [GFF("MAXVALUE", Compatibility.BOTH, ExistsIn.BASE)] public Int32 MAXVALUE;

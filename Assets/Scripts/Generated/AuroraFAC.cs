@@ -17,7 +17,7 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BOTH)] public uint structid;
         [GFF("FactionParentID", Compatibility.BOTH, ExistsIn.BOTH)] public UInt32 FactionParentID;
-        [GFF("FactionName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString FactionName;
+        [GFF("FactionName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString FactionName = new CExoString();
         [GFF("FactionGlobal", Compatibility.BOTH, ExistsIn.BOTH)] public UInt16 FactionGlobal;
         
     }

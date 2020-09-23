@@ -10,20 +10,20 @@ using AuroraEngine;
     [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
     [GFF("Race", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Race;
     [GFF("SubraceIndex", Compatibility.BOTH, ExistsIn.BOTH)] public Byte SubraceIndex;
-    [GFF("FirstName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString FirstName;
-    [GFF("LastName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString LastName;
+    [GFF("FirstName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString FirstName = new CExoLocString();
+    [GFF("LastName", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString LastName = new CExoLocString();
     [GFF("Appearance_Type", Compatibility.BOTH, ExistsIn.BOTH)] public UInt16 Appearance_Type;
     [GFF("Gender", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Gender;
     [GFF("Phenotype", Compatibility.BOTH, ExistsIn.BOTH)] public Int32 Phenotype;
     [GFF("PortraitId", Compatibility.BOTH, ExistsIn.BOTH)] public UInt16 PortraitId;
-    [GFF("Description", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString Description;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Tag;
+    [GFF("Description", Compatibility.BOTH, ExistsIn.BOTH)] public CExoLocString Description = new CExoLocString();
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Tag = new CExoString();
     [GFF("Conversation", Compatibility.BOTH, ExistsIn.BOTH)] public String Conversation;
     [GFF("IsPC", Compatibility.BOTH, ExistsIn.BOTH)] public Byte IsPC;
     [GFF("FactionID", Compatibility.BOTH, ExistsIn.BOTH)] public UInt16 FactionID;
     [GFF("Disarmable", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Disarmable;
-    [GFF("Subrace", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Subrace;
-    [GFF("Deity", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Deity;
+    [GFF("Subrace", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Subrace = new CExoString();
+    [GFF("Deity", Compatibility.BOTH, ExistsIn.BOTH)] public CExoString Deity = new CExoString();
     [GFF("SoundSetFile", Compatibility.BOTH, ExistsIn.BOTH)] public UInt16 SoundSetFile;
     [GFF("Plot", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Plot;
     [GFF("Interruptable", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Interruptable;
@@ -68,7 +68,7 @@ using AuroraEngine;
     [GFF("ScriptUserDefine", Compatibility.BOTH, ExistsIn.BOTH)] public String ScriptUserDefine;
     [GFF("ScriptOnBlocked", Compatibility.BOTH, ExistsIn.BOTH)] public String ScriptOnBlocked;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
-    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
     [GFF("NotReorienting", Compatibility.BOTH, ExistsIn.BOTH)] public Byte NotReorienting;
     [GFF("Portrait", Compatibility.KotOR, ExistsIn.BASE)] public String Portrait;
     [GFF("SaveReflex", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveReflex;
@@ -79,7 +79,7 @@ using AuroraEngine;
     [GFF("Tail", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Tail;
     [GFF("SaveWill", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveWill;
     [GFF("SaveFortitude", Compatibility.KotOR, ExistsIn.BASE)] public Byte SaveFortitude;
-    [GFF("SubRace", Compatibility.KotOR, ExistsIn.BASE)] public CExoString SubRace;
+    [GFF("SubRace", Compatibility.KotOR, ExistsIn.BASE)] public CExoString SubRace = new CExoString();
     [GFF("CRAdjust", Compatibility.KotOR, ExistsIn.BASE)] public Int32 CRAdjust;
     [GFF("SoundSet", Compatibility.KotOR, ExistsIn.BASE)] public UInt32 SoundSet;
     [GFF("Appearance_Head", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Appearance_Head;
@@ -91,8 +91,8 @@ using AuroraEngine;
     [GFF("IgnoreCrePath", Compatibility.TSL, ExistsIn.BOTH)] public Byte IgnoreCrePath;
     [GFF("MultiplierSet", Compatibility.TSL, ExistsIn.BOTH)] public Byte MultiplierSet;
     [GFF("WillNotRender", Compatibility.TSL, ExistsIn.BOTH)] public Byte WillNotRender;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
     [GFF("Age", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 Age;
     [GFF("StartingPackage", Compatibility.BOTH, ExistsIn.SAVE)] public Byte StartingPackage;
@@ -187,8 +187,8 @@ using AuroraEngine;
         [GFF("OffHandCritMult", Compatibility.BOTH, ExistsIn.SAVE)] public Byte OffHandCritMult;
         [GFF("LeftEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 LeftEquip;
         [GFF("RightEquip", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 RightEquip;
-        [GFF("LeftString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LeftString;
-        [GFF("RightString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString RightString;
+        [GFF("LeftString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LeftString = new CExoString();
+        [GFF("RightString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString RightString = new CExoString();
         [GFF("DamageDice", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDice;
         [GFF("DamageDie", Compatibility.BOTH, ExistsIn.SAVE)] public Byte DamageDie;
     
@@ -309,11 +309,11 @@ using AuroraEngine;
         [GFF("Dropable", Compatibility.BOTH, ExistsIn.BOTH)] public Byte Dropable;
         [GFF("ObjectId", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 ObjectId;
         [GFF("BaseItem", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 BaseItem;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag;
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag = new CExoString();
         [GFF("Identified", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Identified;
-        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description;
-        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified;
-        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName;
+        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description = new CExoLocString();
+        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified = new CExoLocString();
+        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName = new CExoLocString();
         [GFF("StackSize", Compatibility.BOTH, ExistsIn.SAVE)] public UInt16 StackSize;
         [GFF("Stolen", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Stolen;
         [GFF("Upgrades", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Upgrades;
@@ -383,11 +383,11 @@ using AuroraEngine;
         [GFF("Repos_PosY", Compatibility.TSL, ExistsIn.BASE)] public UInt16 Repos_PosY;
         [GFF("ObjectId", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 ObjectId;
         [GFF("BaseItem", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 BaseItem;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag;
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag = new CExoString();
         [GFF("Identified", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Identified;
-        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description;
-        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified;
-        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName;
+        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description = new CExoLocString();
+        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified = new CExoLocString();
+        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName = new CExoLocString();
         [GFF("StackSize", Compatibility.BOTH, ExistsIn.SAVE)] public UInt16 StackSize;
         [GFF("Stolen", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Stolen;
         [GFF("Upgrades", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Upgrades;
@@ -459,7 +459,7 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
         [GFF("ExpressionId", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 ExpressionId;
-        [GFF("ExpressionString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString ExpressionString;
+        [GFF("ExpressionString", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString ExpressionString = new CExoString();
         
     }
     
@@ -502,7 +502,7 @@ using AuroraEngine;
         [Serializable]public class AString : AuroraStruct {
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-            [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Value;
+            [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Value = new CExoString();
             
         }
         
@@ -544,7 +544,7 @@ using AuroraEngine;
                 [GFF("CRC", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 CRC;
                 [GFF("InstructionPtr", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 InstructionPtr;
                 [GFF("SecondaryPtr", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 SecondaryPtr;
-                [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
+                [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name = new CExoString();
                 [GFF("StackSize", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 StackSize;
             
                 // Struct definitions
@@ -567,10 +567,15 @@ using AuroraEngine;
                         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
                         [GFF("Type", Compatibility.BOTH, ExistsIn.SAVE)] public Char Type;
                         [GFF("Value", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 Value;
+                        
                     }
+                    
                 }
+                
             }
+            
         }
+        
     }
     
     [Serializable]public class ALvlStat : AuroraStruct {

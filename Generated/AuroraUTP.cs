@@ -7,9 +7,9 @@ using AuroraEngine;
 [Serializable]public class AuroraUTP : AuroraStruct {
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName;
-    [GFF("Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Description;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName = new CExoLocString();
+    [GFF("Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Description = new CExoLocString();
     [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
     [GFF("AutoRemoveKey", Compatibility.BOTH, ExistsIn.BASE)] public Byte AutoRemoveKey;
     [GFF("CloseLockDC", Compatibility.BOTH, ExistsIn.BASE)] public Byte CloseLockDC;
@@ -30,7 +30,7 @@ using AuroraEngine;
     [GFF("TrapFlag", Compatibility.BOTH, ExistsIn.BASE)] public Byte TrapFlag;
     [GFF("TrapOneShot", Compatibility.BOTH, ExistsIn.BASE)] public Byte TrapOneShot;
     [GFF("TrapType", Compatibility.BOTH, ExistsIn.BASE)] public Byte TrapType;
-    [GFF("KeyName", Compatibility.BOTH, ExistsIn.BASE)] public CExoString KeyName;
+    [GFF("KeyName", Compatibility.BOTH, ExistsIn.BASE)] public CExoString KeyName = new CExoString();
     [GFF("AnimationState", Compatibility.BOTH, ExistsIn.BASE)] public Byte AnimationState;
     [GFF("Appearance", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Appearance;
     [GFF("HP", Compatibility.BOTH, ExistsIn.BASE)] public Int16 HP;
@@ -61,15 +61,15 @@ using AuroraEngine;
     [GFF("OnInvDisturbed", Compatibility.BOTH, ExistsIn.BASE)] public String OnInvDisturbed;
     [GFF("OnUsed", Compatibility.BOTH, ExistsIn.BASE)] public String OnUsed;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
-    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
     [GFF("IsComputer", Compatibility.BOTH, ExistsIn.BASE)] public Byte IsComputer;
     [GFF("Portrait", Compatibility.BOTH, ExistsIn.BASE)] public String Portrait;
     [GFF("NotBlastable", Compatibility.TSL, ExistsIn.BASE)] public Byte NotBlastable;
     [GFF("OpenLockDiff", Compatibility.TSL, ExistsIn.BASE)] public Byte OpenLockDiff;
     [GFF("OpenLockDiffMod", Compatibility.TSL, ExistsIn.BASE)] public Char OpenLockDiffMod;
     [GFF("OnFailToOpen", Compatibility.TSL, ExistsIn.BASE)] public String OnFailToOpen;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions

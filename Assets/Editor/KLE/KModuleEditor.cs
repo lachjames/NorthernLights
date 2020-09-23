@@ -298,6 +298,11 @@ public class KModuleEditor : EditorWindow
             selectedResourceType = rt;
             selectedName = name;
         }
+
+        if (selected != null && !editedTemplates.Contains((selectedName, selected, selectedResourceType)))
+        {
+            editedTemplates.Add((selectedName, selected, selectedResourceType));
+        }
     }
 
     void SelectedItem(Stream stream, ResourceType rt)
@@ -355,17 +360,10 @@ public class KModuleEditor : EditorWindow
         // Draw the GFF editor for the selected item
         using (new EditorGUILayout.VerticalScope())
         {
-            if (selectedResourceType != ResourceType.DLG)
+            using (var scroll = new EditorGUILayout.ScrollViewScope(editorScroll))
             {
-                using (var scroll = new EditorGUILayout.ScrollViewScope(editorScroll))
-                {
-                    editorScroll = scroll.scrollPosition;
-                    GFFEditor.DrawStruct(selected);
-                }
-            }
-            if (GUILayout.Button("Mark Template as Edited"))
-            {
-                editedTemplates.Add((selectedName, selected, selectedResourceType));
+                editorScroll = scroll.scrollPosition;
+                GFFEditor.DrawStruct(selected);
             }
         }
     }
@@ -399,32 +397,13 @@ public class KModuleEditor : EditorWindow
     void LoadModule()
     {
         newTemplates.Clear();
+        editedTemplates.Clear();
 
         string loc = EditorUtility.OpenFilePanel("Select Module", "", "*");
+        modulePath = Path.GetDirectoryName(loc);
 
         moduleName = Path.GetFileNameWithoutExtension(loc);
-
         AuroraEngine.Resources.Load(moduleName, false);
-
-        //modulePath = Path.GetDirectoryName(loc);
-
-        // Load rim
-        //string rimLoc = modulePath + "\\" + moduleName + ".rim";
-        //rim = new RIMObject(rimLoc);
-
-        //// Load s_rim
-        //string srimLoc = modulePath + "\\" + moduleName + "_s.rim";
-        //srim = new RIMObject(srimLoc);
-
-        //// If TSL, load dlg_erf and mod 
-        //if (AuroraPrefs.TargetGame() == Game.TSL)
-        //{
-        //    string dlgLoc = modulePath + "\\" + moduleName + "_dlg.erf";
-        //    dlg = new ERFObject(dlgLoc);
-
-        //    string modLoc = modulePath + "\\" + moduleName + ".mod";
-        //    mod = new ERFObject(modLoc);
-        //}
     }
 
     void ImportModel()

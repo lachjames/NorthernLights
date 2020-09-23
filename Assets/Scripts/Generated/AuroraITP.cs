@@ -18,7 +18,7 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
         [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte ID;
-        [GFF("DELETE_ME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString DELETE_ME;
+        [GFF("DELETE_ME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString DELETE_ME = new CExoString();
         [GFF("TYPE", Compatibility.BOTH, ExistsIn.BASE)] public Byte TYPE;
         [GFF("Type", Compatibility.BOTH, ExistsIn.BASE)] public Byte Type;
     
@@ -30,8 +30,8 @@ using AuroraEngine;
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
             [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Byte ID;
-            [GFF("DELETE_ME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString DELETE_ME;
-            [GFF("NAME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString NAME;
+            [GFF("DELETE_ME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString DELETE_ME = new CExoString();
+            [GFF("NAME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString NAME = new CExoString();
             [GFF("RESREF", Compatibility.BOTH, ExistsIn.BASE)] public String RESREF;
             [GFF("CR", Compatibility.BOTH, ExistsIn.BASE)] public Single CR;
             [GFF("Type", Compatibility.BOTH, ExistsIn.BASE)] public Byte Type;
@@ -43,7 +43,7 @@ using AuroraEngine;
             [Serializable]public class ALIST2 : AuroraStruct {
                 // Field definitions
                 [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-                [GFF("NAME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString NAME;
+                [GFF("NAME", Compatibility.BOTH, ExistsIn.BASE)] public CExoString NAME = new CExoString();
                 [GFF("RESREF", Compatibility.BOTH, ExistsIn.BASE)] public String RESREF;
                 [GFF("CR", Compatibility.BOTH, ExistsIn.BASE)] public Single CR;
                 

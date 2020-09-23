@@ -6,160 +6,157 @@ using System.Reflection;
 using UnityEngine;
 using XNode;
 
-public class ExecutableNode : AuroraNode
+namespace XNode
 {
-	[Input] public Conditional trigger;
-	[Output] public Conditional after;
+	public abstract class ComputeNode : ExecutableNode
+	{
+		public abstract Type ParentClass { get; }
 
-	public AuroraNode GetAfter ()
-    {
-		Debug.Log("Getting next node");
+		public string ActionName;
+		string lastActionName;
 
-		foreach (NodePort port in Outputs)
-        {
-			if (port.fieldName == "after")
-            {
-				if (port.Connection == null)
+		object returnValue;
+
+		// Use this for initialization
+		protected override void Init()
+		{
+			base.Init();
+		}
+
+		// Return the correct value of an output port when requested
+		public override object GetValue(NodePort port)
+		{
+			return returnValue;
+		}
+
+		public void UpdateAction()
+		{
+			if (lastActionName == ActionName)
+			{
+				return;
+			}
+
+			// If we reach this point, the action name has changed
+			lastActionName = ActionName;
+
+			// Remove all the old ports
+			foreach (var p in new List<NodePort>(DynamicPorts))
+			{
+				RemoveDynamicPort(p);
+			}
+
+			// Find the MethodInfo for the action
+			MethodInfo m = ParentClass.GetMethod(ActionName);
+
+			if (m == null)
+			{
+				return;
+			}
+
+			// Create ports for the inputs
+			foreach (ParameterInfo p in m.GetParameters())
+			{
+				if (p.ParameterType == typeof(NCSContext))
                 {
-					Debug.Log("Port is not connected, so execution terminates here");
-					return null;
+					AddDynamicInput(typeof(Conditional), ConnectionType.Override, TypeConstraint.Inherited, p.Name);
+				}
+				else
+                {
+					AddDynamicInput(p.ParameterType, ConnectionType.Override, TypeConstraint.Inherited, p.Name);
+				}
+			}
+
+			// Create ports for the outputs if they exist
+			if (m.ReturnType != typeof(void))
+			{
+				// Has a return value
+				AddDynamicOutput(m.ReturnType, ConnectionType.Multiple, TypeConstraint.None, "return");
+			}
+		}
+
+		public override AuroraNode Execute()
+		{
+			// Find the method
+			MethodInfo m = ParentClass.GetMethod(ActionName);
+
+			// Calculate the parameters of the method based on the inputs to the node
+			List<object> parameters = new List<object>();
+
+			foreach (NodePort input in DynamicInputs)
+			{
+				parameters.Add(input.GetInputValue());
+			}
+
+			// We assume the method is static, and run it
+			returnValue = m.Invoke(null, parameters.ToArray());
+
+			return base.Execute();
+		}
+
+		public override string GetCode()
+		{
+			// Find the method
+			MethodInfo m = ParentClass.GetMethod(ActionName);
+
+			// Calculate the parameters of the method based on the inputs to the node
+			List<string> parameters = new List<string>();
+
+			bool semicolon = true;
+
+            foreach (NodePort input in Inputs)
+            {
+				if (input.fieldName == "trigger")
+                {
+					if (input.Connection == null)
+					{
+						semicolon = false;
+					}
+					// Skip the trigger node
+					continue;
                 }
-				Debug.Log("Connecting to the next node");
-				return (AuroraNode)port.Connection.node;
+				if (input.Connection == null)
+				{
+					throw new Exception("Empty input for " + input.fieldName);
+				}
+				parameters.Add(((AuroraNode)input.Connection.node).GetCode());
             }
-        }
 
-		throw new Exception("Did not find after");
-    }
-
-    public override AuroraNode Execute()
-    {
-		return GetAfter();
-    }
-
-	public override string GetCode()
-	{
-		return GetAfter().GetCode();
-	}
-}
-
-public abstract class ComputeNode: ExecutableNode
-{
-	public abstract Type ParentClass { get; }
-
-	public string ActionName;
-	string lastActionName;
-
-	object returnValue;
-
-	// Use this for initialization
-	protected override void Init()
-	{
-		base.Init();
-	}
-
-	// Return the correct value of an output port when requested
-	public override object GetValue(NodePort port)
-	{
-		return returnValue;
-	}
-
-	public void UpdateAction()
-	{
-		if (lastActionName == ActionName)
-		{
-			return;
-		}
-
-		// If we reach this point, the action name has changed
-		lastActionName = ActionName;
-
-		// Remove all the old ports
-		foreach (var p in new List<NodePort>(DynamicPorts))
-		{
-			RemoveDynamicPort(p);
-		}
-
-		// Find the MethodInfo for the action
-		MethodInfo m = ParentClass.GetMethod(ActionName);
-
-		// Create ports for the inputs
-		foreach (ParameterInfo p in m.GetParameters())
-		{
-			AddDynamicInput(p.ParameterType, ConnectionType.Override, TypeConstraint.Inherited, p.Name);
-		}
-
-		// Create ports for the outputs if they exist
-		if (m.ReturnType != typeof(void))
-		{
-			// Has a return value
-			AddDynamicOutput(m.ReturnType, ConnectionType.Multiple, TypeConstraint.None, "return");
+			if (semicolon)
+            {
+				return ActionName + "(" + String.Join(",", parameters) + ");\n" + GetAfterCode();
+			} else
+            {
+				return ActionName + "(" + String.Join(",", parameters) + ")";
+			}
 		}
 	}
 
-    public override AuroraNode Execute()
-    {
-		// Find the method
-		MethodInfo m = ParentClass.GetMethod(ActionName);
-
-		// Calculate the parameters of the method based on the inputs to the node
-		List<object> parameters = new List<object>();
-
-		foreach (NodePort input in DynamicInputs)
-		{
-			parameters.Add(input.GetInputValue());
-		}
-
-		// We assume the method is static, and run it
-		returnValue = m.Invoke(null, parameters.ToArray());
-
-		return base.Execute();
-    }
-
-	public override string GetCode ()
-    {
-		// Find the method
-		MethodInfo m = ParentClass.GetMethod(ActionName);
-
-		// Calculate the parameters of the method based on the inputs to the node
-		List<string> parameters = new List<string>();
-
-		foreach (NodePort input in DynamicInputs)
-		{
-			parameters.Add(((AuroraNode)input.node).GetCode());
-		}
-
-		return ActionName + "(" + String.Join(",", parameters) + ";";
-	}
-}
-
-[CreateNodeMenu("Functions/Custom")]
-public class CustomNode : ComputeNode
-{
-	public override Type ParentClass
+	[CreateNodeMenu("Functions/Custom")]
+	public class CustomNode : ComputeNode
 	{
-		get
-        {
-			return typeof(NCSOverride);
-        }
-    }
-}
-
-[CreateNodeMenu("Functions/Action")]
-public class ActionNode : ComputeNode
-{
-	public override Type ParentClass
-	{
-		get
+		public override Type ParentClass
 		{
-			return typeof(NWScript);
+			get
+			{
+				return typeof(NCSOverride);
+			}
 		}
 	}
 
-    public override AuroraNode Execute()
-    {
+	[CreateNodeMenu("Functions/Action")]
+	public class ActionNode : ComputeNode
+	{
+		public override Type ParentClass
+		{
+			get
+			{
+				return typeof(AuroraEngine.NWScript);
+			}
+		}
 
-
-        return base.Execute();
-    }
+		public override AuroraNode Execute()
+		{
+			return base.Execute();
+		}
+	}
 }

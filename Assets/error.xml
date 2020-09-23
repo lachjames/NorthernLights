@@ -1,0 +1,39 @@
+<gff3 type="DLG">
+	<struct id="4294967295">
+		<uint32 label="DelayEntry">0</uint32>
+		<uint32 label="DelayReply">0</uint32>
+		<uint32 label="NumWords">4148</uint32>
+		<resref label="EndConversation"></resref>
+		<resref label="EndConverAbort"></resref>
+		<byte label="Skippable">1</byte>
+		<resref label="CameraModel"></resref>
+		<exostring label="VO_ID"></exostring>
+		<sint32 label="ConversationType">0</sint32>
+		<byte label="ComputerType">0</byte>
+		<byte label="OldHitCheck">0</byte>
+		<resref label="AmbientTrack"></resref>
+		<byte label="UnequipItems">0</byte>
+		<byte label="AnimatedCut">0</byte>
+		<byte label="UnequipHItem">0</byte>
+		<sint32 label="NextNodeID">120</sint32>
+		<exostring label="DeletedVOFiles"></exostring>
+		<sint32 label="PostProcOwner">0</sint32>
+		<sint32 label="AlienRaceOwner">0</sint32>
+		<sint32 label="RecordNoVO">0</sint32>
+		<exostring label="EditorInfo">v2.3.2 Apr 30, 2008 LastEdit: 18-Mar-10 17:34:05</exostring>
+		<list label="EntryList">
+			<struct id="0">
+				<exostring label="Speaker"></exostring>
+        <locstring label="value14" strref="46">
+          <string language="0" />
+        </locstring>
+				<resref label="VO_ResRef"></resref>
+				<resref label="Script"></resref>
+				<uint32 label="Delay">4294967295</uint32>
+				<exostring label="Comment"></exostring>
+				<resref label="Sound"></resref>
+				<exostring label="Quest"></exostring>
+			</struct>
+		</list>
+	</struct>
+</gff3>

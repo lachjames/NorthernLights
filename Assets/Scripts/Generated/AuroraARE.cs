@@ -42,9 +42,9 @@ using AuroraEngine;
     [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ID;
     [GFF("Creator_ID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Creator_ID;
     [GFF("Version", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Version;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-    [GFF("Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Name;
-    [GFF("Comments", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comments;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+    [GFF("Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Name = new CExoLocString();
+    [GFF("Comments", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comments = new CExoString();
     [GFF("Flags", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Flags;
     [GFF("ModSpotCheck", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ModSpotCheck;
     [GFF("ModListenCheck", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ModListenCheck;
@@ -78,17 +78,17 @@ using AuroraEngine;
     [GFF("DirtySizeThree", Compatibility.TSL, ExistsIn.BASE)] public Int32 DirtySizeThree;
     [GFF("DirtyFormulaThre", Compatibility.TSL, ExistsIn.BASE)] public Int32 DirtyFormulaThre;
     [GFF("DirtyFuncThree", Compatibility.TSL, ExistsIn.BASE)] public Int32 DirtyFuncThree;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // Struct definitions
     [GFF("Map", Compatibility.BOTH, ExistsIn.BASE)] public AMap Map = new AMap();
-    //[GFF("MiniGame", Compatibility.BOTH, ExistsIn.BASE)] public AMiniGame MiniGame = new AMiniGame();
+    [GFF("MiniGame", Compatibility.BOTH, ExistsIn.BASE)] public AMiniGame MiniGame = new AMiniGame();
 
     // List definitions
     [GFF("Rooms", Compatibility.BOTH, ExistsIn.BASE)] public List<ARooms> Rooms = new List<ARooms>();
-    [GFF("Expansion List", Compatibility.BOTH, ExistsIn.BASE)] public List<AuroraStruct> ExpansionList = new List<AuroraStruct>();
+
     // Class definitions    
     [Serializable]public class AMap : AuroraStruct {
         // Field definitions
@@ -356,7 +356,7 @@ using AuroraEngine;
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
         [GFF("AmbientScale", Compatibility.BOTH, ExistsIn.BASE)] public Single AmbientScale;
         [GFF("DisableWeather", Compatibility.BOTH, ExistsIn.BASE)] public Byte DisableWeather;
-        [GFF("RoomName", Compatibility.BOTH, ExistsIn.BASE)] public CExoString RoomName;
+        [GFF("RoomName", Compatibility.BOTH, ExistsIn.BASE)] public CExoString RoomName = new CExoString();
         [GFF("EnvAudio", Compatibility.BOTH, ExistsIn.BASE)] public Int32 EnvAudio;
         [GFF("ForceRating", Compatibility.TSL, ExistsIn.BASE)] public Int32 ForceRating;
     
@@ -367,8 +367,8 @@ using AuroraEngine;
         [Serializable]public class APartSounds : AuroraStruct {
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-            [GFF("ModelPart", Compatibility.BOTH, ExistsIn.BASE)] public CExoString ModelPart;
-            [GFF("OmenEvent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString OmenEvent;
+            [GFF("ModelPart", Compatibility.BOTH, ExistsIn.BASE)] public CExoString ModelPart = new CExoString();
+            [GFF("OmenEvent", Compatibility.BOTH, ExistsIn.BASE)] public CExoString OmenEvent = new CExoString();
             [GFF("Sound", Compatibility.BOTH, ExistsIn.BASE)] public String Sound;
             [GFF("Looping", Compatibility.BOTH, ExistsIn.BASE)] public Byte Looping;
             

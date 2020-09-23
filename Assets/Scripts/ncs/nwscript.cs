@@ -1364,7 +1364,7 @@ namespace AuroraEngine
         }
         public static string GetStringByStrRef (int nStrRef)
         {
-            return AuroraEngine.Resources.GetString(nStrRef);
+            return AuroraEngine.Resources.GetStringByStrref(nStrRef);
         }
         public static void ActionSpeakStringByStrRef (int nStrRef, int nTalkVolume = 0)
         {
@@ -1440,17 +1440,17 @@ namespace AuroraEngine
             string objName = "Object";
             if (obj.GetType() == typeof(Creature))
             {
-                string firstName = AuroraEngine.Resources.GetString((int)((AuroraUTC)obj.template).FirstName.stringref);
-                string lastName = AuroraEngine.Resources.GetString((int)((AuroraUTC)obj.template).LastName.stringref);
+                string firstName = AuroraEngine.Resources.GetString(((AuroraUTC)obj.template).FirstName);
+                string lastName = AuroraEngine.Resources.GetString(((AuroraUTC)obj.template).LastName);
                 objName = firstName + (lastName != "" ? (" " + lastName) : "");
             }
             else if (obj.GetType() == typeof(Door))
             {
-                objName = AuroraEngine.Resources.GetString((int)((AuroraUTD)obj.template).LocName.stringref);
+                objName = AuroraEngine.Resources.GetString(((AuroraUTD)obj.template).LocName);
             }
             else if (obj.GetType() == typeof(Placeable))
             {
-                objName = AuroraEngine.Resources.GetString((int)((AuroraUTP)obj.template).LocName.stringref);
+                objName = AuroraEngine.Resources.GetString(((AuroraUTP)obj.template).LocName);
             }
             return objName;
         }

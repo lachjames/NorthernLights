@@ -125,15 +125,7 @@ public class DialogSystem : MonoBehaviour
                 {
                     int strref = -1;
                     // This should show the current NPC line
-
-                    // TODO: This is hacky, make this better
-                    try
-                    {
-                        strref = (int)curEntry.Text.stringref;
-                    } catch
-                    {
-                    }
-                    string txt = AuroraEngine.Resources.GetString(strref);
+                    string txt = AuroraEngine.Resources.GetString(curEntry.Text);
                     lastLine = txt;
                     if (GUILayout.Button(txt, GUILayout.Width(Screen.width)))
                     {
@@ -144,8 +136,7 @@ public class DialogSystem : MonoBehaviour
                     int i = 0;
                     foreach (AuroraDLG.AEntry.AReplies rply in replies)
                     {
-                        int strref = (int)dialogue.ReplyList[(int)rply.Index].Text.stringref;
-                        string txt = AuroraEngine.Resources.GetString(strref);
+                        string txt = AuroraEngine.Resources.GetString(dialogue.ReplyList[(int)rply.Index].Text);
                         if (GUILayout.Button(txt, GUILayout.Width(Screen.width)))
                         {
                             MoveFromReply(i);
@@ -510,7 +501,7 @@ public class DialogSystem : MonoBehaviour
         {
             return;
         }
-        string txt = AuroraEngine.Resources.GetString((int)dialogue.ReplyList[(int)replies[0].Index].Text.stringref);
+        string txt = AuroraEngine.Resources.GetString(dialogue.ReplyList[(int)replies[0].Index].Text);
         if (txt != "")
         {
             return;

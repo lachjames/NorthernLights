@@ -7,8 +7,8 @@ using AuroraEngine;
 [Serializable]public class AuroraUTS : AuroraStruct {
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+    [GFF("LocName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocName = new CExoLocString();
     [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
     [GFF("Active", Compatibility.BOTH, ExistsIn.BASE)] public Byte Active;
     [GFF("Continuous", Compatibility.BOTH, ExistsIn.BASE)] public Byte Continuous;
@@ -30,9 +30,9 @@ using AuroraEngine;
     [GFF("Volume", Compatibility.BOTH, ExistsIn.BASE)] public Byte Volume;
     [GFF("VolumeVrtn", Compatibility.BOTH, ExistsIn.BASE)] public Byte VolumeVrtn;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
-    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // List definitions

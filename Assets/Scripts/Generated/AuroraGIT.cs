@@ -8,13 +8,12 @@ using AuroraEngine;
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
     [GFF("UseTemplates", Compatibility.BOTH, ExistsIn.BASE)] public Byte UseTemplates;
-    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion;
-    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate;
+    [GFF("KTInfoVersion", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoVersion = new CExoString();
+    [GFF("KTInfoDate", Compatibility.TSL, ExistsIn.BASE)] public CExoString KTInfoDate = new CExoString();
     [GFF("KTGameVerIndex", Compatibility.TSL, ExistsIn.BASE)] public Int32 KTGameVerIndex;
 
     // Struct definitions
     [GFF("AreaProperties", Compatibility.BOTH, ExistsIn.BASE)] public AAreaProperties AreaProperties = new AAreaProperties();
-    //[GFF("", Compatibility.TSL, ExistsIn.BASE)] public A  = new A();
 
     // List definitions
     [GFF("Creature List", Compatibility.BOTH, ExistsIn.BASE)] public List<ACreature > CreatureList = new List<ACreature >();
@@ -44,21 +43,6 @@ using AuroraEngine;
         
     }
     
-    [Serializable]public class A : AuroraStruct {
-        // Field definitions
-        [GFF("structid", Compatibility.TSL, ExistsIn.BASE)] public uint structid;
-        [GFF("AmbientSndDay", Compatibility.TSL, ExistsIn.BASE)] public Int32 AmbientSndDay;
-        [GFF("AmbientSndNight", Compatibility.TSL, ExistsIn.BASE)] public Int32 AmbientSndNight;
-        [GFF("AmbientSndDayVol", Compatibility.TSL, ExistsIn.BASE)] public Int32 AmbientSndDayVol;
-        [GFF("AmbientSndNitVol", Compatibility.TSL, ExistsIn.BASE)] public Int32 AmbientSndNitVol;
-        [GFF("EnvAudio", Compatibility.TSL, ExistsIn.BASE)] public Int32 EnvAudio;
-        [GFF("MusicBattle", Compatibility.TSL, ExistsIn.BASE)] public Int32 MusicBattle;
-        [GFF("MusicDay", Compatibility.TSL, ExistsIn.BASE)] public Int32 MusicDay;
-        [GFF("MusicNight", Compatibility.TSL, ExistsIn.BASE)] public Int32 MusicNight;
-        [GFF("MusicDelay", Compatibility.TSL, ExistsIn.BASE)] public Int32 MusicDelay;
-        
-    }
-    
     [Serializable]public class ACreature  : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
@@ -82,9 +66,9 @@ using AuroraEngine;
         [GFF("Z", Compatibility.BOTH, ExistsIn.BASE)] public Single Z;
         [GFF("Bearing", Compatibility.BOTH, ExistsIn.BASE)] public Single Bearing;
         [GFF("UseTweakColor", Compatibility.BOTH, ExistsIn.BASE)] public Byte UseTweakColor;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo;
-        [GFF("TransitionDestin", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString TransitionDestin;
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo = new CExoString();
+        [GFF("TransitionDestin", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString TransitionDestin = new CExoLocString();
         [GFF("TweakColor", Compatibility.TSL, ExistsIn.BASE)] public UInt32 TweakColor;
         
     }
@@ -102,11 +86,11 @@ using AuroraEngine;
         [GFF("XOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single XOrientation;
         [GFF("YOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single YOrientation;
         [GFF("GeneratedType", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 GeneratedType;
-        [GFF("LinkedTo", Compatibility.TSL, ExistsIn.BASE)] public CExoString LinkedTo;
-        [GFF("Tag", Compatibility.TSL, ExistsIn.BASE)] public CExoString Tag;
-        [GFF("LocalizedName", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString LocalizedName;
-        [GFF("Description", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString Description;
-        [GFF("MapNote", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString MapNote;
+        [GFF("LinkedTo", Compatibility.TSL, ExistsIn.BASE)] public CExoString LinkedTo = new CExoString();
+        [GFF("Tag", Compatibility.TSL, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+        [GFF("LocalizedName", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString LocalizedName = new CExoLocString();
+        [GFF("Description", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString Description = new CExoLocString();
+        [GFF("MapNote", Compatibility.TSL, ExistsIn.BASE)] public CExoLocString MapNote = new CExoLocString();
         
     }
     
@@ -122,11 +106,11 @@ using AuroraEngine;
         [GFF("ZPosition", Compatibility.BOTH, ExistsIn.BASE)] public Single ZPosition;
         [GFF("XOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single XOrientation;
         [GFF("YOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single YOrientation;
-        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocalizedName;
-        [GFF("Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Description;
-        [GFF("MapNote", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString MapNote;
+        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo = new CExoString();
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocalizedName = new CExoLocString();
+        [GFF("Description", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Description = new CExoLocString();
+        [GFF("MapNote", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString MapNote = new CExoLocString();
         
     }
     
@@ -199,10 +183,10 @@ using AuroraEngine;
         [GFF("XOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single XOrientation;
         [GFF("YOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single YOrientation;
         [GFF("ZOrientation", Compatibility.BOTH, ExistsIn.BASE)] public Single ZOrientation;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-        [GFF("TransitionDestin", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString TransitionDestin;
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+        [GFF("TransitionDestin", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString TransitionDestin = new CExoLocString();
         [GFF("LinkedToModule", Compatibility.BOTH, ExistsIn.BASE)] public String LinkedToModule;
-        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo;
+        [GFF("LinkedTo", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkedTo = new CExoString();
         [GFF("LinkedToFlags", Compatibility.BOTH, ExistsIn.BASE)] public Byte LinkedToFlags;
     
         // List definitions

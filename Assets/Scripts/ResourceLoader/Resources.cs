@@ -493,14 +493,26 @@ namespace AuroraEngine
         //    return new TLKObject(xml);
         //}
 
-        public static string GetString (int strref)
+        public static string GetString (GFFObject.CExoLocString locStr)
         {
-            if (!data.tlk.strings.ContainsKey(strref))
+            if (locStr.strings.Count > 0)
+            {
+                return locStr.strings[0].str;
+            }
+
+            if (!data.tlk.strings.ContainsKey((int)locStr.stringref))
             {
                 return "";
             }
+
+            return data.tlk.strings[(int)locStr.stringref].str;
+        }
+
+        public static string GetStringByStrref(int strref)
+        {
             return data.tlk.strings[strref].str;
         }
+
 
         public static VideoClip LoadMovie(string resourceRef)
         {

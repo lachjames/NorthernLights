@@ -7,8 +7,8 @@ using AuroraEngine;
 [Serializable]public class AuroraUTE : AuroraStruct {
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
-    [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocalizedName;
+    [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
+    [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString LocalizedName = new CExoLocString();
     [GFF("TemplateResRef", Compatibility.BOTH, ExistsIn.BASE)] public String TemplateResRef;
     [GFF("Active", Compatibility.BOTH, ExistsIn.BASE)] public Byte Active;
     [GFF("Difficulty", Compatibility.BOTH, ExistsIn.BASE)] public Int32 Difficulty;
@@ -27,7 +27,7 @@ using AuroraEngine;
     [GFF("OnHeartbeat", Compatibility.BOTH, ExistsIn.BASE)] public String OnHeartbeat;
     [GFF("OnUserDefined", Compatibility.BOTH, ExistsIn.BASE)] public String OnUserDefined;
     [GFF("PaletteID", Compatibility.BOTH, ExistsIn.BASE)] public Byte PaletteID;
-    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+    [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
 
     // List definitions
     [GFF("CreatureList", Compatibility.BOTH, ExistsIn.BASE)] public List<ACreature> CreatureList = new List<ACreature>();

@@ -7,25 +7,25 @@ using AuroraEngine;
 [Serializable]public class AuroraSaveNfo : AuroraStruct {
     // Field definitions
     [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-    [GFF("AREANAME", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString AREANAME;
-    [GFF("LASTMODULE", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LASTMODULE;
+    [GFF("AREANAME", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString AREANAME = new CExoString();
+    [GFF("LASTMODULE", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LASTMODULE = new CExoString();
     [GFF("TIMEPLAYED", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 TIMEPLAYED;
     [GFF("CHEATUSED", Compatibility.BOTH, ExistsIn.SAVE)] public Byte CHEATUSED;
-    [GFF("SAVEGAMENAME", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString SAVEGAMENAME;
+    [GFF("SAVEGAMENAME", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString SAVEGAMENAME = new CExoString();
     [GFF("GAMEPLAYHINT", Compatibility.BOTH, ExistsIn.SAVE)] public Byte GAMEPLAYHINT;
     [GFF("STORYHINT", Compatibility.KotOR, ExistsIn.SAVE)] public Byte STORYHINT;
-    [GFF("LIVE1", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE1;
-    [GFF("LIVE2", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE2;
-    [GFF("LIVE3", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE3;
-    [GFF("LIVE4", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE4;
-    [GFF("LIVE5", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE5;
-    [GFF("LIVE6", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE6;
+    [GFF("LIVE1", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE1 = new CExoString();
+    [GFF("LIVE2", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE2 = new CExoString();
+    [GFF("LIVE3", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE3 = new CExoString();
+    [GFF("LIVE4", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE4 = new CExoString();
+    [GFF("LIVE5", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE5 = new CExoString();
+    [GFF("LIVE6", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString LIVE6 = new CExoString();
     [GFF("LIVECONTENT", Compatibility.BOTH, ExistsIn.SAVE)] public Byte LIVECONTENT;
     [GFF("PORTRAIT0", Compatibility.BOTH, ExistsIn.SAVE)] public String PORTRAIT0;
     [GFF("PORTRAIT1", Compatibility.BOTH, ExistsIn.SAVE)] public String PORTRAIT1;
     [GFF("PORTRAIT2", Compatibility.BOTH, ExistsIn.SAVE)] public String PORTRAIT2;
     [GFF("TIMESTAMP", Compatibility.TSL, ExistsIn.SAVE)] public UInt64 TIMESTAMP;
-    [GFF("PCNAME", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PCNAME;
+    [GFF("PCNAME", Compatibility.TSL, ExistsIn.SAVE)] public CExoString PCNAME = new CExoString();
     [GFF("SAVENUMBER", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 SAVENUMBER;
     [GFF("STORYHINT0", Compatibility.TSL, ExistsIn.SAVE)] public Byte STORYHINT0;
     [GFF("STORYHINT1", Compatibility.TSL, ExistsIn.SAVE)] public Byte STORYHINT1;
@@ -38,7 +38,7 @@ using AuroraEngine;
     [GFF("STORYHINT8", Compatibility.TSL, ExistsIn.SAVE)] public Byte STORYHINT8;
     [GFF("STORYHINT9", Compatibility.TSL, ExistsIn.SAVE)] public Byte STORYHINT9;
     [GFF("PCAUTOSAVE", Compatibility.TSL, ExistsIn.SAVE)] public Byte PCAUTOSAVE;
-    [GFF("SCREENSHOT", Compatibility.TSL, ExistsIn.SAVE)] public CExoString SCREENSHOT;
+    [GFF("SCREENSHOT", Compatibility.TSL, ExistsIn.SAVE)] public CExoString SCREENSHOT = new CExoString();
 
     // Struct definitions
     [GFF("AUTOSAVEPARAMS", Compatibility.TSL, ExistsIn.SAVE)] public AAUTOSAVEPARAMS AUTOSAVEPARAMS = new AAUTOSAVEPARAMS();
@@ -47,14 +47,14 @@ using AuroraEngine;
     [Serializable]public class AAUTOSAVEPARAMS : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.TSL, ExistsIn.SAVE)] public uint structid;
-        [GFF("LOADMUSIC", Compatibility.TSL, ExistsIn.SAVE)] public CExoString LOADMUSIC;
-        [GFF("STARTWAYPOINT", Compatibility.TSL, ExistsIn.SAVE)] public CExoString STARTWAYPOINT;
-        [GFF("MOVIE1", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE1;
-        [GFF("MOVIE2", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE2;
-        [GFF("MOVIE3", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE3;
-        [GFF("MOVIE4", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE4;
-        [GFF("MOVIE5", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE5;
-        [GFF("MOVIE6", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE6;
+        [GFF("LOADMUSIC", Compatibility.TSL, ExistsIn.SAVE)] public CExoString LOADMUSIC = new CExoString();
+        [GFF("STARTWAYPOINT", Compatibility.TSL, ExistsIn.SAVE)] public CExoString STARTWAYPOINT = new CExoString();
+        [GFF("MOVIE1", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE1 = new CExoString();
+        [GFF("MOVIE2", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE2 = new CExoString();
+        [GFF("MOVIE3", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE3 = new CExoString();
+        [GFF("MOVIE4", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE4 = new CExoString();
+        [GFF("MOVIE5", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE5 = new CExoString();
+        [GFF("MOVIE6", Compatibility.TSL, ExistsIn.SAVE)] public CExoString MOVIE6 = new CExoString();
         [GFF("TIME_YEAR", Compatibility.TSL, ExistsIn.SAVE)] public UInt32 TIME_YEAR;
         [GFF("TIME_MONTH", Compatibility.TSL, ExistsIn.SAVE)] public Byte TIME_MONTH;
         [GFF("TIME_DAY", Compatibility.TSL, ExistsIn.SAVE)] public Byte TIME_DAY;

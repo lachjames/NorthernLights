@@ -16,11 +16,11 @@ using AuroraEngine;
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
         [GFF("BaseItem", Compatibility.BOTH, ExistsIn.SAVE)] public Int32 BaseItem;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag;
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Tag = new CExoString();
         [GFF("Identified", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Identified;
-        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description;
-        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified;
-        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName;
+        [GFF("Description", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString Description = new CExoLocString();
+        [GFF("DescIdentified", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString DescIdentified = new CExoLocString();
+        [GFF("LocalizedName", Compatibility.BOTH, ExistsIn.SAVE)] public CExoLocString LocalizedName = new CExoLocString();
         [GFF("StackSize", Compatibility.BOTH, ExistsIn.SAVE)] public UInt16 StackSize;
         [GFF("Stolen", Compatibility.BOTH, ExistsIn.SAVE)] public Byte Stolen;
         [GFF("Upgrades", Compatibility.BOTH, ExistsIn.SAVE)] public UInt32 Upgrades;

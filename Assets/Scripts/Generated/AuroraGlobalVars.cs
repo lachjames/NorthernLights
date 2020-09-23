@@ -22,35 +22,35 @@ using AuroraEngine;
     [Serializable]public class ACatBoolean : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
+        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name = new CExoString();
         
     }
     
     [Serializable]public class ACatNumber : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
+        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name = new CExoString();
         
     }
     
     [Serializable]public class ACatLocation : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
+        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name = new CExoString();
         
     }
     
     [Serializable]public class ACatString : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name;
+        [GFF("Name", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString Name = new CExoString();
         
     }
     
     [Serializable]public class AValString : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.SAVE)] public uint structid;
-        [GFF("String", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString String;
+        [GFF("String", Compatibility.BOTH, ExistsIn.SAVE)] public CExoString String = new CExoString();
         
     }
     

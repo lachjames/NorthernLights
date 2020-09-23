@@ -15,10 +15,10 @@ using AuroraEngine;
     [Serializable]public class ACategories : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-        [GFF("Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Name;
+        [GFF("Name", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Name = new CExoLocString();
         [GFF("Priority", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Priority;
-        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
-        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag;
+        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
+        [GFF("Tag", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Tag = new CExoString();
         [GFF("PlotIndex", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlotIndex;
         [GFF("PlanetID", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlanetID;
         [GFF("XP", Compatibility.KotOR, ExistsIn.BASE)] public UInt32 XP;
@@ -33,7 +33,7 @@ using AuroraEngine;
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
             [GFF("ID", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 ID;
             [GFF("End", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 End;
-            [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text;
+            [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text = new CExoLocString();
             [GFF("XP_Percentage", Compatibility.BOTH, ExistsIn.BASE)] public Single XP_Percentage;
             
         }

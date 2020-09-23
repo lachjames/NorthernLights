@@ -72,7 +72,6 @@ public class AuroraStruct
             {
                 // The struct ID should be dealt with separately
                 structid = (uint)f.GetValue(this);
-                Debug.Log("Struct id " + structid + " found");
                 hasStructID = true;
                 continue;
             }

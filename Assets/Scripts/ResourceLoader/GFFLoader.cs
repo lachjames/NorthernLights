@@ -316,21 +316,26 @@ namespace AuroraEngine
 
             uint stringref = BitConverter.ToUInt32(buffer, 0);  //index into the user's tlk file or 0xFFFFFFFF if the string doesn't reference the tlk file
             uint count = BitConverter.ToUInt32(buffer, 4);      //how many substrings are there
-            var strings = new GFFObject.CExoLocString.SubString[count];
+            List<GFFObject.CExoLocString.SubString> strings = new List<GFFObject.CExoLocString.SubString>();
 
             int stringLength;
             for (int i = 0, j = 8; i < count; i++)
             {
-                strings[i] = new GFFObject.CExoLocString.SubString();
+                strings.Add(new GFFObject.CExoLocString.SubString());
 
                 //string id = (2 x language id) + gender
                 strings[i].strid = BitConverter.ToInt32(buffer, j + 0);
 
                 stringLength = BitConverter.ToInt32(buffer, j + 4);
-                file.Read(buffer, 0, buffer.Length);
+                Debug.Log("String length: " + stringLength);
 
-                strings[i].str = Encoding.ASCII.GetString(buffer, j + 8, stringLength);
+                strings[i].str = Encoding.UTF8.GetString(buffer, j + 8, stringLength);
+                Debug.Log("Substring: " + strings[i].str);
 
+                foreach (char c in Encoding.UTF8.GetString(buffer, j + 8, stringLength))
+                {
+                    Debug.Log((int)c);
+                }
                 j += 8 + stringLength;
             }
 

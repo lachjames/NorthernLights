@@ -10,6 +10,7 @@ using AuroraEngine;
 [CanEditMultipleObjects]
 public class GFFEditor : Editor
 {
+    static Dictionary<object, bool> isOpen = new Dictionary<object, bool>();
     // Start is called before the first frame update
     void Start()
     {
@@ -124,18 +125,37 @@ public class GFFEditor : Editor
             listField.SetValue(owner, listObj);
         }
 
-        //Debug.Log(listObj);
+        if (!isOpen.ContainsKey(listObj))
+        {
+            isOpen[listObj] = false;
+        }
 
         IList list = (IList)listObj;
-
+        
         using (new EditorGUILayout.VerticalScope("box"))
         {
-            EditorGUILayout.LabelField("List " + listField.Name);
-            if (GUILayout.Button("Add to list"))
+
+            using (new EditorGUILayout.HorizontalScope())
             {
-                // Add to list
-                object newValue = Activator.CreateInstance(listType);
-                list.Add(newValue);
+                EditorGUILayout.LabelField("List " + listField.Name);
+
+                if (GUILayout.Button("Toggle"))
+                {
+                    // Toggle whether list is open
+                    isOpen[listObj] = !isOpen[listObj];
+                }
+
+                if (GUILayout.Button("+"))
+                {
+                    // Add to list
+                    object newValue = Activator.CreateInstance(listType);
+                    list.Add(newValue);
+                }
+            }
+
+            if (!isOpen[listObj])
+            {
+                return;
             }
 
             int i = 0;
@@ -247,8 +267,13 @@ public class GFFEditor : Editor
                 return;
             }
 
+            if (GUILayout.Button("Add String"))
+            {
+                cur.strings.Add(new GFFObject.CExoLocString.SubString());
+            }
+
             // Show the list of strings
-            for (int i = 0; i < cur.strings.Length; i++)
+            for (int i = 0; i < cur.strings.Count; i++)
             {
                 GFFObject.CExoLocString.SubString sub = cur.strings[i];
 
@@ -256,6 +281,10 @@ public class GFFEditor : Editor
                 {
                     try
                     {
+                        if (GUILayout.Button("Delete")) {
+                            cur.strings.RemoveAt(i);
+                            continue;
+                        }
                         EditorGUILayout.LabelField("String " + i);
                         string newID = Draw("ID" + i, sub.strid.ToString());
                         string newValue = Draw("String", sub.str);

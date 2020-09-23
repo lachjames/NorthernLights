@@ -14,7 +14,7 @@ using AuroraEngine;
     [GFF("EndConverAbort", Compatibility.BOTH, ExistsIn.BASE)] public String EndConverAbort;
     [GFF("Skippable", Compatibility.BOTH, ExistsIn.BASE)] public Byte Skippable;
     [GFF("CameraModel", Compatibility.BOTH, ExistsIn.BASE)] public String CameraModel;
-    [GFF("VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString VO_ID;
+    [GFF("VO_ID", Compatibility.BOTH, ExistsIn.BASE)] public CExoString VO_ID = new CExoString();
     [GFF("ConversationType", Compatibility.BOTH, ExistsIn.BASE)] public Int32 ConversationType;
     [GFF("ComputerType", Compatibility.BOTH, ExistsIn.BASE)] public Byte ComputerType;
     [GFF("OldHitCheck", Compatibility.BOTH, ExistsIn.BASE)] public Byte OldHitCheck;
@@ -23,11 +23,11 @@ using AuroraEngine;
     [GFF("AnimatedCut", Compatibility.BOTH, ExistsIn.BASE)] public Byte AnimatedCut;
     [GFF("UnequipHItem", Compatibility.BOTH, ExistsIn.BASE)] public Byte UnequipHItem;
     [GFF("NextNodeID", Compatibility.TSL, ExistsIn.BASE)] public Int32 NextNodeID;
-    [GFF("DeletedVOFiles", Compatibility.TSL, ExistsIn.BASE)] public CExoString DeletedVOFiles;
+    [GFF("DeletedVOFiles", Compatibility.TSL, ExistsIn.BASE)] public CExoString DeletedVOFiles = new CExoString();
     [GFF("PostProcOwner", Compatibility.TSL, ExistsIn.BASE)] public Int32 PostProcOwner;
     [GFF("AlienRaceOwner", Compatibility.TSL, ExistsIn.BASE)] public Int32 AlienRaceOwner;
     [GFF("RecordNoVO", Compatibility.TSL, ExistsIn.BASE)] public Int32 RecordNoVO;
-    [GFF("EditorInfo", Compatibility.TSL, ExistsIn.BASE)] public CExoString EditorInfo;
+    [GFF("EditorInfo", Compatibility.TSL, ExistsIn.BASE)] public CExoString EditorInfo = new CExoString();
 
     // List definitions
     [GFF("EntryList", Compatibility.BOTH, ExistsIn.BASE)] public List<AEntry> EntryList = new List<AEntry>();
@@ -39,17 +39,17 @@ using AuroraEngine;
     [Serializable]public class AEntry : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-        [GFF("Speaker", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Speaker;
-        [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text;
+        [GFF("Speaker", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Speaker = new CExoString();
+        [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text = new CExoLocString();
         [GFF("VO_ResRef", Compatibility.BOTH, ExistsIn.BASE)] public String VO_ResRef;
         [GFF("Script", Compatibility.BOTH, ExistsIn.BASE)] public String Script;
         [GFF("Delay", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Delay;
-        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
         [GFF("Sound", Compatibility.BOTH, ExistsIn.BASE)] public String Sound;
-        [GFF("Quest", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Quest;
+        [GFF("Quest", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Quest = new CExoString();
         [GFF("PlotIndex", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlotIndex;
         [GFF("PlotXPPercentage", Compatibility.BOTH, ExistsIn.BASE)] public Single PlotXPPercentage;
-        [GFF("Listener", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Listener;
+        [GFF("Listener", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Listener = new CExoString();
         [GFF("WaitFlags", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 WaitFlags;
         [GFF("CameraAngle", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 CameraAngle;
         [GFF("FadeType", Compatibility.BOTH, ExistsIn.BASE)] public Byte FadeType;
@@ -75,8 +75,8 @@ using AuroraEngine;
         [GFF("ActionParam3b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam3b;
         [GFF("ActionParam4b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam4b;
         [GFF("ActionParam5b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam5b;
-        [GFF("ActionParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrA;
-        [GFF("ActionParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrB;
+        [GFF("ActionParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrA = new CExoString();
+        [GFF("ActionParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrB = new CExoString();
         [GFF("NodeUnskippable", Compatibility.TSL, ExistsIn.BASE)] public Int32 NodeUnskippable;
         [GFF("PostProcNode", Compatibility.TSL, ExistsIn.BASE)] public Int32 PostProcNode;
         [GFF("AlienRaceNode", Compatibility.TSL, ExistsIn.BASE)] public Int32 AlienRaceNode;
@@ -85,7 +85,8 @@ using AuroraEngine;
         [GFF("RecordNoVOOverri", Compatibility.TSL, ExistsIn.BASE)] public Int32 RecordNoVOOverri;
         [GFF("FacialAnim", Compatibility.TSL, ExistsIn.BASE)] public Int32 FacialAnim;
         [GFF("NodeID", Compatibility.TSL, ExistsIn.BASE)] public Int32 NodeID;
-        [GFF("VOTextChanged", Compatibility.TSL, ExistsIn.BASE)] public Byte VOTextChanged;
+        // NOTE: This MUST be set to Int32 (sometimes it's byte but it must be Int32)
+        [GFF("VOTextChanged", Compatibility.TSL, ExistsIn.BASE)] public Int32 VOTextChanged;
         [GFF("Changed", Compatibility.TSL, ExistsIn.BASE)] public Byte Changed;
         [GFF("RecordNoOverri", Compatibility.TSL, ExistsIn.BASE)] public Int32 RecordNoOverri;
     
@@ -97,7 +98,7 @@ using AuroraEngine;
         [Serializable]public class AAnim : AuroraStruct {
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-            [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant;
+            [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant = new CExoString();
             [GFF("Animation", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Animation;
             
         }
@@ -108,7 +109,7 @@ using AuroraEngine;
             [GFF("Index", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Index;
             [GFF("Active", Compatibility.BOTH, ExistsIn.BASE)] public String Active;
             [GFF("IsChild", Compatibility.BOTH, ExistsIn.BASE)] public Byte IsChild;
-            [GFF("LinkComment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkComment;
+            [GFF("LinkComment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkComment = new CExoString();
             [GFF("Active2", Compatibility.TSL, ExistsIn.BASE)] public String Active2;
             [GFF("Param1", Compatibility.TSL, ExistsIn.BASE)] public Int32 Param1;
             [GFF("Param2", Compatibility.TSL, ExistsIn.BASE)] public Int32 Param2;
@@ -123,8 +124,8 @@ using AuroraEngine;
             [GFF("Not", Compatibility.TSL, ExistsIn.BASE)] public Byte Not;
             [GFF("Not2", Compatibility.TSL, ExistsIn.BASE)] public Byte Not2;
             [GFF("Logic", Compatibility.TSL, ExistsIn.BASE)] public Int32 Logic;
-            [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA;
-            [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB;
+            [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA = new CExoString();
+            [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB = new CExoString();
             
         }
         
@@ -133,16 +134,16 @@ using AuroraEngine;
     [Serializable]public class AReply : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-        [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text;
+        [GFF("Text", Compatibility.BOTH, ExistsIn.BASE)] public CExoLocString Text = new CExoLocString();
         [GFF("VO_ResRef", Compatibility.BOTH, ExistsIn.BASE)] public String VO_ResRef;
         [GFF("Script", Compatibility.BOTH, ExistsIn.BASE)] public String Script;
         [GFF("Delay", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Delay;
-        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment;
+        [GFF("Comment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Comment = new CExoString();
         [GFF("Sound", Compatibility.BOTH, ExistsIn.BASE)] public String Sound;
-        [GFF("Quest", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Quest;
+        [GFF("Quest", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Quest = new CExoString();
         [GFF("PlotIndex", Compatibility.BOTH, ExistsIn.BASE)] public Int32 PlotIndex;
         [GFF("PlotXPPercentage", Compatibility.BOTH, ExistsIn.BASE)] public Single PlotXPPercentage;
-        [GFF("Listener", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Listener;
+        [GFF("Listener", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Listener = new CExoString();
         [GFF("WaitFlags", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 WaitFlags;
         [GFF("CameraAngle", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 CameraAngle;
         [GFF("FadeType", Compatibility.BOTH, ExistsIn.BASE)] public Byte FadeType;
@@ -168,8 +169,8 @@ using AuroraEngine;
         [GFF("ActionParam3b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam3b;
         [GFF("ActionParam4b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam4b;
         [GFF("ActionParam5b", Compatibility.TSL, ExistsIn.BASE)] public Int32 ActionParam5b;
-        [GFF("ActionParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrA;
-        [GFF("ActionParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrB;
+        [GFF("ActionParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrA = new CExoString();
+        [GFF("ActionParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ActionParamStrB = new CExoString();
         [GFF("NodeUnskippable", Compatibility.TSL, ExistsIn.BASE)] public Int32 NodeUnskippable;
         [GFF("PostProcNode", Compatibility.TSL, ExistsIn.BASE)] public Int32 PostProcNode;
         [GFF("AlienRaceNode", Compatibility.TSL, ExistsIn.BASE)] public Int32 AlienRaceNode;
@@ -193,7 +194,7 @@ using AuroraEngine;
             [GFF("Index", Compatibility.BOTH, ExistsIn.BASE)] public UInt32 Index;
             [GFF("Active", Compatibility.BOTH, ExistsIn.BASE)] public String Active;
             [GFF("IsChild", Compatibility.BOTH, ExistsIn.BASE)] public Byte IsChild;
-            [GFF("LinkComment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkComment;
+            [GFF("LinkComment", Compatibility.BOTH, ExistsIn.BASE)] public CExoString LinkComment = new CExoString();
             [GFF("Active2", Compatibility.TSL, ExistsIn.BASE)] public String Active2;
             [GFF("Param1", Compatibility.TSL, ExistsIn.BASE)] public Int32 Param1;
             [GFF("Param2", Compatibility.TSL, ExistsIn.BASE)] public Int32 Param2;
@@ -208,15 +209,15 @@ using AuroraEngine;
             [GFF("Not", Compatibility.TSL, ExistsIn.BASE)] public Byte Not;
             [GFF("Not2", Compatibility.TSL, ExistsIn.BASE)] public Byte Not2;
             [GFF("Logic", Compatibility.TSL, ExistsIn.BASE)] public Int32 Logic;
-            [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA;
-            [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB;
+            [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA = new CExoString();
+            [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB = new CExoString();
             
         }
         
         [Serializable]public class AAnim : AuroraStruct {
             // Field definitions
             [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-            [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant;
+            [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant = new CExoString();
             [GFF("Animation", Compatibility.BOTH, ExistsIn.BASE)] public UInt16 Animation;
             
         }
@@ -242,8 +243,8 @@ using AuroraEngine;
         [GFF("Not", Compatibility.TSL, ExistsIn.BASE)] public Byte Not;
         [GFF("Not2", Compatibility.TSL, ExistsIn.BASE)] public Byte Not2;
         [GFF("Logic", Compatibility.TSL, ExistsIn.BASE)] public Int32 Logic;
-        [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA;
-        [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB;
+        [GFF("ParamStrA", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrA = new CExoString();
+        [GFF("ParamStrB", Compatibility.TSL, ExistsIn.BASE)] public CExoString ParamStrB = new CExoString();
         [GFF("IsChild", Compatibility.TSL, ExistsIn.BASE)] public Byte IsChild;
         
     }
@@ -251,7 +252,7 @@ using AuroraEngine;
     [Serializable]public class AStunt : AuroraStruct {
         // Field definitions
         [GFF("structid", Compatibility.BOTH, ExistsIn.BASE)] public uint structid;
-        [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant;
+        [GFF("Participant", Compatibility.BOTH, ExistsIn.BASE)] public CExoString Participant = new CExoString();
         [GFF("StuntModel", Compatibility.BOTH, ExistsIn.BASE)] public String StuntModel;
         
     }
