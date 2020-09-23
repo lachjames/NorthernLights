@@ -20,15 +20,14 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
  - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
  - TSL support is still an ongoing issue, as TSL's game files are more complex than those for K1. However, I anticipate the majority of the issues here will be resolved shortly.
  
-## Installation
+## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
  1. Download the repository, either by cloning it using git or just downloading it as a .zip file
  2. Unzip the resulting folder somewhere on your computer
  3. Open the folder in Unity as a project
  4. Open the "KotOR" scene, in the "scenes" folder
- 5. Open Systems>Loading System in the inspector, and change the kotorDir variable to point to the base directory of your KotOR 1 installation (TSL support is coming as a VERY high priority and is, theoretically, almost complete)
- 6. Set the "Level Name" variable in the same inspector window as (5) to whichever module you want to load
- 7. Press the play button at the top-middle of the screen
+ 5. In the top menu, go to Edit -> Project Settings, then click the "Aurora Preferences" tab. Enter the game you're working on (TSL is best supported for now), the location of your K1/TSL installation (where appropriate), and a "Module Out Location", which is a folder that **you don't mind being completely erased frequently by the level editor** (it's used for temp space during saving/loading).
+ 6. Follow the guides at https://github.com/lachjames/KotOR-Modding-Guide/wiki to learn how to use the editor, including which windows are applicable for which tasks.
 
 ## Who to thank
  - Almost all of the code for loading models, GFF, LYT, RIM, MOD, ERF, ... files is either directly from, or derived from, the KotOR-Unity repo (https://github.com/rwc4301/KotOR-Unity). This project wouldn't have gotten off the ground without the amazing work of rwc4301.
