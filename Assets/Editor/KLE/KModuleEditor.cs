@@ -355,10 +355,13 @@ public class KModuleEditor : EditorWindow
         // Draw the GFF editor for the selected item
         using (new EditorGUILayout.VerticalScope())
         {
-            using (var scroll = new EditorGUILayout.ScrollViewScope(editorScroll))
+            if (selectedResourceType != ResourceType.DLG)
             {
-                editorScroll = scroll.scrollPosition;
-                GFFEditor.DrawStruct(selected);
+                using (var scroll = new EditorGUILayout.ScrollViewScope(editorScroll))
+                {
+                    editorScroll = scroll.scrollPosition;
+                    GFFEditor.DrawStruct(selected);
+                }
             }
             if (GUILayout.Button("Mark Template as Edited"))
             {
