@@ -8,6 +8,7 @@ using XNode;
 
 namespace XNode
 {
+    [Serializable]
 	public abstract class ComputeNode : ExecutableNode
 	{
 		public abstract Type ParentClass { get; }
@@ -131,32 +132,4 @@ namespace XNode
 		}
 	}
 
-	[CreateNodeMenu("Functions/Custom")]
-	public class CustomNode : ComputeNode
-	{
-		public override Type ParentClass
-		{
-			get
-			{
-				return typeof(NCSOverride);
-			}
-		}
-	}
-
-	[CreateNodeMenu("Functions/Action")]
-	public class ActionNode : ComputeNode
-	{
-		public override Type ParentClass
-		{
-			get
-			{
-				return typeof(AuroraEngine.NWScript);
-			}
-		}
-
-		public override AuroraNode Execute()
-		{
-			return base.Execute();
-		}
-	}
 }

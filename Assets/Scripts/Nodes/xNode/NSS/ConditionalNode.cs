@@ -11,6 +11,7 @@ namespace XNode
 {
     [CreateNodeMenu("If/Else Condition")]
 	[ExecuteInEditMode]
+    [Serializable]
 	public class ConditionalNode : ExecutableNode
 	{
 		[Input] public int input;

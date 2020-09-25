@@ -1,4 +1,5 @@
 ﻿using AuroraEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using XNode;
 namespace XNode
 {
 	[CreateNodeMenu("Values/String")]
+    [Serializable]
 	public class StringNode : AuroraNode
 	{
 
@@ -33,6 +35,7 @@ namespace XNode
 	}
 
 	[CreateNodeMenu("Values/Int")]
+    [Serializable]
 	public class IntNode : AuroraNode
 	{
 
@@ -59,6 +62,7 @@ namespace XNode
 	}
 
 	[CreateNodeMenu("Values/Float")]
+    [Serializable]
 	public class FloatNode : AuroraNode
 	{
 
@@ -85,6 +89,7 @@ namespace XNode
 	}
 
 	[CreateNodeMenu("Values/ObjectSelf")]
+    [Serializable]
 	public class ObjectSelf : AuroraNode
 	{
 		[Output] public AuroraObject output;

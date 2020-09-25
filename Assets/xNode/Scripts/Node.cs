@@ -414,6 +414,7 @@ namespace XNode {
         }
     }
 
+    [Serializable]
     public class AuroraNode : Node
     {
         public virtual AuroraNode Execute()
@@ -427,6 +428,7 @@ namespace XNode {
         }
     }
 
+    [Serializable]
     public class ExecutableNode : AuroraNode
     {
         public static HashSet<ExecutableNode> traversed = new HashSet<ExecutableNode>();

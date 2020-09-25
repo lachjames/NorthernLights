@@ -84,7 +84,7 @@ using AuroraEngine;
 
     // Struct definitions
     [GFF("Map", Compatibility.BOTH, ExistsIn.BASE)] public AMap Map = new AMap();
-    [GFF("MiniGame", Compatibility.BOTH, ExistsIn.BASE)] public AMiniGame MiniGame = new AMiniGame();
+    //[GFF("MiniGame", Compatibility.BOTH, ExistsIn.BASE)] public AMiniGame MiniGame = new AMiniGame();
 
     // List definitions
     [GFF("Rooms", Compatibility.BOTH, ExistsIn.BASE)] public List<ARooms> Rooms = new List<ARooms>();

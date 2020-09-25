@@ -17,6 +17,7 @@ using System.Net.Configuration;
  * 
  * Some specific corrections must also be made:
  *  - In AuroraDLG, VOTextChanged's type must be set to Int32, not Byte
+ *  - In AuroraARE, the instance of AMiniGame must be commented out
 */
 public class CodeGenerator : EditorWindow
 {
