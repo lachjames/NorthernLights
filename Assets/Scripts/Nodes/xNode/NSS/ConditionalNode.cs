@@ -9,7 +9,7 @@ using XNode;
 
 namespace XNode
 {
-    [CreateNodeMenu("If/Else Condition")]
+    [CreateNodeMenu("IfElse Condition")]
 	[ExecuteInEditMode]
     [Serializable]
 	public class ConditionalNode : ExecutableNode

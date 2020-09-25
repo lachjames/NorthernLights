@@ -38,18 +38,6 @@ namespace XNode
 		public override string Operator => "/";
 	}
 
-	[CreateNodeMenu("BinaryOps/Div/Int")]
-	public class DivInt : DivOperation
-	{
-		[Input] public new int x, y;
-		[Output] public new int result;
-	}
 
-	[CreateNodeMenu("BinaryOps/Div/Float")]
-	public class DivFloat : DivOperation
-	{
-		[Input] public new float x, y;
-		[Output] public new float result;
-	}
 	#endregion Division
 }
