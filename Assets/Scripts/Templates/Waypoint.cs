@@ -9,7 +9,7 @@ namespace AuroraEngine
 			GameObject gameObject;
 
 			//get the resource reference for this object, which we'll use as it's in-engine name
-			string name = utw.TemplateResRef;
+			string name = gitData.Tag;
 
 			//create a new game object and load the model into the scene
 			gameObject = new GameObject();
