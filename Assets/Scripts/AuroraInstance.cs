@@ -47,8 +47,10 @@ public class AuroraInstance : MonoBehaviour
 
                 // Calculate orientation from bearing
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aCreature.YOrientation = Mathf.Cos(CalculateBearing(transform));
-                aCreature.XOrientation = Mathf.Sin(CalculateBearing(transform));
+                Vector2 cForward = new Vector2(transform.forward.x, transform.forward.z);
+                cForward.Normalize();
+                aCreature.XOrientation = cForward.x;
+                aCreature.YOrientation = cForward.y;
                 break;
             case "Placeables":
                 // TODO: Calculate bearing
@@ -103,8 +105,10 @@ public class AuroraInstance : MonoBehaviour
                 aStore.ZPosition = transform.position.y;
 
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aStore.YOrientation = Mathf.Cos(CalculateBearing(transform));
-                aStore.XOrientation = Mathf.Sin(CalculateBearing(transform));
+                Vector2 sForward = new Vector2(transform.forward.x, transform.forward.z);
+                sForward.Normalize();
+                aStore.XOrientation = sForward.x;
+                aStore.YOrientation = sForward.y;
                 break;
             case "Waypoints":
                 AuroraGIT.AWaypoint aWaypoint = (AuroraGIT.AWaypoint)gitData;
@@ -113,8 +117,10 @@ public class AuroraInstance : MonoBehaviour
                 aWaypoint.ZPosition = transform.position.y;
 
                 // This is an "xy vector pointing in the direction of the creature's orientation"
-                aWaypoint.YOrientation = Mathf.Cos(CalculateBearing(transform));
-                aWaypoint.XOrientation = Mathf.Sin(CalculateBearing(transform));
+                Vector2 wForward = new Vector2(transform.forward.x, transform.forward.z);
+                wForward.Normalize();
+                aWaypoint.XOrientation = wForward.x;
+                aWaypoint.YOrientation = wForward.y;
                 break;
             case "Cameras":
                 AuroraGIT.ACamera aCamera = (AuroraGIT.ACamera)gitData;

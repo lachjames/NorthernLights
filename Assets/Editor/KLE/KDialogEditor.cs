@@ -7,6 +7,8 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEngine;
+using XNode;
+using XNodeEditor;
 
 public class KDialogEditor : EditorWindow
 {
@@ -60,7 +62,13 @@ public class KDialogEditor : EditorWindow
     {
         using (new EditorGUILayout.HorizontalScope())
         {
-
+            if (GUILayout.Button("Node View"))
+            {
+                DialogGraph dg = new DialogGraph();
+                dg.LoadDLG(dlg);
+                Debug.Log(dg);
+                NodeEditorWindow.Open(dg);
+            }
         }
     }
 

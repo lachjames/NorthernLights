@@ -391,7 +391,6 @@ namespace AuroraEngine
             //{
             //    return GameObject.Instantiate(modelCache[resref]);
             //}
-
             Stream mdl = data.GetStream(resref, ResourceType.MDL), mdx = data.GetStream(resref, ResourceType.MDX);
 
             if (mdl == null || mdx == null)

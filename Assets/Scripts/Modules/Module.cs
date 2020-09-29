@@ -252,13 +252,17 @@ namespace AuroraEngine
                     Vector3 position = new Vector3(c.XPosition, c.ZPosition, c.YPosition);
 
                     //character orientation is stored as a vector2 which describes an angle to rotate around
-                    float x = c.XOrientation, y = c.YOrientation;
-                    float bearing = Mathf.Tan(x / y);
-                    Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
+                    //float x = c.XOrientation, y = c.YOrientation;
+                    //float bearing = Mathf.Tan(x / y);
+                    //Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
+
+                    float x = c.XOrientation;
+                    float y = c.YOrientation;
+                    Vector3 lookDirection = new Vector3(x, 0, y);
 
                     Creature creature = Resources.LoadCreature(c.TemplateResRef, c);
                     creature.gameObject.transform.position = position;
-                    creature.gameObject.transform.rotation = rotation;
+                    creature.gameObject.transform.LookAt(creature.gameObject.transform.position + 10 * lookDirection);
                     creature.gameObject.tag = "Creature";
 
                     creature.transform.SetParent(parent.transform);
@@ -398,13 +402,13 @@ namespace AuroraEngine
                 {
                     Vector3 position = new Vector3(p.XPosition, p.ZPosition, p.YPosition);
 
-                    float x = p.XOrientation, y = p.YOrientation;
-                    float bearing = Mathf.Tan(x / y);
-                    Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
+                    float x = p.XOrientation;
+                    float y = p.YOrientation;
+                    Vector3 lookDirection = new Vector3(x, 0, y);
 
                     store = Resources.LoadStore(p.ResRef, p);
                     store.gameObject.transform.position = position;
-                    store.gameObject.transform.rotation = rotation;
+                    store.gameObject.transform.LookAt(position + 10 * lookDirection);
 
                     store.transform.SetParent(parent.transform);
 
@@ -426,12 +430,13 @@ namespace AuroraEngine
                 {
                     Vector3 position = new Vector3(p.XPosition, p.ZPosition, p.YPosition);
 
-                    float x = p.XOrientation, y = p.YOrientation;
-                    float bearing = Mathf.Tan(x / y);
-                    Quaternion rotation = Quaternion.Euler(0, bearing * Mathf.Rad2Deg * -1, 0);
+                    float x = p.XOrientation;
+                    float y = p.YOrientation;
+                    Vector3 lookDirection = new Vector3(x, 0, y);
 
                     waypoint = Resources.LoadWaypoint(p.TemplateResRef, p);
                     waypoint.gameObject.transform.position = position;
+                    waypoint.gameObject.transform.LookAt(position + 10 * lookDirection);
 
                     waypoint.transform.SetParent(parent.transform);
 

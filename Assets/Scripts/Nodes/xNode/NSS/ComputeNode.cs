@@ -100,7 +100,7 @@ namespace XNode
 			MethodInfo m = ParentClass.GetMethod(ActionName);
 
 			// Calculate the parameters of the method based on the inputs to the node
-			List<string> parameters = new List<string>();
+			Dictionary<string, string> parameters = new Dictionary<string, string>();
 
 			bool semicolon = true;
 
@@ -119,15 +119,21 @@ namespace XNode
 				{
 					throw new Exception("Empty input for " + input.fieldName);
 				}
-				parameters.Add(((AuroraNode)input.Connection.node).GetCode());
+				parameters[input.fieldName] = ((AuroraNode)input.Connection.node).GetCode();
             }
+
+			List<string> sortedParameters = new List<string>();
+			foreach (ParameterInfo p in m.GetParameters())
+			{
+				sortedParameters.Add(parameters[p.Name]);
+			}
 
 			if (semicolon)
             {
-				return ActionName + "(" + String.Join(",", parameters) + ");\n" + GetAfterCode();
+				return ActionName + "(" + String.Join(",", sortedParameters) + ");\n" + GetAfterCode();
 			} else
             {
-				return ActionName + "(" + String.Join(",", parameters) + ")";
+				return ActionName + "(" + String.Join(",", sortedParameters) + ")";
 			}
 		}
 	}
