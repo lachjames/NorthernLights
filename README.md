@@ -6,6 +6,7 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
 
 ## What Works
  - The level editor is functional, and can save and load modules. It is still in (very early) private alpha, so please let me know if/when you find bugs.
+ - KotOR and TSL are both supported fully in the level editor.
  - Model loading and animations (thanks in no small part to the work of rwc4301, whose work in turn seems to be partially based on the Xoreos project) 
  - NCS scripts run natively, although performance needs to be improved
  - Many of the engine routines have been implemented, along with the corresponding systems
@@ -17,8 +18,7 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
 ## What doesn't work
  - Many of the systems currently use reflection to (very significantly) improve the ability of 
  - The save-load system
- - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
- - TSL support is still an ongoing issue, as TSL's game files are more complex than those for K1. However, I anticipate the majority of the issues here will be resolved shortly.
+ - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet 
  
 ## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
