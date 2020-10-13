@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
 namespace AuroraEngine
 {
-	public class RIMObject
+	public class RIMObject : AuroraArchive
 	{
 		public struct Resource
 		{
@@ -17,50 +18,52 @@ namespace AuroraEngine
 
         public const int HEADER_SIZE = 160, RES_SIZE = 32;
 
-        public string filePath;
-
 		public Dictionary<(string, ResourceType), Resource> resources;
 
-		public RIMObject(string filePath)
-		{
-			this.filePath = filePath;
+		public RIMObject(string filepath) : base(filepath) { }
 
+		public RIMObject(Stream stream) : base(stream) { }
+
+		public override void SetupArchive()
+        {
 			byte[] buffer;
+			//Read the header
+			buffer = new byte[HEADER_SIZE];
+			memoryStream.Read(buffer, 0, HEADER_SIZE);
 
-			using (FileStream stream = File.Open(filePath, FileMode.Open)) {
-				//Read the header
-				buffer = new byte[HEADER_SIZE];
-				stream.Read(buffer, 0, HEADER_SIZE);
-
-				string fileType = Encoding.UTF8.GetString(buffer, 0, 4);
-				string fileVersion = Encoding.UTF8.GetString(buffer, 4, 4);
+			string fileType = Encoding.UTF8.GetString(buffer, 0, 4);
+			string fileVersion = Encoding.UTF8.GetString(buffer, 4, 4);
 				
-				int resourceCount = (int)BitConverter.ToUInt32(buffer, 12);
-				long resourceOffset = BitConverter.ToUInt32(buffer, 16);
+			int resourceCount = (int)BitConverter.ToUInt32(buffer, 12);
+			long resourceOffset = BitConverter.ToUInt32(buffer, 16);
 
-				stream.Position = resourceOffset;
+			UnityEngine.Debug.Log(fileType);
+			UnityEngine.Debug.Log(fileVersion);
+			UnityEngine.Debug.Log(resourceCount);
 
-				buffer = new byte[resourceCount * RES_SIZE];
-				stream.Read(buffer, 0, resourceCount * RES_SIZE);
+			memoryStream.Position = resourceOffset;
 
-				resources = new Dictionary<(string, ResourceType), Resource>(resourceCount);
+			buffer = new byte[resourceCount * RES_SIZE];
+			memoryStream.Read(buffer, 0, resourceCount * RES_SIZE);
 
-				for (int i = 0, idx = 0; i < resourceCount; i++, idx += RES_SIZE) {
-					string resref = Encoding.UTF8.GetString(buffer, idx + 0, 16).TrimEnd('\0').ToLower();	//resrefs are always case insensitive
-					ResourceType type = (ResourceType)BitConverter.ToUInt16(buffer, idx + 16);
+			resources = new Dictionary<(string, ResourceType), Resource>(resourceCount);
 
-					resources.Add((resref, type), new Resource {
-						ResRef = resref,
-						ResType = type,
-						ID = BitConverter.ToUInt32(buffer, idx + 20),
-						Offset = BitConverter.ToUInt32(buffer, idx + 24),
-						FileSize = BitConverter.ToUInt32(buffer, idx + 28)
-					});
-				}
+			for (int i = 0, idx = 0; i < resourceCount; i++, idx += RES_SIZE) {
+				UnityEngine.Debug.Log(i);
+				string resref = Encoding.UTF8.GetString(buffer, idx + 0, 16).TrimEnd('\0').ToLower();	//resrefs are always case insensitive
+				ResourceType type = (ResourceType)BitConverter.ToUInt16(buffer, idx + 16);
+
+				resources.Add((resref, type), new Resource {
+					ResRef = resref,
+					ResType = type,
+					ID = BitConverter.ToUInt32(buffer, idx + 20),
+					Offset = BitConverter.ToUInt32(buffer, idx + 24),
+					FileSize = BitConverter.ToUInt32(buffer, idx + 28)
+				});
 			}
 		}
 
-		public Stream GetResource(string resref, ResourceType type)
+		public override Stream GetResource(string resref, ResourceType type)
 		{
 			Resource resource;
 

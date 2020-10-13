@@ -5,39 +5,24 @@ using System.Text;
 
 namespace AuroraEngine
 {
-	public class ERFObject
-	{
-		public const int HEADER_SIZE = 160, KEY_SIZE = 24, RES_SIZE = 8;
-
-        public string filePath;
-        public Stream myStream;
+    public class ERFObject : AuroraArchive
+    {
+        public const int HEADER_SIZE = 160, KEY_SIZE = 24, RES_SIZE = 8;
 
         public Dictionary<(string, ResourceType), uint> resourceKeys;
         public (uint, uint)[] resourcePointers;
 
-		public ERFObject(string filePath)
-		{
-			this.filePath = filePath;
+        public ERFObject(string filepath) : base(filepath) { }
 
+        public ERFObject(Stream stream) : base(stream) { }
 
-			using (FileStream stream = File.Open(filePath, FileMode.Open)) {
-                LoadStream(stream);
-			}
-		}
-
-        public ERFObject (Stream stream)
-        {
-            myStream = stream;
-            LoadStream(stream);
-        }
-
-        public void LoadStream (Stream stream)
+        public override void SetupArchive()
         {
             byte[] buffer;
 
             //Read header
             buffer = new byte[HEADER_SIZE];
-            stream.Read(buffer, 0, HEADER_SIZE);
+            memoryStream.Read(buffer, 0, HEADER_SIZE);
 
             string fileType = Encoding.UTF8.GetString(buffer, 0, 4);
             string fileVersion = Encoding.UTF8.GetString(buffer, 4, 4);
@@ -56,7 +41,7 @@ namespace AuroraEngine
             Array.Copy(buffer, 44, reserved, 0, 116);
 
             //Read localized strings (these don't seem to exist in the kotor ERFs?)
-            stream.Position = offsetToLocalizedStrings;
+            memoryStream.Position = offsetToLocalizedStrings;
             for (int i = 0; i < languageCount; i++)
             {
 
@@ -66,8 +51,8 @@ namespace AuroraEngine
             resourceKeys = new Dictionary<(string, ResourceType), uint>((int)resourceCount);
 
             buffer = new byte[resourceCount * KEY_SIZE];
-            stream.Position = offsetToKeyList;
-            stream.Read(buffer, 0, (int)resourceCount * KEY_SIZE);
+            memoryStream.Position = offsetToKeyList;
+            memoryStream.Read(buffer, 0, (int)resourceCount * KEY_SIZE);
 
             for (int i = 0; i < resourceCount; i++)
             {
@@ -82,8 +67,8 @@ namespace AuroraEngine
             resourcePointers = new (uint, uint)[resourceCount];
 
             buffer = new byte[resourceCount * RES_SIZE];
-            stream.Position = offsetToResourceList;
-            stream.Read(buffer, 0, (int)resourceCount * RES_SIZE);
+            memoryStream.Position = offsetToResourceList;
+            memoryStream.Read(buffer, 0, (int)resourceCount * RES_SIZE);
 
             for (int i = 0; i < resourceCount; i++)
             {
@@ -94,32 +79,18 @@ namespace AuroraEngine
             }
         }
 
-		public Stream GetResource(string resref, ResourceType type)
+		public override Stream GetResource(string resref, ResourceType type)
 		{
 			uint value;
 
 			if (resourceKeys.TryGetValue((resref.ToLower(), type), out value)) {
 				var pointer = resourcePointers[value];
 
-                if (myStream != null)
-                {
-                        myStream.Position = pointer.Item1;
+                memoryStream.Position = pointer.Item1;
 
-                        byte[] buffer = new byte[pointer.Item2];
-                        myStream.Read(buffer, 0, (int)pointer.Item2);
-                        return new MemoryStream(buffer);
-                }
-                else
-                {
-                    using (FileStream stream = File.Open(filePath, FileMode.Open))
-                    {
-                        stream.Position = pointer.Item1;
-
-                        byte[] buffer = new byte[pointer.Item2];
-                        stream.Read(buffer, 0, (int)pointer.Item2);
-                        return new MemoryStream(buffer);
-                    }
-                }
+                byte[] buffer = new byte[pointer.Item2];
+                memoryStream.Read(buffer, 0, (int)pointer.Item2);
+                return new MemoryStream(buffer);
             }
 
 			return null;

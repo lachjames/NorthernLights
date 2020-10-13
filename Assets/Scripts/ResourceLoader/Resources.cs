@@ -780,6 +780,7 @@ namespace AuroraEngine
             }
 
             UnityEngine.Debug.Log(output);
+            UnityEngine.Debug.Log(error);
 
             // Finally, we run the normal NCSScript reader on that
             return output;

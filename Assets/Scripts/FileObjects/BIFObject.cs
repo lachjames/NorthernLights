@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AuroraEngine
 {
-	public class BIFObject
+	public class BIFObject : AuroraArchive
 	{
 		public struct Resource
 		{
@@ -18,34 +18,26 @@ namespace AuroraEngine
 
 		private const int HEADER_SIZE = 20;
 
-		private string filePath;
-
 		private string fileType, fileVersion;
 		private uint variableResourceCount, fixedResourceCount, variableTableOffset, variableTableRowSize, variableTableSize;
 
 		public Resource[] resources;
 
-		public BIFObject(string filePath)
-		{
-			this.filePath = filePath;
-			using (FileStream stream = File.Open(filePath, FileMode.Open)) {
-                SetupBIF(stream);
-			}
-		}
+        KEYObject keyObject;
 
-
-        public BIFObject (Stream stream)
-        {
-            SetupBIF(stream);
+        public BIFObject(string filepath, KEYObject key) : base(filepath) {
+            keyObject = key;
         }
 
-        public void SetupBIF(Stream stream)
+        public BIFObject(Stream stream) : base(stream) { }
+
+        public override void SetupArchive()
         {
             byte[] buffer;
 
             //Read the header
             buffer = new byte[HEADER_SIZE];
-            stream.Read(buffer, 0, HEADER_SIZE);
+            memoryStream.Read(buffer, 0, HEADER_SIZE);
 
             fileType = Encoding.UTF8.GetString(buffer, 0, 4);
             fileVersion = Encoding.UTF8.GetString(buffer, 4, 4);
@@ -58,7 +50,7 @@ namespace AuroraEngine
 
             //Read variable tabs blocks
             buffer = new byte[variableTableSize];
-            stream.Read(buffer, 0, (int)variableTableSize);
+            memoryStream.Read(buffer, 0, (int)variableTableSize);
             resources = new Resource[variableResourceCount];
 
             for (int i = 0; i < variableResourceCount; i++)
@@ -84,38 +76,6 @@ namespace AuroraEngine
 			throw new Exception("Resource not found.");
 		}
 
-		public List<Resource> GetResourcesByType(uint ResType)
-		{
-			List<Resource> arr = new List<Resource>();
-
-			for (int i = 0; i < variableResourceCount; i++) {
-				if (this.resources[i].ResType == ResType) {
-					arr.Add(this.resources[i]);
-				}
-			}
-
-			return arr;
-		}
-
-		//GetResourceByLabel(label = null, ResType = null)
-		//{
-		//	if (label != null) {
-		//		let len = Global.kotorKEY.keys.length;
-		//		for (let i = 0; i != len; i++) {
-		//			let key = Global.kotorKEY.keys[i];
-		//			if (key.ResRef == label && key.ResType == ResType) {
-		//				for (let j = 0; j != this.resources.length; j++) {
-		//					let res = this.resources[j];
-		//					if (res.ID == key.ResID && res.ResType == ResType) {
-		//						return res;
-		//					}
-		//				}
-		//			}
-		//		}
-		//	}
-		//	return null;
-		//}
-
 		public Stream GetResourceData(Resource resource)
 		{
 			using (FileStream stream = File.Open(filePath, FileMode.Open)) {
@@ -127,5 +87,20 @@ namespace AuroraEngine
 				return new MemoryStream(buffer);
 			}
 		}
-	}
+
+        public override Stream GetResource(string resref, ResourceType rt)
+        {
+            uint id;
+
+            // Then try and load from BIFs
+            if (keyObject.TryGetResourceID(resref, rt, out id))
+            {
+                uint bifIndex = id >> 20;
+
+                return GetResourceData(GetResourceById(id));
+            }
+
+            return null;
+        }
+    }
 }

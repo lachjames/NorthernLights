@@ -258,8 +258,8 @@ using AuroraEngine;
 
         foreach (string filename in Directory.GetFiles(dataDir))
         {
-            //Debug.Log("Loading " + filename);
-            BIFObject obj = new BIFObject(filename);
+            // We don't actually use the key here
+            BIFObject obj = new BIFObject(filename, null);
             LoadBIF(obj, defs, compat, existsIn);
         }
     }

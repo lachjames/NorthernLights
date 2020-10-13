@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 
 namespace AuroraEngine
@@ -41,6 +43,7 @@ namespace AuroraEngine
                 float soundLength = 0;
                 if (node.Attributes["soundlength"] != null)
                 {
+                    Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
                     soundLength = float.Parse(node.Attributes["soundlength"].Value);
                 }
 

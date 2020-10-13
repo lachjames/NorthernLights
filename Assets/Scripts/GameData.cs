@@ -111,7 +111,7 @@ public class AuroraData
         bifObjects = new BIFObject[bifs.Length];
         for (int i = 0; i < bifs.Length; i++)
         {
-            bifObjects[i] = new BIFObject(AuroraPrefs.GetKotorLocation() + "\\" + bifs[i].Filename);
+            bifObjects[i] = new BIFObject(AuroraPrefs.GetKotorLocation() + "\\" + bifs[i].Filename, keyObject);
         }
 
         textures = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\TexturePacks\\swpc_tex_tpa.erf");
@@ -153,19 +153,16 @@ public class AuroraData
             UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
         }
 
-        if (AuroraPrefs.TargetGame() == Game.TSL)
+        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf"))
         {
-            if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf"))
-            {
-                dlg = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf");
-                UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
-            }
+            dlg = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf");
+            UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
+        }
 
-            if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod"))
-            {
-                mod = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod");
-                UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
-            }
+        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod"))
+        {
+            mod = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod");
+            UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
         }
 
         module = new Module(moduleName, this, instantiateModule);
@@ -234,6 +231,7 @@ public class AuroraData
             return default;
 
         GFFObject obj = new GFFLoader(stream).GetObject();
+        stream.Close();
         return (T)obj.Serialize<T>();
     }
 
@@ -241,7 +239,7 @@ public class AuroraData
     {
         if (overridePaths.ContainsKey((resref, rt)))
         {
-            return new FileStream(overridePaths[(resref, rt)], FileMode.Open);
+            return new FileStream(overridePaths[(resref, rt)], FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
         return null;
     }

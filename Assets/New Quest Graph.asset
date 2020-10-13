@@ -1,0 +1,197 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4313560906087296265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c42381021a97ef042841f07cac5cde8e, type: 3}
+  m_Name: Deliver
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -868.7693, y: 51.674576}
+  ports:
+    keys:
+    - inPhases
+    - outPhases
+    values:
+    - _fieldName: inPhases
+      _node: {fileID: -4313560906087296265}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outPhases
+      _node: {fileID: -4313560906087296265}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inPhases
+        node: {fileID: 5823912550285665291}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  inPhases: {fileID: 0}
+  outPhases: {fileID: 0}
+  itemName: Holocron
+  recipient: Kreia
+--- !u!114 &-4220741482890777451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7524481df2b51804ab627acb48dd77e8, type: 3}
+  m_Name: Trigger Dialog
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -168, y: 72}
+  ports:
+    keys:
+    - inPhases
+    - outPhases
+    values:
+    - _fieldName: inPhases
+      _node: {fileID: -4220741482890777451}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: outPhases
+        node: {fileID: 5823912550285665291}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outPhases
+      _node: {fileID: -4220741482890777451}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inPhases
+        node: {fileID: -584699592697038341}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  inPhases: {fileID: 0}
+  outPhases: {fileID: 0}
+--- !u!114 &-584699592697038341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99be5c27fee2e6f4cb655fec827f5bd5, type: 3}
+  m_Name: Kill NPC
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 157.11122, y: 104.06131}
+  ports:
+    keys:
+    - inPhases
+    - outPhases
+    values:
+    - _fieldName: inPhases
+      _node: {fileID: -584699592697038341}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: outPhases
+        node: {fileID: -4220741482890777451}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outPhases
+      _node: {fileID: -584699592697038341}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  inPhases: {fileID: 0}
+  outPhases: {fileID: 0}
+  npcTag: c_enemy02
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a76e4ac06edc044b8297b28b76c79b9, type: 3}
+  m_Name: New Quest Graph
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -4313560906087296265}
+  - {fileID: 5823912550285665291}
+  - {fileID: -4220741482890777451}
+  - {fileID: -584699592697038341}
+--- !u!114 &5823912550285665291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99be5c27fee2e6f4cb655fec827f5bd5, type: 3}
+  m_Name: Kill NPC
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -568, y: 56}
+  ports:
+    keys:
+    - inPhases
+    - outPhases
+    values:
+    - _fieldName: inPhases
+      _node: {fileID: 5823912550285665291}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: outPhases
+        node: {fileID: -4313560906087296265}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: outPhases
+      _node: {fileID: 5823912550285665291}
+      _typeQualifiedName: QuestPhase, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: inPhases
+        node: {fileID: -4220741482890777451}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  inPhases: {fileID: 0}
+  outPhases: {fileID: 0}
+  npcTag: c_enemy01
