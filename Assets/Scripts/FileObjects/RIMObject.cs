@@ -37,9 +37,9 @@ namespace AuroraEngine
 			int resourceCount = (int)BitConverter.ToUInt32(buffer, 12);
 			long resourceOffset = BitConverter.ToUInt32(buffer, 16);
 
-			UnityEngine.Debug.Log(fileType);
-			UnityEngine.Debug.Log(fileVersion);
-			UnityEngine.Debug.Log(resourceCount);
+			//UnityEngine.Debug.Log(fileType);
+			//UnityEngine.Debug.Log(fileVersion);
+			//UnityEngine.Debug.Log(resourceCount);
 
 			memoryStream.Position = resourceOffset;
 
@@ -49,7 +49,6 @@ namespace AuroraEngine
 			resources = new Dictionary<(string, ResourceType), Resource>(resourceCount);
 
 			for (int i = 0, idx = 0; i < resourceCount; i++, idx += RES_SIZE) {
-				UnityEngine.Debug.Log(i);
 				string resref = Encoding.UTF8.GetString(buffer, idx + 0, 16).TrimEnd('\0').ToLower();	//resrefs are always case insensitive
 				ResourceType type = (ResourceType)BitConverter.ToUInt16(buffer, idx + 16);
 

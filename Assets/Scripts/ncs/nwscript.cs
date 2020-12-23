@@ -216,7 +216,8 @@ namespace AuroraEngine
                 Debug.LogWarning("Could not add object " + sItemTemplate + " to target " + oTarget + " of type + " + oTarget.GetType().Name);
             }
 
-            return new AuroraObject();
+            // TODO: Make this work
+            return null;
         }
         public static void ActionEquipItem (AuroraObject oItem, int nInventorySlot, int bInstant = 0)
         {

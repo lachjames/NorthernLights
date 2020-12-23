@@ -257,7 +257,7 @@ public class AuroraData
         return GetStreamFromBase(resref, rt);
     }
 
-    Stream GetStreamFromModule(string resref, ResourceType rt)
+    Stream GetStreamFromModule(string resref, ResourceType rt, bool warnOnFail = false)
     {
         // Check if the item is in the rim
 
@@ -280,7 +280,7 @@ public class AuroraData
             stream = rim.GetResource(resref, rt);
         }
 
-        if (stream == null)
+        if (warnOnFail && stream == null)
         {
             UnityEngine.Debug.LogWarning("Failed to load file " + resref + " of type " + rt);
         }

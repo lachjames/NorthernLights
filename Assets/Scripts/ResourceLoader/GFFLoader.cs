@@ -321,21 +321,22 @@ namespace AuroraEngine
             int stringLength;
             for (int i = 0, j = 8; i < count; i++)
             {
+                // TODO: I was debugging this at some point - why?
                 strings.Add(new GFFObject.CExoLocString.SubString());
 
                 //string id = (2 x language id) + gender
                 strings[i].strid = BitConverter.ToInt32(buffer, j + 0);
 
                 stringLength = BitConverter.ToInt32(buffer, j + 4);
-                Debug.Log("String length: " + stringLength);
+                //Debug.Log("String length: " + stringLength);
 
                 strings[i].str = Encoding.UTF8.GetString(buffer, j + 8, stringLength);
-                Debug.Log("Substring: " + strings[i].str);
+                //Debug.Log("Substring: " + strings[i].str);
 
-                foreach (char c in Encoding.UTF8.GetString(buffer, j + 8, stringLength))
-                {
-                    Debug.Log((int)c);
-                }
+                //foreach (char c in Encoding.UTF8.GetString(buffer, j + 8, stringLength))
+                //{
+                //    Debug.Log((int)c);
+                //}
                 j += 8 + stringLength;
             }
 

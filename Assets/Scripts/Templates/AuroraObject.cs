@@ -226,6 +226,7 @@ namespace AuroraEngine
             catch (NotImplementedException e)
             {
                 // This is ok
+                Debug.Log("Skipping not-implemented action: " + e);
                 actions.RemoveAt(0);
                 return;
             }

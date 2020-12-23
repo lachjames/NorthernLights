@@ -305,6 +305,8 @@ public class StateSystem : MonoBehaviour
 
     int Execute (AuroraObject caller, NCSScript script, NCSContext context, int scriptVar, bool isConditional = false)
     {
+        Debug.Log("Executing script" + script.scriptName);
+
         if (pauseOnScript)
         {
             Debug.Log("Pausing before script " + script.scriptName);

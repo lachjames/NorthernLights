@@ -348,8 +348,8 @@ public class DialogSystem : MonoBehaviour
 
     public void StartDialog(string resref, AuroraObject owner)
     {
+        Debug.Log("Starting dialog " + resref);
         AuroraDLG dlg = AuroraEngine.Resources.LoadDialogue(resref);
-        Debug.Log(dlg);
 
         // Create the camera model if one exists for this dialog
         if (dlg.CameraModel != null && dlg.CameraModel != "")
@@ -374,8 +374,6 @@ public class DialogSystem : MonoBehaviour
         {
             ((Creature)owner).OnDialogue();
         }
-
-        // AuroraDLG.AStarting starter = dlg.StartingList[0];
 
         AuroraDLG.AStarting starter = null;
         foreach (AuroraDLG.AStarting option in dlg.StartingList)

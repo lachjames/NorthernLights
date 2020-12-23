@@ -259,13 +259,13 @@ namespace AuroraEngine
             {
                 return;
             }
-            Debug.Log("Creating emitter with " +
-                "texture " + node.emitterHeader.texture +
-                "blast radius " + node.emitterHeader.blastRadius +
-                "size start " + node.emitterParameters.sizeStart +
-                "size end " + node.emitterParameters.sizeEnd +
-                "texture " + node.emitterHeader.texture
-            );
+            //Debug.Log("Creating emitter with " +
+            //    "texture " + node.emitterHeader.texture +
+            //    "blast radius " + node.emitterHeader.blastRadius +
+            //    "size start " + node.emitterParameters.sizeStart +
+            //    "size end " + node.emitterParameters.sizeEnd +
+            //    "texture " + node.emitterHeader.texture
+            //);
 
             //AuroraEmitter emitter = go.AddComponent<AuroraEmitter>();
             //emitter.header = node.emitterHeader;
@@ -297,7 +297,7 @@ namespace AuroraEngine
                     if (node.skinmeshHeader != null)
                     {
                         Mesh raw = go.GetComponent<MeshFilter>().sharedMesh;
-                        GameObject.DestroyImmediate(go.GetComponent<MeshFilter>());
+                        GameObject.Destroy(go.GetComponent<MeshFilter>());
 
                         SkinnedMeshRenderer sk = go.AddComponent<SkinnedMeshRenderer>();
 
