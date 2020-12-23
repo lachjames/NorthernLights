@@ -18,7 +18,7 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
 ## What doesn't work
  - Many of the systems currently use reflection to (very significantly) improve the ability of 
  - The save-load system
- - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet 
+ - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
  
 ## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
@@ -38,4 +38,4 @@ Please follow the following steps:
  - KotOR.js, another project similar to this, whose public source code has been helpful when trying to crack a couple of difficult nuts
  - MDLOps, whose source code I have relied on heavily when trying to understand the MDL/MDX format
  - The NWN NSS/NCS Skywing documentation
- - So, so much more... I need to finish this section
+ - So, so much more... I need to continually update this section with people I missed, or new people who helped out :)
