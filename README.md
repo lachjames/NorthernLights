@@ -1,7 +1,7 @@
 # The Northern Lights Project
 
 The Northern Lights Project (a placeholder name) is a full reimplementation of the Aurora/Odyssey engine, targeting the two Knights of the Old Republic games (KotOR 1 and TSL). It is made of two elements:
- - A full re-reimplementation of the Odyssey engine
+ - A full re-reimplementation of the Odyssey engine, intended to fix bugs and allow the game to run on modern hardware without the nightmares of the past...
  - A level editor with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
 
 ## What Works
@@ -16,9 +16,10 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
  - Movie playback works (although it works by first converting all the movies to MP4, and then playing them). Eventually, using Xoreos as a reference, I'd like to read the movies directly from .bik format, but that's a lower priority.
  
 ## What doesn't work
- - Many of the systems currently use reflection to (very significantly) improve the ability of 
+ - Many of the systems currently use reflection to (very significantly) improve code readability. However, this comes at a performance cost. I might have to reimplement some things without reflection (the script system, in particular, is a target for this).
  - The save-load system
  - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
+ - Combat and gameplay in general are very limited in scope right now. Dialog works, and some scripts work (but with large, game-breaking bugs).
  
 ## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
