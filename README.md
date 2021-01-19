@@ -1,8 +1,10 @@
 # The Northern Lights Project
 
 The Northern Lights Project (a placeholder name) is a full reimplementation of the Aurora/Odyssey engine, targeting the two Knights of the Old Republic games (KotOR 1 and TSL). It is made of two elements:
- - A full re-reimplementation of the Odyssey engine
- - A level editor with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
+ - A full re-reimplementation of the Odyssey engine, intended to fix bugs and allow the game to run on modern hardware without the nightmares of the past...
+ - A level editor (named the KotOR Level Editor, or KLE) with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
+ 
+Please find a video outlining the features of the KLE [here](https://www.youtube.com/watch?v=HoQwFkdiEkk).
 
 ## What Works
  - The level editor is functional, and can save and load modules. It is still in (very early) private alpha, so please let me know if/when you find bugs.
@@ -16,9 +18,10 @@ The Northern Lights Project (a placeholder name) is a full reimplementation of t
  - Movie playback works (although it works by first converting all the movies to MP4, and then playing them). Eventually, using Xoreos as a reference, I'd like to read the movies directly from .bik format, but that's a lower priority.
  
 ## What doesn't work
- - Many of the systems currently use reflection to (very significantly) improve the ability of 
+ - Many of the systems currently use reflection to (very significantly) improve code readability. However, this comes at a performance cost. I might have to reimplement some things without reflection (the script system, in particular, is a target for this).
  - The save-load system
- - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet 
+ - The effect system (as in, effects on characters, such as heal, damage, ...) is not yet implemented
+ - Combat and gameplay in general are very limited in scope right now. Dialog works, and some scripts work (but with large, game-breaking bugs).
  
 ## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
@@ -38,4 +41,4 @@ Please follow the following steps:
  - KotOR.js, another project similar to this, whose public source code has been helpful when trying to crack a couple of difficult nuts
  - MDLOps, whose source code I have relied on heavily when trying to understand the MDL/MDX format
  - The NWN NSS/NCS Skywing documentation
- - So, so much more... I need to finish this section
+ - So, so much more... I need to continually update this section with people I missed, or new people who helped out :)
