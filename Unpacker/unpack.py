@@ -1,7 +1,7 @@
 import os
 import shutil
 import threading
-from checksumdir import dirhash
+# from checksumdir import dirhash
 
 
 class UnpackContext:
