@@ -11,22 +11,26 @@ public class TLK : BinaryStructure
     [BinaryText(4)] public string fileType;
     [BinaryText(4)] public string version;
 
-    public int languageID = 0;
-    public int stringCount = 10;
-    public int stringEntriesOffset = 0;
+    public uint languageID;
+    public uint stringCount;
+    public uint stringEntriesOffset;
 
     [BinaryCustom("ReadStrings")] public Dictionary<int, StringData> strings;
 
     public int ReadStrings(byte[] data, int start, FieldInfo f, object target, Dictionary<string, byte[]> other)
     {
-        stringCount = 49265;
-        Debug.Log("TLK file reading " + stringCount + " strings");
+        Debug.Log(fileType + " " + version);
+        Debug.Log("TLK file reading " + stringCount + " strings from offset " + stringEntriesOffset);
         strings = new Dictionary<int, StringData>();
 
         int pos = start;
 
         for (int i = 0; i < stringCount; i++)
         {
+            if (i > 10)
+            {
+                break;
+            }
             StringData stringData = new StringData();
             stringData.stringEntriesOffset = stringEntriesOffset;
 
@@ -41,7 +45,7 @@ public class TLK : BinaryStructure
 
 public class StringData : BinaryStructure
 {
-    [BinarySkip()] public int stringEntriesOffset;
+    [BinarySkip()] public uint stringEntriesOffset;
 
     public uint flags;
     [BinaryText(16)] public string soundResRef;
@@ -65,7 +69,8 @@ public class StringData : BinaryStructure
 
         // Load the string
         DialogString s = new DialogString();
-        s.Load(data, other, (int)offsetToString);
+        s.Load(data, other, (int)(stringEntriesOffset + offsetToString));
+        Debug.Log((string)s);
 
         return start;
     }

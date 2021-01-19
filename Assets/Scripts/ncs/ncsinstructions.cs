@@ -21,5 +21,7 @@ namespace NCSInstructions
         }
 
         public abstract void Run(NCSContext context);
+
+        public abstract ILInstruction Convert(int command, StackMatrix matrix);
     }
 }

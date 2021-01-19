@@ -113,18 +113,23 @@ public class PlayerController : MonoBehaviour
         {
             if (moveV > 0.5f)
             {
-                anim.CrossFade("run");
+                //anim.CrossFade("runss");
+                new AuroraAnimations.Anim_Run_Single_Saber().PlayAnimation(anim);
             } else if (moveV < 0)
             {
                 //anim.CrossFade("back");
                 // Moving backwards
-            } else
+                new AuroraAnimations.Anim_Walk_Single_Saber().PlayAnimation(anim);
+            }
+            else
             {
-                anim.CrossFade("walk");
+                new AuroraAnimations.Anim_Walk_Single_Saber().PlayAnimation(anim);
+                //anim.CrossFade("walkss");
             }
         } else
         {
-            anim.CrossFade("neutral");
+            new AuroraAnimations.Anim_Idle_1().PlayAnimation(anim);
+            //anim.CrossFade("neutral");
         }
     }
 

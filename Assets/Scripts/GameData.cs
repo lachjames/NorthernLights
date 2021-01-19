@@ -30,6 +30,7 @@ public class AuroraData
 
     public Dictionary<string, _2DAObject> loaded2das = new Dictionary<string, _2DAObject>();
     public TLKObject tlk;
+    //public TLK tlk;
 
     public List<string> overrideFiles = new List<string>();
     public Dictionary<(string, ResourceType), string> overridePaths = new Dictionary<(string, ResourceType), string>();
@@ -132,6 +133,13 @@ public class AuroraData
             string filename = filepath.Split('\\').Last().Replace(".wav", "");
             voLocations[filename.ToLower()] = filepath;
         }
+
+        //Stream tlk_stream = new FileStream(AuroraPrefs.GetKotorLocation() + "\\dialog.tlk", FileMode.Open);
+        //int b = tlk_stream.ReadByte();
+        //UnityEngine.Debug.Log(b);
+        //tlk_stream.Seek(0, SeekOrigin.Begin);
+        //tlk = new TLK();
+        //tlk.Load(tlk_stream, new Dictionary<string, Stream>(), 0, 0);
 
         string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
         tlk = new TLKObject(tlkXML);

@@ -1631,8 +1631,8 @@ namespace AuroraEngine
         public static void SetCustomToken (int nCustomTokenNumber, string sTokenValue)
         {
             dialogSystem.SetCustomToken(nCustomTokenNumber, sTokenValue);
-            Console.WriteLine ("Function SetCustomToken not implemented");
-            throw new NotImplementedException ();
+            //Console.WriteLine ("Function SetCustomToken not implemented");
+            //throw new NotImplementedException ();
         }
         public static int GetHasFeat (int nFeat, AuroraObject oCreature = null)
         {
@@ -4043,7 +4043,8 @@ namespace AuroraEngine
         }
         public static void PlayMovie (string sMovie)
         {
-            movieSystem.PlayImmediate(sMovie);
+            Debug.Log("Movie playback not yet implemented");
+            //movieSystem.PlayImmediate(sMovie);
         }
         public static void SaveNPCState (int nNPC)
         {

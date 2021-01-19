@@ -74,7 +74,7 @@ public class StateSystem : MonoBehaviour
 
     public Dictionary<string, Func<AuroraObject, int, int>> scriptOverrides = new Dictionary<string, Func<AuroraObject, int, int>>()
     {
-        { "k_ai_master", NCSOverride.k_ai_master }
+        //{ "k_ai_master", NCSOverride.k_ai_master }
     };
 
     public enum GameState
@@ -256,6 +256,9 @@ public class StateSystem : MonoBehaviour
 
     public AuroraObject GetClosestObjectByTag (string tag, AuroraObject target, int nNth)
     {
+        // nNth is 1-based for some reason...
+        nNth -= 1;
+        
         if (!auroraObjects.ContainsKey(tag))
         {
             return AuroraObject.OBJECT_INVALID;
@@ -306,6 +309,7 @@ public class StateSystem : MonoBehaviour
     int Execute (AuroraObject caller, NCSScript script, NCSContext context, int scriptVar, bool isConditional = false)
     {
         Debug.Log("Executing script" + script.scriptName);
+        LoggedEvents.Log("Run Script", script.scriptName);
 
         if (pauseOnScript)
         {
@@ -347,6 +351,8 @@ public class StateSystem : MonoBehaviour
         contexts.Pop();
         assignedCommands.RemoveAt(assignedCommands.Count - 1);
         events.RemoveAt(events.Count - 1);
+
+        LoggedEvents.Log("Finished Script", script.scriptName);
 
         return value;
     }
@@ -734,4 +740,37 @@ public class StateSystem : MonoBehaviour
     {
         Debug.Log("Speaking string " + sStringToSpeak + " with volume " + nTalkVolume);
     }
+}
+
+public static class LoggedEvents
+{
+    public static List<LogEvent> events = new List<LogEvent>();
+
+    public static void DrawGUI ()
+    {
+        using (new GUILayout.VerticalScope())
+        {
+            foreach (LogEvent e in events)
+            {
+                using (new GUILayout.HorizontalScope())
+                {
+                    GUILayout.Label(e.name, GUILayout.Width(100));
+                    GUILayout.Label(e.desc);
+                }
+            }
+        }
+    }
+
+    public static void Log(string name, string desc)
+    {
+        events.Add(new LogEvent() {
+            name = name,
+            desc = desc
+        });
+    }
+}
+
+public class LogEvent
+{
+    public string name, desc;
 }

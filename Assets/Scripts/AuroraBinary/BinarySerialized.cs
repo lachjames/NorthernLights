@@ -200,7 +200,7 @@ public class BinaryConversion
 
 public class BinaryStructure
 {
-    public int Load(Stream stream, Dictionary<string, Stream> other, int start = 0)
+    public int Load(Stream stream, Dictionary<string, Stream> other, int start = 0, int skip = 12)
     {
         byte[] data;
 
@@ -209,7 +209,7 @@ public class BinaryStructure
         {
             stream.Position = 0;
             stream.CopyTo(memoryStream);
-            data = memoryStream.ToArray().Skip(12).ToArray();
+            data = memoryStream.ToArray().Skip(skip).ToArray();
         }
 
         Dictionary<string, byte[]> otherBytes = new Dictionary<string, byte[]>();

@@ -123,10 +123,11 @@ namespace AuroraEngine
             // Check for perception of the player
             if (SeesObject(stateManager.PC))
             {
+                Debug.Log("Sees player");
                 if (!sawPlayerLastFrame)
                 {
                     // Saw the player for the first time
-                    lastPerceptionVanished = true;
+                    lastPerceptionVanished = false;
                     lastPerceived = stateManager.PC;
                     OnNotice();
                     lastPerceived = null;
@@ -140,7 +141,7 @@ namespace AuroraEngine
                 if (sawPlayerLastFrame)
                 {
                     // We call this script if the player vanishes too
-                    lastPerceptionVanished = false;
+                    lastPerceptionVanished = true;
                     lastPerceived = stateManager.PC;
                     OnNotice();
                     lastPerceived = null;

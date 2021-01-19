@@ -37,7 +37,12 @@ namespace AuroraEngine
 		public WeaponType GetWeaponType()
 		{
 			AuroraUTI item = (AuroraUTI)this.template;
-			int isRanged = int.Parse(Resources.From2DA("baseitems", item.BaseItem, "rangedweapon"));
+			string isRangedStr = Resources.From2DA("baseitems", item.BaseItem, "rangedweapon");
+			if (isRangedStr == null)
+            {
+				isRangedStr = "0";
+            }
+			int isRanged = int.Parse(isRangedStr);
 
 			if (isRanged > 0)
             {

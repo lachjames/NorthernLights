@@ -1,0 +1,100 @@
+xoreos-tools - Tools to help with xoreos development
+Copyright (c) 2012-2020 by the following:
+
+Sven Hesse (DrMcCoy) <drmccoy@drmccoy.de>
+Matthew Hoops (clone2727) <clone2727@gmail.com>
+
+Contributors:
+
+Beren Minor <beren.minor+git@gmail.com>
+cc9cii <cc9c@iinet.net.au>
+Enrico Horn (Farmboy0) <farmboy0+git@googlemail.com>
+kevL <k3v1s73n@gmail.com>
+Anthony J. Bentley <anthony@anjbe.name>
+Ben Rosser (TC01) <rosser.bjr@gmail.com>
+Michael Drüing (darkstar) <michael@drueing.de>
+Matthias Gatto (cosmo-ray) <uso.cosmo.ray@gmail.com>
+Alexander Nahapetyan (NAAleks) <anahape@ncsu.edu>
+Patrick (Nostritius) <nostritius@googlemail.com>
+Bob Hall (rjshae) <rjh405@gmail.com>
+Cameron Cawley (ccawley2011) <ccawley2011@gmail.com>
+Charlotte Koch <cfkoch@edgebsd.org>
+
+
+xoreos-tools is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 3
+of the License, or (at your option) any later version.
+
+xoreos-tools is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with xoreos-tools. If not, see <https://gnu.org/licenses/gpl-3.0.html>.
+
+
+The Infinity engine, Aurora engine, Odyssey engine and Eclipse engine are
+registered trademarks of BioWare Corp., a subsidiary of Electronic Arts, Inc.
+The Electron engine and Lycium engine are trademarks of BioWare Corp., a
+subsidiary of Electronic Arts, Inc. Bink is a registered trademark of RAD Game
+Tools, Inc. Neverwinter Nights is a registered trademark of Wizards of the
+Coast, a subsidiary of Hasbro Inc. Star Wars, Knights of the Old Republic and
+The Sith Lords are registered trademarks of Lucasfilm Entertainment Company
+Ltd., a subsidiary of The Walt Disney Company. Jade Empire is a registered
+trademark of BioWare Corp., a subsidiary of Electronic Arts, Inc. Sonic the
+Hedgehog is a registered trademark of Sega Corporation. The Witcher is a
+registered trademark of CD Projekt S.A. Dragon Age is a registered trademark
+of Electronic Arts, Inc. All rights reserved.
+
+
+boost.m4
+********
+   xoreos-tools uses Benoit Sigoure's boost.m4 autoconf macros
+   (<https://github.com/tsuna/boost.m4>) to check for the needed Boost
+   libraries. boost.m4 is licensed under version 3 or later of the GNU General
+   Public License. For the full license text, see COPYING or
+   <https://gnu.org/licenses/gpl-3.0.html>.
+
+UTF-8 CPP
+*********
+   xoreos-tools uses the lightweight header-only UTF-8 CPP library
+   (<http://utfcpp.sourceforge.net/>) for handling UTF-8 encoded strings.
+   UTF-8 CPP is licensed under the Boost Software License. See
+   external/utf8cpp/utf8.h or <https://www.boost.org/users/license.html>
+   for details.
+
+ScummVM code
+************
+   xoreos-tools uses some ScummVM (<https://scummvm.org/>) code, most
+   prominently the endian, singleton and stream code. ScummVM is licensed under
+   version 2 or later of the GNU General Public License. For the full license
+   text, see doc/LICENSE.GPLv2 or <https://gnu.org/licenses/gpl-2.0.html>.
+
+Nintendo DS formats
+*******************
+   xoreos-tools includes readers for various Nintendo DS file formats, based on
+   code in Tinke by pleoNeX (<https://github.com/pleonex/tinke>), licensed
+   under version 3 or later of the GNU General Public License. For the full
+   license text, see COPYING or <https://gnu.org/licenses/gpl-3.0.html>.
+   They are also based on lowlines' file format specifications
+   (<http://llref.emutalk.net/docs/>) and the Nintendo DS information
+   documentation GBATEK by Martin Korth (<https://problemkaputt.de/gbatek.htm>).
+
+Google Test
+***********
+   xoreos-tools uses Google Test (<https://github.com/google/googletest>),
+   Google's C++ test framework. Google Test is licensed under the terms of the
+   3-clause BSD license. For the full license text, see tests/googletest/LICENSE
+   or <https://github.com/google/googletest/blob/master/googletest/LICENSE>.
+
+Libraries
+*********
+   In addition to the above, xoreos-tools is also only possible because of the
+   people working for the following libraries and organizations. Many thanks!
+   - libiconv <https://www.gnu.org/software/libiconv/>
+   - zlib <https://zlib.net/>
+   - liblzma <https://tukaani.org/xz/>
+   - libxml2 <http://www.xmlsoft.org/>
+   - Boost <https://www.boost.org/>

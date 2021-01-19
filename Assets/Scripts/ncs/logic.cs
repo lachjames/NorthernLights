@@ -18,6 +18,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class LOGORII : NCSInstruction
     {
@@ -30,6 +35,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class INCORII : NCSInstruction
     {
@@ -41,6 +51,11 @@ namespace NCSInstructions
             int result = val1 | val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EXCORII : NCSInstruction
     {
@@ -52,6 +67,11 @@ namespace NCSInstructions
             int result = val1 ^ val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class BOOLANDII : NCSInstruction
     {
@@ -63,6 +83,11 @@ namespace NCSInstructions
             int result = val1 & val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EQII : NCSInstruction
     {
@@ -75,6 +100,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EQFF : NCSInstruction
     {
@@ -87,6 +117,11 @@ namespace NCSInstructions
             int result = truth ? 1: 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EQSS : NCSInstruction
     {
@@ -99,6 +134,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EQOO : NCSInstruction
     {
@@ -111,6 +151,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class EQTT : NCSInstruction
     {
@@ -123,6 +168,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEQII : NCSInstruction
     {
@@ -135,6 +185,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEQFF : NCSInstruction
     {
@@ -147,6 +202,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEQSS : NCSInstruction
     {
@@ -159,6 +219,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEQOO : NCSInstruction
     {
@@ -171,6 +236,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEQTT : NCSInstruction
     {
@@ -183,6 +253,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class GEQII : NCSInstruction
     {
@@ -199,6 +274,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class GEQFF : NCSInstruction
     {
@@ -211,6 +291,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class GTII : NCSInstruction
@@ -224,6 +309,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class GTFF : NCSInstruction
     {
@@ -236,6 +326,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class LTII : NCSInstruction
     {
@@ -248,6 +343,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class LTFF : NCSInstruction
     {
@@ -260,6 +360,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class LEQII : NCSInstruction
     {
@@ -272,6 +377,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class LEQFF : NCSInstruction
     {
@@ -284,6 +394,11 @@ namespace NCSInstructions
             int result = truth ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class SHLEFTII : NCSInstruction
@@ -295,6 +410,11 @@ namespace NCSInstructions
             int result = val1 << val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SHRIGHTII : NCSInstruction
     {
@@ -305,6 +425,11 @@ namespace NCSInstructions
             int result = val1 >> val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class USHRIGHTII : NCSInstruction
     {
@@ -316,6 +441,11 @@ namespace NCSInstructions
             uint result = val1 << val2;
             context.Push((int)result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class NOTI : NCSInstruction
@@ -327,6 +457,11 @@ namespace NCSInstructions
             int result = val1 == 0 ? 1 : 0;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
 }

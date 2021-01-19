@@ -28,6 +28,11 @@ namespace NCSInstructions
                 size -= 4;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class CPDOWNSP : NCSInstruction
     {
@@ -47,6 +52,11 @@ namespace NCSInstructions
                 size -= 4;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class CPTOPBP : NCSInstruction
@@ -67,6 +77,11 @@ namespace NCSInstructions
                 offset += 4;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class CPDOWNBP : NCSInstruction
     {
@@ -88,6 +103,11 @@ namespace NCSInstructions
                 size -= 4;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MOVSP : NCSInstruction
     {
@@ -111,6 +131,11 @@ namespace NCSInstructions
                 offset -= 4;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
 
@@ -121,6 +146,12 @@ namespace NCSInstructions
         {
             context.Push(0);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.INT, "0"));
+            return new NOOP();
+        }
+
     }
 
     public class RSADDF : NCSInstruction
@@ -130,6 +161,12 @@ namespace NCSInstructions
         {
             context.Push(0.0);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.FLOAT, "0.0"));
+            return new NOOP();
+        }
+
     }
 
     public class RSADDS : NCSInstruction
@@ -139,6 +176,12 @@ namespace NCSInstructions
         {
             context.Push("");
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.STRING, "\"\""));
+            return new NOOP();
+        }
+
     }
 
     public class RSADDO : NCSInstruction
@@ -149,6 +192,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.OBJECT, "OBJECT_INVALID"));
+            return new NOOP();
+        }
+
     }
 
     public class RSADDE0 : NCSInstruction
@@ -159,6 +208,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E0, ""));
+            return new NOOP();
+        }
+
     }
 
     public class RSADDE1 : NCSInstruction
@@ -169,6 +224,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E1, ""));
+            return new NOOP();
+        }
+
     }
     public class RSADDE2 : NCSInstruction
     {
@@ -178,6 +239,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E2, ""));
+            return new NOOP();
+        }
+
     }
     public class RSADDE3 : NCSInstruction
     {
@@ -187,6 +254,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E3, ""));
+            return new NOOP();
+        }
+
     }
     public class RSADDE4 : NCSInstruction
     {
@@ -196,6 +269,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E4, ""));
+            return new NOOP();
+        }
+
     }
     public class RSADDE5 : NCSInstruction
     {
@@ -205,6 +284,12 @@ namespace NCSInstructions
             // Not required
             context.Push(new object());
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.E5, ""));
+            return new NOOP();
+        }
+
     }
 
 
@@ -216,6 +301,12 @@ namespace NCSInstructions
             int value = int.Parse(args[1]);
             context.Push(value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.INT, args[1]));
+            return new NOOP();
+        }
+
     }
 
     public class CONSTF : NCSInstruction
@@ -226,6 +317,12 @@ namespace NCSInstructions
             float value = float.Parse(args[1]);
             context.Push(value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.FLOAT, args[1]));
+            return new NOOP();
+        }
+
     }
     public class CONSTS : NCSInstruction
     {
@@ -235,6 +332,12 @@ namespace NCSInstructions
             string value = args[1];
             context.Push(value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            matrix.Push(command, new PropagateData(NCSDataType.STRING, args[1]));
+            return new NOOP();
+        }
+
     }
 
     public class CONSTO : NCSInstruction
@@ -256,6 +359,24 @@ namespace NCSInstructions
                 throw new Exception("Tried to instantiate constant object with value " + args[1]);
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            int value = int.Parse(args[1]);
+            if (value == 0)
+            {
+                matrix.Push(command, new PropagateData(NCSDataType.OBJECT, "OBJECT_SELF"));
+            }
+            else if (value == 0x00000001 || value == -1 || value == 0x7F000000)
+            {
+                matrix.Push(command, new PropagateData(NCSDataType.OBJECT, "OBJECT_INVALID"));
+            }
+            else
+            {
+                throw new Exception("Tried to instantiate constant object with value " + args[1]);
+            }
+            return new NOOP();
+        }
+
     }
 
     public class STORE_STATEALL : NCSInstruction
@@ -265,6 +386,11 @@ namespace NCSInstructions
             // Pushes an immediate value onto the stack
             Debug.Log("STORE_STATEALL is obsolete and not implemented");
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class DESTRUCT : NCSInstruction
@@ -298,6 +424,11 @@ namespace NCSInstructions
                 context.Push(obj);
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class DECSPI : NCSInstruction
@@ -309,6 +440,11 @@ namespace NCSInstructions
             int value = ((int)context.GetOffsetSP(offset)) - 1;
             context.SetOffsetSP(offset, value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class INCSPI : NCSInstruction
@@ -320,6 +456,11 @@ namespace NCSInstructions
             int value = ((int)context.GetOffsetSP(offset)) + 1;
             context.SetOffsetSP(offset, value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class DECBP : NCSInstruction
@@ -331,6 +472,11 @@ namespace NCSInstructions
             int value = ((int)context.GetOffsetBP(offset)) - 1;
             context.SetOffsetBP(offset, value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class INCBP : NCSInstruction
     {
@@ -341,6 +487,11 @@ namespace NCSInstructions
             int value = ((int)context.GetOffsetBP(offset)) + 1;
             context.SetOffsetBP(offset, value);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class SAVEBP : NCSInstruction
@@ -351,6 +502,11 @@ namespace NCSInstructions
             context.Push(basePtr);
             context.basePointer = context.stackPointer;
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class RESTOREBP : NCSInstruction
@@ -360,6 +516,11 @@ namespace NCSInstructions
             int basePtr = (int)context.Pop();
             context.basePointer = basePtr;
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class STORESTATE : NCSInstruction
@@ -369,6 +530,10 @@ namespace NCSInstructions
             // Push a copy of the current context to the stack
             context.StoreState(context.script.labels[args[1]]);
             //throw new NotImplementedException("STORESTATE not yet implemented ;(");
+        }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

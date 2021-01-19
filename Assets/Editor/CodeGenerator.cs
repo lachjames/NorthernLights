@@ -1,15 +1,11 @@
 ﻿using AuroraEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using Newtonsoft.Json;
-using UnityEngine.Networking.NetworkSystem;
-using System.Net.Configuration;
 
 /* Some general post-generation manual changes are required.
  *  - Renaming some classes with the same names as their parents
@@ -84,9 +80,14 @@ using AuroraEngine;
     {
         using (new EditorGUILayout.VerticalScope())
         {
-            if (GUILayout.Button("Load GFFs"))
+            if (GUILayout.Button("Create GFF Templates"))
             {
                 LoadGFFs();
+            }
+
+            if (GUILayout.Button("Create Animatinos"))
+            {
+                LoadAnimations();
             }
 
             if (!loadedGFFs)
@@ -94,6 +95,93 @@ using AuroraEngine;
                 return;
             }
         }
+    }
+
+    void LoadAnimations ()
+    {
+        string template = @"
+    public class {17} : AuroraAnimation {{
+        public override int id {{ get {{ return {0}; }} }}
+        public override string name {{ get {{ return ""{1}""; }} }}
+        public override string description {{ get {{ return ""{2}""; }} }}
+        public override bool stationary {{ get {{ return {3}; }} }} 
+        public override bool pause {{ get {{ return {4}; }} }} 
+        public override bool walking {{ get {{ return {5}; }} }} 
+        public override bool running {{ get {{ return {6}; }} }} 
+        public override bool looping {{ get {{ return {7}; }} }} 
+        public override bool fireforget {{ get {{ return {8}; }} }} 
+        public override bool overlay {{ get {{ return {9}; }} }} 
+        public override bool playoutofplace {{ get {{ return {10}; }} }} 
+        public override bool dialog {{ get {{ return {11}; }} }} 
+        public override bool damage {{ get {{ return {12}; }} }} 
+        public override bool parry {{ get {{ return {13}; }} }} 
+        public override bool dodge {{ get {{ return {14}; }} }} 
+        public override bool attack {{ get {{ return {15}; }} }} 
+        public override bool hideequippeditems {{ get {{ return {16}; }} }} 
+    }}
+";
+
+        string def = @"
+public class AuroraAnimations {
+";
+
+        // Read the animations 2DA file
+        _2DAObject anims2da = AuroraEngine.Resources.data.Load2DA("animations");
+
+        Dictionary<string, int> occurrances = new Dictionary<string, int>();
+
+        int i = 0;
+        foreach (var row in anims2da.data)
+        {
+            if (row[0] == "" || row[1].Contains("*"))
+            {
+                continue;
+            }
+
+            string class_name = "Anim_" + (row[1] == "" ? row[0] : row[1]).Replace("(", "").Replace(")", "");
+            if (!occurrances.ContainsKey(class_name))
+            {
+                occurrances[class_name] = 0;
+            }
+
+            occurrances[class_name] += 1;
+            if (occurrances[class_name] > 1)
+            {
+                class_name += "_0" + occurrances[class_name];
+            }
+
+            string output = string.Format(template,
+                i,
+                row[0],
+                row[1],
+                row[2] == "1" ? "true" : "false",
+                row[3] == "1" ? "true" : "false",
+                row[4] == "1" ? "true" : "false",
+                row[5] == "1" ? "true" : "false",
+                row[6] == "1" ? "true" : "false",
+                row[7] == "1" ? "true" : "false",
+                row[8] == "1" ? "true" : "false",
+                row[9] == "1" ? "true" : "false",
+                row[10] == "1" ? "true" : "false",
+                row[11] == "1" ? "true" : "false",
+                row[12] == "1" ? "true" : "false",
+                row[13] == "1" ? "true" : "false",
+                row[14] == "1" ? "true" : "false",
+                row[15] == "1" ? "true" : "false",
+                class_name
+            );
+            Debug.Log(output);
+
+            def += output;
+
+            i++;
+        }
+
+        def += "\n}";
+
+        Debug.Log(def);
+
+        File.WriteAllText(OutputLocation + "\\" + "animations.cs", def);
     }
 
     // Source: https://stackoverflow.com/questions/7413612/how-to-limit-the-execution-time-of-a-function-in-c-sharp

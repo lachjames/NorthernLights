@@ -266,7 +266,7 @@ namespace AuroraEngine
                     creature.gameObject.tag = "Creature";
 
                     creature.transform.SetParent(parent.transform);
-
+                    creature.transform.name = ((AuroraUTC)creature.template).Tag;
                     SetLayerRecursive(creature.gameObject, LayerMask.NameToLayer("Creature"));
 
                     //Debug.Log(character.template);
@@ -320,9 +320,11 @@ namespace AuroraEngine
                     // Put back the original rotation, to rotate the obstacle correctly
                     door.transform.rotation = rot;
 
+                    string tag = d.Tag;
+                    
                     door.transform.SetParent(parent.transform);
+                    door.transform.name = tag;
 
-                    string tag = ((AuroraUTD)door.template).Tag;
                     //if (d.Tag != null)
                     //{
                     //    tag = d.Tag;
@@ -358,7 +360,7 @@ namespace AuroraEngine
                     SetLayerRecursive(placeable.gameObject, LayerMask.NameToLayer("NavMeshStatic"));
 
                     placeable.transform.SetParent(parent.transform);
-
+                    placeable.transform.name = ((AuroraUTP)placeable.template).Tag;
                     stateManager.AddObject(((AuroraUTP)placeable.template).Tag, placeable);
                 });
             }
@@ -381,9 +383,12 @@ namespace AuroraEngine
                     sound = Resources.LoadSound(p.TemplateResRef, p);
                     sound.gameObject.transform.position = position;
 
-                    sound.transform.SetParent(parent.transform);
+                    string tag = p.Tag;
 
-                    stateManager.AddObject(((AuroraUTS)sound.template).Tag, sound);
+                    sound.transform.SetParent(parent.transform);
+                    sound.transform.name = tag;
+
+                    stateManager.AddObject(tag, sound);
                 });
             }
         }
@@ -411,6 +416,7 @@ namespace AuroraEngine
                     store.gameObject.transform.LookAt(position + 10 * lookDirection);
 
                     store.transform.SetParent(parent.transform);
+                    store.transform.name = ((AuroraUTM)store.template).Tag;
 
                     stateManager.AddObject(((AuroraUTM)store.template).Tag, store);
                 });
@@ -438,9 +444,11 @@ namespace AuroraEngine
                     waypoint.gameObject.transform.position = position;
                     waypoint.gameObject.transform.LookAt(position + 10 * lookDirection);
 
-                    waypoint.transform.SetParent(parent.transform);
+                    //string tag = ((AuroraUTW)waypoint.template).Tag;
+                    string tag = p.Tag;
 
-                    string tag = ((AuroraUTW)waypoint.template).Tag;
+                    waypoint.transform.SetParent(parent.transform);
+                    waypoint.transform.name = tag;
                     //if (p.Tag != null)
                     //{
                     //    tag = p.Tag;
@@ -478,6 +486,8 @@ namespace AuroraEngine
                     cam.gameObject.transform.rotation = rotation;
 
                     cam.transform.SetParent(parent.transform);
+                    cam.transform.name = "Camera_" + p.CameraID;
+
                     cameraPoints.Add(cam);
                 });
             }
@@ -520,9 +530,11 @@ namespace AuroraEngine
                     }
 
 
+                    string tag = t.Tag;
+                    
                     trigger.transform.SetParent(parent.transform);
+                    trigger.transform.name = tag;
 
-                    string tag = ((AuroraUTT)trigger.template).Tag;
                     //if (t.Tag != null)
                     //{
                     //    tag = t.Tag;
@@ -564,6 +576,7 @@ namespace AuroraEngine
                     collider.isTrigger = true;
 
                     encounter.transform.SetParent(parent.transform);
+                    encounter.transform.name = ((AuroraUTE)encounter.template).Tag;
 
                     stateManager.AddObject(((AuroraUTE)encounter.template).Tag, encounter);
                 });

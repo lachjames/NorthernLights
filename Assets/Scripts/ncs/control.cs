@@ -18,8 +18,15 @@ namespace NCSInstructions
         public override void Run(NCSContext context)
         {
             context.Log("Calling " + args[1]);
+
             // Get the function definition for the action
             MethodInfo m = nwscript.GetMethod(args[1]);
+
+            if (m == null)
+            {
+                Debug.LogError("Warning: could not find method " + args[1]);
+            }
+
             int paramCount = int.Parse(args[2]);
 
             object[] parameters = new object[m.GetParameters().Length];
@@ -62,7 +69,33 @@ namespace NCSInstructions
                 parameters[i] = Type.Missing;
             }
 
-            object return_value = m.Invoke(null, parameters);
+            // Generate the function call signature
+            string signature = args[1] + "(";
+            
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                signature += parameters[i];
+                if (i != parameters.Length - 1)
+                {
+                    signature += ",";
+                }
+            }
+            
+            signature += ")";
+
+            object return_value;
+
+            try
+            {
+                return_value = m.Invoke(null, parameters);
+            } catch (Exception e)
+            {
+                LoggedEvents.Log("  Action", "FAILED: " + signature);
+                throw e;
+            }
+
+            LoggedEvents.Log("  Action", signature + " = " + return_value);
+
             context.Log(m.Name + " returned with value " + return_value);
 
             if (m.ReturnType == typeof(void))
@@ -79,6 +112,11 @@ namespace NCSInstructions
                 context.Push(return_value);
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class JNZ : NCSInstruction
@@ -100,6 +138,11 @@ namespace NCSInstructions
                 context.programCounter = offset - 1;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class JZ : NCSInstruction
@@ -121,6 +164,11 @@ namespace NCSInstructions
                 context.programCounter = offset - 1;
             }
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class JMP : NCSInstruction
     {
@@ -131,6 +179,11 @@ namespace NCSInstructions
             int newPC = script.labels[args[1]];
             context.programCounter = newPC;
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class JSR : NCSInstruction
@@ -141,6 +194,11 @@ namespace NCSInstructions
             int newPC = script.labels[args[1]];
             context.Jump(newPC);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
 
@@ -153,6 +211,11 @@ namespace NCSInstructions
                 context.last_return = context.stack[0];
             context.Return();
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
 
@@ -163,6 +226,11 @@ namespace NCSInstructions
             // Pushes an immediate value onto the stack
             //Debug.Log("No-op");
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
     public class T : NCSInstruction
@@ -172,5 +240,10 @@ namespace NCSInstructions
             // Pushes an immediate value onto the stack
             Debug.Log("This should never be reached");
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }

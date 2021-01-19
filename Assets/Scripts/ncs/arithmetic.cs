@@ -14,6 +14,11 @@ namespace NCSInstructions
             int result = val1 + val2;
             context.Push(result);
         }
+
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
     }
     public class ADDIF : NCSInstruction
     {
@@ -25,6 +30,11 @@ namespace NCSInstructions
             float result = val1 + val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class ADDFI : NCSInstruction
     {
@@ -35,6 +45,10 @@ namespace NCSInstructions
             float val1 = (float)context.Pop();
             float result = val1 + val2;
             context.Push(result);
+        }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
         }
     }
     public class ADDFF : NCSInstruction
@@ -47,6 +61,11 @@ namespace NCSInstructions
             float result = val1 + val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class ADDSS : NCSInstruction
     {
@@ -58,6 +77,11 @@ namespace NCSInstructions
             string result = val1 + val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class ADDVV : NCSInstruction
     {
@@ -69,6 +93,11 @@ namespace NCSInstructions
             Vector3 result = val1 + val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SUBII : NCSInstruction
     {
@@ -80,6 +109,11 @@ namespace NCSInstructions
             int result = val1 - val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SUBIF : NCSInstruction
     {
@@ -91,6 +125,11 @@ namespace NCSInstructions
             float result = val1 - val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SUBFI : NCSInstruction
     {
@@ -102,6 +141,11 @@ namespace NCSInstructions
             float result = val1 - val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SUBFF : NCSInstruction
     {
@@ -113,6 +157,11 @@ namespace NCSInstructions
             float result = val1 - val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class SUBVV : NCSInstruction
     {
@@ -124,6 +173,11 @@ namespace NCSInstructions
             Vector3 result = val1 - val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULII : NCSInstruction
     {
@@ -135,6 +189,11 @@ namespace NCSInstructions
             int result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULIF : NCSInstruction
     {
@@ -146,6 +205,11 @@ namespace NCSInstructions
             float result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULFI : NCSInstruction
     {
@@ -157,6 +221,11 @@ namespace NCSInstructions
             float result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULFF : NCSInstruction
     {
@@ -168,6 +237,11 @@ namespace NCSInstructions
             float result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULVF : NCSInstruction
     {
@@ -179,6 +253,11 @@ namespace NCSInstructions
             Vector3 result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MULFV : NCSInstruction
     {
@@ -190,6 +269,11 @@ namespace NCSInstructions
             Vector3 result = val1 * val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class DIVII : NCSInstruction
     {
@@ -201,6 +285,11 @@ namespace NCSInstructions
             int result = val1 / val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class DIVIF : NCSInstruction
     {
@@ -212,6 +301,11 @@ namespace NCSInstructions
             float result = val1 / val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class DIVFI : NCSInstruction
     {
@@ -223,6 +317,11 @@ namespace NCSInstructions
             float result = val1 / val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class DIVFF : NCSInstruction
     {
@@ -234,6 +333,11 @@ namespace NCSInstructions
             float result = val1 / val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class DIVVF : NCSInstruction
     {
@@ -245,6 +349,11 @@ namespace NCSInstructions
             Vector3 result = val1 / val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class MODII : NCSInstruction
     {
@@ -255,6 +364,11 @@ namespace NCSInstructions
             int result = val1 % val2;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEGI : NCSInstruction
     {
@@ -265,6 +379,11 @@ namespace NCSInstructions
             int result = -val1;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class NEGF : NCSInstruction
     {
@@ -275,6 +394,11 @@ namespace NCSInstructions
             float result = -val1;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
     public class COMPI : NCSInstruction
     {
@@ -285,6 +409,11 @@ namespace NCSInstructions
             int result = ~val1;
             context.Push(result);
         }
+        public override ILInstruction Convert(int command, StackMatrix matrix)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 
 }

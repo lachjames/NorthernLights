@@ -49,6 +49,24 @@ public class KDialogEditor : EditorWindow
         }
     }
 
+    public void LoadDLGFromFile ()
+    {
+        // Ask for a filename
+        string filename = EditorUtility.OpenFilePanel("Select a DLG file", "", "");
+        using (FileStream fs = new FileStream(filename, FileMode.Open))
+        {
+            AuroraDLG dlg = (AuroraDLG)new GFFLoader(fs).GetObject().Serialize<AuroraDLG>();
+            LoadDLG(dlg);
+        }
+    }
+
+    public void SaveDLGToFile ()
+    {
+        string filename = EditorUtility.SaveFilePanel("Save File As...", "", "dialog.dlg", "");
+        KModuleEditor.CreateGFFFile(AuroraPrefs.GetModuleOutLocation(), "dialog", dlg, "dlg");
+        File.Move(AuroraPrefs.GetModuleOutLocation() + "/dialog.dlg", filename);
+    }
+
     public void LoadDLG (AuroraDLG dlg)
     {
         curEntry = null;
@@ -62,6 +80,14 @@ public class KDialogEditor : EditorWindow
     {
         using (new EditorGUILayout.HorizontalScope())
         {
+            if (GUILayout.Button("Load From File"))
+            {
+                LoadDLGFromFile();
+            }
+            if (GUILayout.Button("Save To File"))
+            {
+                SaveDLGToFile();
+            }
             if (GUILayout.Button("Node View"))
             {
                 DialogGraph dg = new DialogGraph();
