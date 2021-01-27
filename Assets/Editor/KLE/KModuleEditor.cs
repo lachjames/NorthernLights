@@ -13,10 +13,6 @@ public class KModuleEditor : EditorWindow
 {
     string moduleName;
     string modulePath;
-    RIMObject rim, srim;
-    ERFObject dlg, mod;
-
-    object currentItem;
 
     int tab;
 
@@ -372,12 +368,6 @@ public class KModuleEditor : EditorWindow
     {
         moduleName = null;
         modulePath = null;
-        rim = null;
-        srim = null;
-        dlg = null;
-        mod = null;
-
-        currentItem = null;
 
         tab = 0;
 
