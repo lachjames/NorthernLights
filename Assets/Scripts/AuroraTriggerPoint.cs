@@ -15,7 +15,6 @@ public class AuroraTriggerPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        geometry.structid = 3;
         geometry.PointX = transform.localPosition.x;
         geometry.PointY = transform.localPosition.z;
         geometry.PointZ = transform.localPosition.y;

@@ -40,6 +40,13 @@ public class KTriggerEditor : EditorWindow
     {
         // A list of triggers can be found in the GIT file
         triggers = AuroraEngine.Resources.data.module.git.TriggerList;
+        foreach (var trigger in triggers)
+        {
+            foreach (var geom in trigger.Geometry)
+            {
+                geom.structid = 3;
+            }
+        }
 
         // Create the editor parent if it doesn't exist
         if (editorParent == null)
