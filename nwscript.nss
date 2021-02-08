@@ -16,7 +16,7 @@
 
 // Constants
 
-int        NUM_INVENTORY_SLOTS          = 18;
+int        NUM_INVENTORY_SLOTS          = 20;
 
 int    TRUE                     = 1;
 int    FALSE                    = 0;
@@ -51,6 +51,8 @@ int    INVENTORY_SLOT_CWEAPON_L   = 14;
 int    INVENTORY_SLOT_CWEAPON_R   = 15;
 int    INVENTORY_SLOT_CWEAPON_B   = 16;
 int    INVENTORY_SLOT_CARMOUR     = 17;
+int    INVENTORY_SLOT_RIGHTWEAPON2= 18;
+int    INVENTORY_SLOT_LEFTWEAPON2 = 19;
 
 //Effect type constants
 int    DURATION_TYPE_INSTANT    = 0;
@@ -226,6 +228,7 @@ int IMMUNITY_TYPE_NEGATIVE_LEVEL    = 29;
 int IMMUNITY_TYPE_SNEAK_ATTACK      = 30;
 int IMMUNITY_TYPE_CRITICAL_HIT      = 31;
 int IMMUNITY_TYPE_DEATH             = 32;
+int IMMUNITY_TYPE_DROID_CONFUSED    = 33;
 
 int AREA_TRANSITION_RANDOM        = 0;
 int AREA_TRANSITION_USER_DEFINED  = 1;
@@ -394,10 +397,13 @@ int EFFECT_TYPE_MISS_CHANCE                 = 71;
 int EFFECT_TYPE_CONCEALMENT                 = 72;
 int EFFECT_TYPE_SPELL_IMMUNITY              = 73;
 int EFFECT_TYPE_ASSUREDHIT                  = 74;
-int EFFECT_TYPE_VISUAL              = 75;
-int EFFECT_TYPE_LIGHTSABERTHROW         = 76;
-int EFFECT_TYPE_FORCEJUMP           = 77;
-int EFFECT_TYPE_ASSUREDDEFLECTION       = 78;
+int EFFECT_TYPE_VISUAL                      = 75;
+int EFFECT_TYPE_LIGHTSABERTHROW             = 76;
+int EFFECT_TYPE_FORCEJUMP                   = 77;
+int EFFECT_TYPE_ASSUREDDEFLECTION           = 78;
+int EFFECT_TYPE_DROID_CONFUSED              = 79;
+int EFFECT_TYPE_MINDTRICK                   = 80; // DJS-OEI 7/28/2004
+int EFFECT_TYPE_DROIDSCRAMBLE               = 81; // DJS-OEI 8/21/2004
 
 
 int ITEM_PROPERTY_ABILITY_BONUS                            = 0 ;
@@ -459,6 +465,13 @@ int ITEM_PROPERTY_BLASTER_BOLT_DEFLECT_INCREASE            = 55;
 int ITEM_PROPERTY_BLASTER_BOLT_DEFLECT_DECREASE            = 56;
 int ITEM_PROPERTY_USE_LIMITATION_FEAT                      = 57;
 int ITEM_PROPERTY_DROID_REPAIR_KIT                         = 58;
+int ITEM_PROPERTY_DISGUISE                                 = 59;//RWT-OEI 12/03/03 - Caught this list up with the in-game code
+int ITEM_PROPERTY_LIMIT_USE_BY_GENDER                      = 60;
+int ITEM_PROPERTY_LIMIT_USE_BY_SUBRACE                     = 61;
+int ITEM_PROPERTY_LIMIT_USE_BY_PC                          = 62;
+int ITEM_PROPERTY_DAMPEN_SOUND                             = 63;
+int ITEM_PROPERTY_DOORCUTTING                              = 64;
+int ITEM_PROPERTY_DOORSABERING                             = 65;
 
 int BASE_ITEM_QUARTER_STAFF              = 0;
 int BASE_ITEM_STUN_BATON                 = 1;
@@ -545,6 +558,8 @@ int BASE_ITEM_CREATURE_ITEM_PIERCE       = 82;
 int BASE_ITEM_CREATURE_WEAPON_SL_PRC     = 83;
 int BASE_ITEM_CREATURE_HIDE_ITEM         = 84;
 int BASE_ITEM_BASIC_CLOTHING             = 85;
+int BASE_ITEM_WRIST_LAUNCHER             = 91;
+int BASE_ITEM_FORCE_PIKE                 = 93; // DJS-OEI 8/19/2004
 
 int BASE_ITEM_INVALID = 256;
 
@@ -636,6 +651,7 @@ int VFX_DUR_CARBONITE_CHUNKS               = 2055;
 int VFX_DUR_SHIELD_BLUE_MARK_I             = 2056;
 int VFX_DUR_SHIELD_BLUE_MARK_II            = 2058;
 int VFX_DUR_SHIELD_BLUE_MARK_IV            = 2059;
+int VFX_DUR_ELECTRICAL_SPARK               = 2067;
 
 int VFX_FNF_FORCE_WAVE                     = 3001;
 int VFX_FNF_PLOT_MAN_SONIC_WAVE            = 3002;
@@ -689,6 +705,7 @@ int VFX_IMP_MIRV                           = 6000;
 int VFX_IMP_MIRV_IMPACT                    = 6001;
 int VFX_IMP_SCREEN_SHAKE                   = 6002;
 
+int VFX_DUR_HOLO_PROJECT           = 9010;  // DJS-OEI 9/15/2004
 
 int AOE_PER_FOGACID                = 0;
 int AOE_PER_FOGFIRE                = 1;
@@ -727,6 +744,22 @@ int AOE_PER_CREEPING_DOOM          = 33;
 int AOE_PER_EVARDS_BLACK_TENTACLES = 34;
 int AOE_MOB_INVISIBILITY_PURGE     = 35;
 int AOE_MOB_DRAGON_FEAR            = 36;
+
+// DJS-OEI 7/21/2004
+// Form re-design.
+/*
+// DJS-OEI 3/28/2004
+// These masks are used in Spells.2DA to indicate which spells
+// can be affected by which Forms. Unfortunately, the script compiler
+// won't let me make a constant with a Hex value, so I've had to use
+// decimal.
+int FORM_MASK_FORCE_FOCUS                       = 1;
+int FORM_MASK_ENDURING_FORCE                    = 2;
+int FORM_MASK_FORCE_AMPLIFICATION               = 4;
+int FORM_MASK_FORCE_POTENCY                     = 8;
+int FORM_MASK_REGENERATION                      = 16;
+int FORM_MASK_POWER_OF_THE_DARK_SIDE            = 32;
+*/
 
 // these constants match those in spell.2da
 int FORCE_POWER_ALL_FORCE_POWERS            = -1;  // used for spell immunity.
@@ -795,6 +828,124 @@ int SPECIAL_ABILITY_TAUNT                   = 61;
 int SPECIAL_ABILITY_WHIRLING_DERVISH        = 62;
 int SPECIAL_ABILITY_RAGE                    = 63;
 
+// DJS-OEI 12/9/2003
+// New Force Powers
+int FORCE_POWER_MASTER_ENERGY_RESISTANCE        = 133;
+int FORCE_POWER_MASTER_HEAL                     = 134;
+int FORCE_POWER_FORCE_BARRIER                   = 135;
+int FORCE_POWER_IMPROVED_FORCE_BARRIER          = 136;
+int FORCE_POWER_MASTER_FORCE_BARRIER            = 137;
+int FORCE_POWER_BATTLE_MEDITATION_PC            = 138;  // Only PCs, CNPCs, and Friendly allies should cast
+int FORCE_POWER_IMPROVED_BATTLE_MEDITATION_PC   = 139;  // these versions of Battle Meditation.
+int FORCE_POWER_MASTER_BATTLE_MEDITATION_PC     = 140;  //
+int FORCE_POWER_BAT_MED_ENEMY                   = 141;  // Only hostile creatures should cast
+int FORCE_POWER_IMP_BAT_MED_ENEMY               = 142;  // these versions of Battle Meditation.
+int FORCE_POWER_MAS_BAT_MED_ENEMY               = 143;  //
+int FORCE_POWER_CRUSH_OPPOSITION_I              = 144;
+int FORCE_POWER_CRUSH_OPPOSITION_II             = 145;
+int FORCE_POWER_CRUSH_OPPOSITION_III            = 146;
+int FORCE_POWER_CRUSH_OPPOSITION_IV             = 147;
+int FORCE_POWER_CRUSH_OPPOSITION_V              = 148;
+int FORCE_POWER_CRUSH_OPPOSITION_VI             = 149;
+int FORCE_POWER_FORCE_BODY                      = 150;
+int FORCE_POWER_IMPROVED_FORCE_BODY             = 151;
+int FORCE_POWER_MASTER_FORCE_BODY               = 152;
+int FORCE_POWER_DRAIN_FORCE                     = 153;
+int FORCE_POWER_IMPROVED_DRAIN_FORCE            = 154;
+int FORCE_POWER_MASTER_DRAIN_FORCE              = 155;
+int FORCE_POWER_FORCE_CAMOUFLAGE                = 156;
+int FORCE_POWER_IMPROVED_FORCE_CAMOUFLAGE       = 157;
+int FORCE_POWER_MASTER_FORCE_CAMOUFLAGE         = 158;
+int FORCE_POWER_FORCE_SCREAM                    = 159;
+int FORCE_POWER_IMPROVED_FORCE_SCREAM           = 160;
+int FORCE_POWER_MASTER_FORCE_SCREAM             = 161;
+int FORCE_POWER_FORCE_REPULSION                 = 162;
+int FORCE_POWER_FORCE_REDIRECTION               = 163;
+int FORCE_POWER_FURY                            = 164;
+int FORCE_POWER_IMPROVED_FURY                   = 165;
+int FORCE_POWER_MASTER_FURY                     = 166;
+int FORCE_POWER_INSPIRE_FOLLOWERS_I             = 167;
+int FORCE_POWER_INSPIRE_FOLLOWERS_II            = 168;
+int FORCE_POWER_INSPIRE_FOLLOWERS_III           = 169;
+int FORCE_POWER_INSPIRE_FOLLOWERS_IV            = 170;
+int FORCE_POWER_INSPIRE_FOLLOWERS_V             = 171;
+int FORCE_POWER_INSPIRE_FOLLOWERS_VI            = 172;
+int FORCE_POWER_REVITALIZE                      = 173;
+int FORCE_POWER_IMPROVED_REVITALIZE             = 174;
+int FORCE_POWER_MASTER_REVITALIZE               = 175;
+int FORCE_POWER_FORCE_SIGHT                     = 176;
+int FORCE_POWER_FORCE_CRUSH                     = 177;
+int FORCE_POWER_PRECOGNITION                    = 178;
+int FORCE_POWER_BATTLE_PRECOGNITION             = 179;
+int FORCE_POWER_FORCE_ENLIGHTENMENT             = 180;
+int FORCE_POWER_MIND_TRICK                      = 181;
+int FORCE_POWER_CONFUSION                       = 200;
+int FORCE_POWER_BEAST_TRICK                     = 182;
+int FORCE_POWER_BEAST_CONFUSION                 = 184;
+int FORCE_POWER_DROID_TRICK                     = 201;
+int FORCE_POWER_DROID_CONFUSION                 = 269;
+int FORCE_POWER_BREATH_CONTROL                  = 270;
+int FORCE_POWER_WOOKIEE_RAGE_I                  = 271;
+int FORCE_POWER_WOOKIEE_RAGE_II                 = 272;
+int FORCE_POWER_WOOKIEE_RAGE_III                = 273;
+
+// DJS-OEI 7/21/2004
+// Form re-design.
+/*
+// DJS-OEI 3/25/2004
+int FORM_LIGHTSABER_PADAWAN_I                   = 205;
+int FORM_LIGHTSABER_PADAWAN_II                  = 206;
+int FORM_LIGHTSABER_PADAWAN_III                 = 207;
+int FORM_LIGHTSABER_DAKLEAN_I                   = 208;
+int FORM_LIGHTSABER_DAKLEAN_II                  = 209;
+int FORM_LIGHTSABER_DAKLEAN_III                 = 210;
+int FORM_LIGHTSABER_SENTINEL_I                  = 211;
+int FORM_LIGHTSABER_SENTINEL_II                 = 212;
+int FORM_LIGHTSABER_SENTINEL_III                = 213;
+int FORM_LIGHTSABER_SODAK_I                     = 214;
+int FORM_LIGHTSABER_SODAK_II                    = 215;
+int FORM_LIGHTSABER_SODAK_III                   = 216;
+int FORM_LIGHTSABER_ANCIENT_I                   = 217;
+int FORM_LIGHTSABER_ANCIENT_II                  = 218;
+int FORM_LIGHTSABER_ANCIENT_III                 = 219;
+int FORM_LIGHTSABER_MASTER_I                    = 220;
+int FORM_LIGHTSABER_MASTER_II                   = 221;
+int FORM_LIGHTSABER_MASTER_III                  = 222;
+int FORM_CONSULAR_FORCE_FOCUS_I                 = 223;
+int FORM_CONSULAR_FORCE_FOCUS_II                = 224;
+int FORM_CONSULAR_FORCE_FOCUS_III               = 225;
+int FORM_CONSULAR_ENDURING_FORCE_I              = 226;
+int FORM_CONSULAR_ENDURING_FORCE_II             = 227;
+int FORM_CONSULAR_ENDURING_FORCE_III            = 228;
+int FORM_CONSULAR_FORCE_AMPLIFICATION_I         = 229;
+int FORM_CONSULAR_FORCE_AMPLIFICATION_II        = 230;
+int FORM_CONSULAR_FORCE_AMPLIFICATION_III       = 231;
+int FORM_CONSULAR_FORCE_SHELL_I                 = 232;
+int FORM_CONSULAR_FORCE_SHELL_II                = 233;
+int FORM_CONSULAR_FORCE_SHELL_III               = 234;
+int FORM_CONSULAR_FORCE_POTENCY_I               = 235;
+int FORM_CONSULAR_FORCE_POTENCY_II              = 236;
+int FORM_CONSULAR_FORCE_POTENCY_III             = 237;
+int FORM_CONSULAR_REGENERATION_I                = 238;
+int FORM_CONSULAR_REGENERATION_II               = 239;
+int FORM_CONSULAR_REGENERATION_III              = 240;
+int FORM_CONSULAR_POWER_OF_THE_DARK_SIDE_I      = 241;
+int FORM_CONSULAR_POWER_OF_THE_DARK_SIDE_II     = 242;
+int FORM_CONSULAR_POWER_OF_THE_DARK_SIDE_III    = 243;
+*/
+
+int FORM_SABER_I_SHII_CHO                       = 258;
+int FORM_SABER_II_MAKASHI                       = 259;
+int FORM_SABER_III_SORESU                       = 260;
+int FORM_SABER_IV_ATARU                         = 261;
+int FORM_SABER_V_SHIEN                          = 262;
+int FORM_SABER_VI_NIMAN                         = 263;
+int FORM_SABER_VII_JUYO                         = 264;
+int FORM_FORCE_I_FOCUS                          = 265;
+int FORM_FORCE_II_POTENCY                       = 266;
+int FORM_FORCE_III_AFFINITY                     = 267;
+int FORM_FORCE_IV_MASTERY                       = 268;
+
 // these constants must match those in poison.2da
 
 int POISON_ABILITY_SCORE_MILD     = 0;
@@ -803,6 +954,12 @@ int POISON_ABILITY_SCORE_VIRULENT = 2;
 int POISON_DAMAGE_MILD            = 3;
 int POISON_DAMAGE_AVERAGE         = 4;
 int POISON_DAMAGE_VIRULENT        = 5;
+int POISON_ABILITY_AND_DAMAGE_AVERAGE  = 6;
+int POISON_ABILITY_AND_DAMAGE_VIRULENT = 7;
+int POISON_DAMAGE_ROCKET          = 8; // DJS-OEI 4/12/2004
+int POISON_DAMAGE_NORMAL_DART     = 9; // DJS-OEI 4/13/2004
+int POISON_DAMAGE_KYBER_DART      = 10; // DJS-OEI 4/13/2004
+int POISON_DAMAGE_KYBER_DART_HALF = 11; // DJS-OEI 4/13/2004
 
 // the thing after CREATURE_TYPE_ should refer to the
 // actual "subtype" in the lists given above.
@@ -842,6 +999,17 @@ int CLASS_TYPE_COMBATDROID   = 6;
 int CLASS_TYPE_EXPERTDROID   = 7;
 int CLASS_TYPE_MINION        = 8;
 
+// DJS-OEI 2/11/2004
+int CLASS_TYPE_TECHSPECIALIST    = 9;
+int CLASS_TYPE_BOUNTYHUNTER      = 10;  // Cut, I believe
+int CLASS_TYPE_JEDIWEAPONMASTER  = 11;
+int CLASS_TYPE_JEDIMASTER        = 12;
+int CLASS_TYPE_JEDIWATCHMAN      = 13;
+int CLASS_TYPE_SITHMARAUDER      = 14;
+int CLASS_TYPE_SITHLORD          = 15;
+int CLASS_TYPE_SITHASSASSIN      = 16;
+
+
 int CLASS_TYPE_INVALID   = 255;
 
 // These are for GetFirstInPersistentObject() and GetNextInPersistentObject()
@@ -866,6 +1034,10 @@ int STANDARD_FACTION_ENDAR_SPIRE    = 14;
 int STANDARD_FACTION_RANCOR         = 15;
 int STANDARD_FACTION_GIZKA_1        = 16;
 int STANDARD_FACTION_GIZKA_2        = 17;
+// DJS-OEI 2/25/2004
+int STANDARD_FACTION_SELF_LOATHING  = 21;
+int STANDARD_FACTION_ONE_ON_ONE     = 22;
+int STANDARD_FACTION_PARTYPUPPET    = 23;
 
 // Skill defines
 int SKILL_COMPUTER_USE    = 0;
@@ -978,6 +1150,96 @@ int FEAT_IMPROVED_FLURRY                       = 91;
 int FEAT_IMPROVED_RAPID_SHOT                   = 92;
 int FEAT_PROFICIENCY_ALL                       = 93;
 int FEAT_BATTLE_MEDITATION                     = 94;
+// DJS-OEI 11/12/2003
+int FEAT_EVASION                               = 125;
+int FEAT_TARGETING_1                           = 126;
+int FEAT_TARGETING_2                           = 127;
+int FEAT_TARGETING_3                           = 128;
+int FEAT_TARGETING_4                           = 129;
+int FEAT_TARGETING_5                           = 130;
+int FEAT_TARGETING_6                           = 131;
+int FEAT_TARGETING_7                           = 132;
+int FEAT_TARGETING_8                           = 133;
+int FEAT_TARGETING_9                           = 134;
+int FEAT_TARGETING_10                          = 135;
+// DJS-OEI 10/5/2004
+// Moved down to 240+
+/*
+int FEAT_PRECISE_SHOT                          = 136;
+int FEAT_IMPROVED_PRECISE_SHOT                 = 137;
+int FEAT_MASTER_PRECISE_SHOT                   = 138;
+*/
+int FEAT_CLOSE_COMBAT                          = 139;
+int FEAT_IMPROVED_CLOSE_COMBAT                 = 140;
+int FEAT_IMPROVED_FORCE_CAMOUFLAGE             = 141;
+int FEAT_MASTER_FORCE_CAMOUFLAGE               = 142;
+int FEAT_REGENERATE_FORCE_POINTS               = 143;
+int FEAT_DARK_SIDE_CORRUPTION                  = 149;
+int FEAT_IGNORE_PAIN_1                         = 150;
+int FEAT_IGNORE_PAIN_2                         = 151;
+int FEAT_IGNORE_PAIN_3                         = 152;
+int FEAT_INCREASE_COMBAT_DAMAGE_1              = 153;
+int FEAT_INCREASE_COMBAT_DAMAGE_2              = 154;
+int FEAT_INCREASE_COMBAT_DAMAGE_3              = 155;
+int FEAT_SUPERIOR_WEAPON_FOCUS_LIGHTSABER_1    = 156;
+int FEAT_SUPERIOR_WEAPON_FOCUS_LIGHTSABER_2    = 157;
+int FEAT_SUPERIOR_WEAPON_FOCUS_LIGHTSABER_3    = 158;
+int FEAT_SUPERIOR_WEAPON_FOCUS_TWO_WEAPON_1    = 159;
+int FEAT_SUPERIOR_WEAPON_FOCUS_TWO_WEAPON_2    = 160;
+int FEAT_SUPERIOR_WEAPON_FOCUS_TWO_WEAPON_3    = 161;
+int FEAT_LIGHT_SIDE_ENLIGHTENMENT              = 167;
+int FEAT_DEFLECT                               = 168;
+int FEAT_INNER_STRENGTH_1                      = 169;
+int FEAT_INNER_STRENGTH_2                      = 170;
+int FEAT_INNER_STRENGTH_3                      = 171;
+int FEAT_INCREASE_MELEE_DAMAGE_1               = 172;
+int FEAT_INCREASE_MELEE_DAMAGE_2               = 173;
+int FEAT_INCREASE_MELEE_DAMAGE_3               = 174;
+int FEAT_CRAFT                                 = 175;
+int FEAT_MASTERCRAFT_WEAPONS_1                 = 176;
+int FEAT_MASTERCRAFT_WEAPONS_2                 = 177;
+int FEAT_MASTERCRAFT_WEAPONS_3                 = 178;
+int FEAT_MASTERCRAFT_ARMOR_1                   = 179;
+int FEAT_MASTERCRAFT_ARMOR_2                   = 180;
+int FEAT_MASTERCRAFT_ARMOR_3                   = 181;
+int FEAT_DROID_INTERFACE                       = 182;
+int FEAT_CLASS_SKILL_AWARENESS                 = 183;
+int FEAT_CLASS_SKILL_COMPUTER_USE              = 184;
+int FEAT_CLASS_SKILL_DEMOLITIONS               = 185;
+int FEAT_CLASS_SKILL_REPAIR                    = 186;
+int FEAT_CLASS_SKILL_SECURITY                  = 187;
+int FEAT_CLASS_SKILL_STEALTH                   = 188;
+int FEAT_CLASS_SKILL_TREAT_INJURY              = 189;
+int FEAT_DUAL_STRIKE                           = 190;
+int FEAT_IMPROVED_DUAL_STRIKE                  = 191;
+int FEAT_MASTER_DUAL_STRIKE                    = 192;
+int FEAT_FINESSE_LIGHTSABERS                   = 193;
+int FEAT_FINESSE_MELEE_WEAPONS                 = 194;
+int FEAT_MOBILITY                              = 195;
+int FEAT_REGENERATE_VITALITY_POINTS            = 196;
+int FEAT_STEALTH_RUN                           = 197;
+int FEAT_KINETIC_COMBAT                        = 198;
+int FEAT_SURVIVAL                              = 199;
+int FEAT_MANDALORIAN_COURAGE                   = 200;
+int FEAT_PERSONAL_CLOAKING_SHIELD              = 201;
+int FEAT_MENTOR                                = 202;
+int FEAT_IMPLANT_SWITCHING                     = 203;
+int FEAT_SPIRIT                                = 204;
+int FEAT_FORCE_CHAIN                           = 205;
+int FEAT_WAR_VETERAN                           = 206;
+// DJS-OEI 10/5/2004
+// Moved down to 240+
+/*
+int FEAT_PRECISE_SHOT_IV                       = 226;
+int FEAT_PRECISE_SHOT_V                        = 227;
+*/
+int FEAT_FIGHTING_SPIRIT                       = 236;
+int FEAT_HEROIC_RESOLVE                        = 237;
+int FEAT_PRECISE_SHOT                          = 240;
+int FEAT_IMPROVED_PRECISE_SHOT                 = 241;
+int FEAT_MASTER_PRECISE_SHOT                   = 242;
+int FEAT_PRECISE_SHOT_IV                       = 243;
+int FEAT_PRECISE_SHOT_V                        = 244;
 
 // Special Attack Defines
 int SPECIAL_ATTACK_INVALID              =   0;
@@ -1037,14 +1299,30 @@ int ANIMATION_LOOPING_SPASM         = 21;
 int ANIMATION_LOOPING_SLEEP         = 22;
 int ANIMATION_LOOPING_PRONE         = 23;
 int ANIMATION_LOOPING_PAUSE3        = 24;
-int ANIMATION_LOOPING_WELD      = 25;
-int ANIMATION_LOOPING_DEAD      = 26;
-int ANIMATION_LOOPING_TALK_INJURED  = 27;
-int ANIMATION_LOOPING_LISTEN_INJURED = 28;
-int ANIMATION_LOOPING_TREAT_INJURED = 29;
-int ANIMATION_LOOPING_DEAD_PRONE    = 30;
-int ANIMATION_LOOPING_KNEEL_TALK_ANGRY = 31;
-int ANIMATION_LOOPING_KNEEL_TALK_SAD   = 32;
+int ANIMATION_LOOPING_WELD              = 25;
+int ANIMATION_LOOPING_DEAD              = 26;
+int ANIMATION_LOOPING_TALK_INJURED      = 27;
+int ANIMATION_LOOPING_LISTEN_INJURED    = 28;
+int ANIMATION_LOOPING_TREAT_INJURED     = 29;
+int ANIMATION_LOOPING_DEAD_PRONE        = 30;
+int ANIMATION_LOOPING_KNEEL_TALK_ANGRY  = 31;
+int ANIMATION_LOOPING_KNEEL_TALK_SAD    = 32;
+int ANIMATION_LOOPING_CHECK_BODY        = 33;
+int ANIMATION_LOOPING_UNLOCK_DOOR       = 34;
+int ANIMATION_LOOPING_SIT_AND_MEDITATE  = 35;
+
+int ANIMATION_LOOPING_SIT_CHAIR         = 36;//AWD-OEI 07/06/2004
+int ANIMATION_LOOPING_SIT_CHAIR_DRINK   = 37;//AWD-OEI 07/06/2004
+int ANIMATION_LOOPING_SIT_CHAIR_PAZAK   = 38;//AWD-OEI 07/06/2004
+int ANIMATION_LOOPING_SIT_CHAIR_COMP1   = 39;//AWD-OEI 07/06/2004
+int ANIMATION_LOOPING_SIT_CHAIR_COMP2   = 40;//AWD-OEI 07/06/2004
+
+int ANIMATION_LOOPING_RAGE              = 41;//JAB-OEI 07/15/2004
+//int ANIMATION_LOOPING_DIVE_ROLL       = 42;//BMA-OEI 08/18/2004
+int ANIMATION_LOOPING_CLOSED            = 43;//AWD-OEI 08/23/2004
+int ANIMATION_LOOPING_STEALTH           = 44;//BMA-OEI 08/31/2004
+int ANIMATION_LOOPING_CHOKE_WORKING     = 45;//DJS-OEI 09/09/2004
+int ANIMATION_LOOPING_MEDITATE_STAND    = 46;//DJS-OEI 9/10/2004
 
 // NOTE: Choke is really a looping animation.  The fire and forget constant has
 //       been left in because it has already been used in many places.  Please
@@ -1077,6 +1355,10 @@ int ANIMATION_FIREFORGET_THROW_HIGH         = 117;
 int ANIMATION_FIREFORGET_THROW_LOW          = 118;
 int ANIMATION_FIREFORGET_CUSTOM01           = 119;
 int ANIMATION_FIREFORGET_TREAT_INJURED      = 120;
+int ANIMATION_FIREFORGET_FORCE_CAST         = 121;
+int ANIMATION_FIREFORGET_OPEN               = 122;//AWD-OEI 08/23/2004
+int ANIMATION_FIREFORGET_DIVE_ROLL          = 123;//DJS-OEI 08/29/2004
+int ANIMATION_FIREFORGET_SCREAM             = 124;//DJS-OEI 09/09/2004
 
 // Placeable animation constants
 int ANIMATION_PLACEABLE_ACTIVATE            = 200;
@@ -1223,6 +1505,8 @@ int ACTION_FOLLOW             = 35;
 int ACTION_WAIT               = 36;
 int ACTION_SIT                = 37;
 int ACTION_FOLLOWLEADER       = 38;
+int ACTION_FOLLOWOWNER        = 43;
+
 
 int ACTION_INVALID                = 65535;
 int ACTION_QUEUEEMPTY             = 65534;
@@ -1239,6 +1523,20 @@ int TRAP_BASE_TYPE_LASER_SLICING_DEADLY         = 8;
 int TRAP_BASE_TYPE_POISON_GAS_MINOR             = 9;
 int TRAP_BASE_TYPE_POISON_GAS_AVERAGE           = 10;
 int TRAP_BASE_TYPE_POISON_GAS_DEADLY            = 11;
+int TRAP_BASE_TYPE_SONIC_CHARGE_MINOR           = 14;
+int TRAP_BASE_TYPE_SONIC_CHARGE_AVERAGE         = 15;
+int TRAP_BASE_TYPE_SONIC_CHARGE_DEADLY          = 16;
+// DJS-OEI 1/20/2004
+int TRAP_BASE_TYPE_FLASH_STUN_STRONG            = 17;
+int TRAP_BASE_TYPE_FLASH_STUN_DEVASTATING       = 18;
+int TRAP_BASE_TYPE_FRAGMENTATION_MINE_STRONG    = 19;
+int TRAP_BASE_TYPE_FRAGMENTATION_MINE_DEVASTATING  = 20;
+int TRAP_BASE_TYPE_LASER_SLICING_STRONG         = 21;
+int TRAP_BASE_TYPE_LASER_SLICING_DEVASTATING    = 22;
+int TRAP_BASE_TYPE_POISON_GAS_STRONG            = 23;
+int TRAP_BASE_TYPE_POISON_GAS_DEVASTATING       = 24;
+int TRAP_BASE_TYPE_SONIC_CHARGE_STRONG          = 25;
+int TRAP_BASE_TYPE_SONIC_CHARGE_DEVASTATING     = 26;
 
 int SWMINIGAME_TRACKFOLLOWER_SOUND_ENGINE = 0;
 int SWMINIGAME_TRACKFOLLOWER_SOUND_DEATH  = 1;
@@ -1246,45 +1544,63 @@ int SWMINIGAME_TRACKFOLLOWER_SOUND_DEATH  = 1;
 int CONVERSATION_TYPE_CINEMATIC = 0;
 int CONVERSATION_TYPE_COMPUTER  = 1;
 
-int PLANET_ENDAR_SPIRE      = 0;
-int PLANET_TARIS            = 1;
+int PLANET_DANTOOINE        = 0;
+int PLANET_DXUN             = 1;
 int PLANET_EBON_HAWK        = 2;
-int PLANET_DANTOOINE        = 3;
-int PLANET_TATOOINE         = 4;
-int PLANET_KASHYYYK         = 5;
-int PLANET_MANAAN           = 6;
-int PLANET_KORRIBAN         = 7;
-int PLANET_LEVIATHAN        = 8;
-int PLANET_UNKNOWN_WORLD    = 9;
-int PLANET_STAR_FORGE       = 10;
-int PLANET_LIVE_01          = 11;
+int PLANET_KORRIBAN         = 3;
+int PLANET_M4_78            = 4;
+int PLANET_MALACHOR_V       = 5;
+int PLANET_NAR_SHADDAA      = 6;
+int PLANET_ONDERON          = 7;
+int PLANET_PERAGUS          = 8;
+int PLANET_TELOS            = 9;
+int PLANET_HARBINGER        = 10;
+int PLANET_LIVE_01          = 11;//The 'live' planets are just space fillers
 int PLANET_LIVE_02          = 12;
 int PLANET_LIVE_03          = 13;
 int PLANET_LIVE_04          = 14;
 int PLANET_LIVE_05          = 15;
+int PLANET_LIVE_06          = 16;
 
-int NPC_PLAYER          = -1;
-int NPC_BASTILA         = 0;
-int NPC_CANDEROUS       = 1;
-int NPC_CARTH           = 2;
-int NPC_HK_47           = 3;
-int NPC_JOLEE           = 4;
-int NPC_JUHANI          = 5;
-int NPC_MISSION         = 6;
-int NPC_T3_M4           = 7;
-int NPC_ZAALBAR         = 8;
+int NPC_PLAYER          =-1;
+int NPC_ATTON           = 0;
+int NPC_BAO_DUR         = 1;
+int NPC_CANDEROUS       = 2;
+int NPC_G0T0            = 3;
+int NPC_HANDMAIDEN      = 4;
+int NPC_HK_47           = 5;
+int NPC_KREIA           = 6;
+int NPC_MIRA            = 7;
+int NPC_T3_M4           = 8;
+int NPC_VISAS           = 9;
+int NPC_HANHARR          = 10;
+int NPC_DISCIPLE        = 11;
+
+int PUP_SENSORBALL      = 0;
+int PUP_OTHER1          = 1;
+int PUP_OTHER2          = 2;
 
 
 int PARTY_AISTYLE_AGGRESSIVE    = 0;
 int PARTY_AISTYLE_DEFENSIVE     = 1;
 int PARTY_AISTYLE_PASSIVE       = 2;
 
-int NPC_AISTYLE_DEFAULT_ATTACK  = 0;
+int NPC_AISTYLE_DEFAULT_ATTACK  = 0;//Depricated, we don't use this anymore. RWT-OEI 08/18/04
 int NPC_AISTYLE_RANGED_ATTACK   = 1;
 int NPC_AISTYLE_MELEE_ATTACK    = 2;
 int NPC_AISTYLE_AID             = 3;
-int NPC_AISTYLE_GRENADE_THROWER = 4;
-int NPC_AISTYLE_JEDI_SUPPORT    = 5;
+int NPC_AISTYLE_GRENADE_THROWER = 4;//Depricated, we don't use this anymore. RWT-OEI 08/18/04
+int NPC_AISTYLE_JEDI_SUPPORT    = 5;//Depricated, we don't use this anymore. RWT-OEI 08/18/04
+int NPC_AISTYLE_HEALER          = 6;//RWT-OEI 03/18/04 - No fighting, just heals
+int NPC_AISTYLE_SKIRMISH        = 7;//RWT-OEI 03/22/04 - This AI moves and shoots
+int NPC_AISTYLE_TURTLE          = 8;//JAB-OEI 07/03/04 - Turtles then unleashes charged attack
+int NPC_AISTYLE_PARTY_AGGRO     = 9;//RWT-OEI 08/18/04 - All out attacking party member
+int NPC_AISTYLE_PARTY_DEFENSE   = 10;//RWT-OEI 08/18/04 - Attacks, but doesn't stray to far.
+int NPC_AISTYLE_PARTY_RANGED    = 11;//RWT-OEI 08/18/04 - Doesn't run around a lot, but does heal.
+int NPC_AISTYLE_PARTY_STATIONARY= 12;//RWT-OEI 08/18/04 - Uses healing and defensive force powers.
+int NPC_AISTYLE_PARTY_SUPPORT   = 13;//RWT-OEI 08/28/04 - Revisiting party AI stuff
+int NPC_AISTYLE_PARTY_REMOTE    = 14;//RWT-OEI 09/08/04 - Combat AI for the floating remote.
+int NPC_AISTYLE_MONSTER_POWERS  = 15;//DJS-OEI 09/27/04 - Combat AI for the Malachor Storm Beasts and other ability-using monsters.
 
 int DISGUISE_TYPE_TEST            = 1;
 int DISGUISE_TYPE_P_T3M3          = 2;
@@ -1630,6 +1946,10 @@ int SHIELD_VERPINE_PROTOTYPE      = 14;
 int SHIELD_ANTIQUE_DROID          = 15;
 int SHIELD_PLOT_TAR_M09AA         = 16;
 int SHIELD_PLOT_UNK_M44AA         = 17;
+int SHIELD_PLOT_MAN_M28AA         = 18;
+int SHIELD_HEAT                   = 19;
+int SHIELD_DREXL                  = 20; // JAB-OEI 7/2/04
+
 
 int SUBRACE_NONE   = 0;
 int SUBRACE_WOOKIE = 1;
@@ -1638,10 +1958,45 @@ int VIDEO_EFFECT_NONE              = -1;
 int VIDEO_EFFECT_SECURITY_CAMERA   = 0;
 int VIDEO_EFFECT_FREELOOK_T3M4     = 1;
 int VIDEO_EFFECT_FREELOOK_HK47     = 2;
+int VIDEO_EFFECT_CLAIRVOYANCE      = 3;
+int VIDEO_EFFECT_FORCESIGHT        = 4;
+int VIDEO_EFFECT_VISAS_FREELOOK    = 5;
+int VIDEO_EFFECT_CLAIRVOYANCEFULL  = 6;
+int VIDEO_EFFECT_FURY_1            = 7;
+int VIDEO_EFFECT_FURY_2            = 8;
+int VIDEO_EFFECT_FURY_3            = 9;
+int VIDEO_FFECT_SECURITY_NO_LABEL  = 10;//RWT-OEI 05/05/04 - Same as the Security Camera, but turns off the 'Press A to...' label.
 
-int TUTORIAL_WINDOW_START_SWOOP_RACE = 0;
-int TUTORIAL_WINDOW_RETURN_TO_BASE   = 1;
-int TUTORIAL_WINDOW_MOVEMENT_KEYS    = 2;
+// DJS-OEI 1/14/2004
+// Modified the way these work. The values
+// listed here are now direct references to
+// rows in Tutorial.2DA. Originally these
+// would have to be converted to .2DA ids
+// in the code.
+int TUTORIAL_WINDOW_START_SWOOP_RACE = 9;
+int TUTORIAL_WINDOW_RETURN_TO_BASE   = 40;
+// DJS-OEI 11/21/2003
+int TUTORIAL_WINDOW_TEMP1            = 42;
+int TUTORIAL_WINDOW_TEMP2            = 43;
+int TUTORIAL_WINDOW_TEMP3            = 44;
+int TUTORIAL_WINDOW_TEMP4            = 45;
+int TUTORIAL_WINDOW_TEMP5            = 46;
+int TUTORIAL_WINDOW_TEMP6            = 47;
+int TUTORIAL_WINDOW_TEMP7            = 48;
+int TUTORIAL_WINDOW_TEMP8            = 49;
+int TUTORIAL_WINDOW_TEMP9            = 50;
+int TUTORIAL_WINDOW_TEMP10           = 51;
+int TUTORIAL_WINDOW_TEMP11           = 52;
+int TUTORIAL_WINDOW_TEMP12           = 53;
+int TUTORIAL_WINDOW_TEMP13           = 54;
+int TUTORIAL_WINDOW_TEMP14           = 55;
+int TUTORIAL_WINDOW_TEMP15           = 56;
+
+int AI_LEVEL_VERY_HIGH               =  4;  // AWD-OEI 7/08/2004
+int AI_LEVEL_HIGH                    =  3;  // AWD-OEI 7/08/2004
+int AI_LEVEL_NORMAL                  =  2;  // AWD-OEI 7/08/2004
+int AI_LEVEL_LOW                     =  1;  // AWD-OEI 7/08/2004
+int AI_LEVEL_VERY_LOW                =  0;  // AWD-OEI 7/08/2004
 
 int MOVEMENT_SPEED_PC       = 0;
 int MOVEMENT_SPEED_IMMOBILE     = 1;
@@ -1660,6 +2015,29 @@ int LIVE_CONTENT_PKG4 = 4;
 int LIVE_CONTENT_PKG5 = 5;
 int LIVE_CONTENT_PKG6 = 6;
 
+//RWT-OEI 12/16/03
+//  These constants are for the Implant Swapping support in a_swapimplant
+//  They correspond directly with the ACTIONIDs in the game for each of the
+//  implant swapping actions.
+int IMPLANT_NONE  = 0;
+int IMPLANT_REGEN = 1;
+int IMPLANT_STR   = 2;
+int IMPLANT_END   = 3;
+int IMPLANT_AGI   = 4;
+
+// DJS-OEI 6/12/2004
+// These constants can be OR'ed together and sent to SetForfeitConditions()
+// in order to set up flagging situations that will alert the area script that
+// the player has violated them. This is usually used for Battle Arena restrictions.
+int FORFEIT_NO_FORCE_POWERS = 1;    // Player cannot cast any Force Powers
+int FORFEIT_NO_ITEMS        = 2;    // Player cannot use any items (medpacs, grenades, stims, grenades)
+int FORFEIT_NO_WEAPONS      = 4;    // Player must fight unarmed. Equipping a weapon is a forfeit.
+int FORFEIT_DXUN_SWORD_ONLY = 8;    // Player can only use the sword with tag 'pl_sword' given to them at the start
+                                    // of one of the Dxun Battle Circle fights, or no weapon at all.
+int FORFEIT_NO_ARMOR        = 16;   // Player cannot use any armor.
+int FORFEIT_NO_RANGED       = 32;   // Player cannot use ranged weapons.
+int FORFEIT_NO_LIGHTSABER   = 64;   // Player cannot use lightsabers.
+int FORFEIT_NO_ITEM_BUT_SHIELD  = 128;   // Player cannot use items except for shields.
 
 string sLanguage = "nwscript";
 
@@ -1833,7 +2211,8 @@ object GetItemPossessedBy(object oCreature, string sItemTag);
 // - nStackSize: This is the stack size of the item to be created
 // * Return value: The object that has been created.  On error, this returns
 //   OBJECT_INVALID.
-object CreateItemOnObject(string sItemTemplate, object oTarget=OBJECT_SELF, int nStackSize=1);
+//RWT-OEI 12/16/03 - Added the bHideMessage parameter
+object CreateItemOnObject(string sItemTemplate, object oTarget=OBJECT_SELF, int nStackSize=1, int nHideMessage = 0);
 
 // 32: Equip oItem into nInventorySlot.
 // - nInventorySlot: INVENTORY_SLOT_*
@@ -2080,7 +2459,10 @@ effect EffectAbilityIncrease(int nAbilityToIncrease, int nModifyBy);
 effect EffectDamageResistance(int nDamageType, int nAmount, int nLimit=0);
 
 // 82: Create a Resurrection effect. This should be applied as an instantaneous effect.
-effect EffectResurrection();
+// DJS-OEI 8/26/2004
+// Added a parameter for the percentage of HP the target
+// should receive when they are revived.
+effect EffectResurrection( int nHPPercent=0 );
 
 // 83: GetPlayerRestrictMode
 // returns the current player 'restricted' mode
@@ -2216,8 +2598,8 @@ int ReflexSave(object oCreature, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, 
 // Returns: 2 if the target was immune to the save type specified
 int WillSave(object oCreature, int nDC, int nSaveType=SAVING_THROW_TYPE_NONE, object oSaveVersus=OBJECT_SELF);
 
-// 111: Get the DC to save against for a spell (10 + spell level + relevant ability
-// bonus).  This can be called by a creature or by an Area of Effect object.
+// 111: Get the DC to save against for a spell (5 + spell level + CHA Mod + WIS Mod).
+// This can be called by a creature or by an Area of Effect object.
 int GetSpellSaveDC();
 
 // 112: Set the subtype of eEffect to Magical and return eEffect.
@@ -2357,7 +2739,9 @@ event EventUserDefined(int nUserDefinedEventNumber);
 // - nSpectacularDeath: if this is TRUE, the creature to which this effect is
 //   applied will die in an extraordinary fashion
 // - nDisplayFeedback
-effect EffectDeath(int nSpectacularDeath=FALSE, int nDisplayFeedback=TRUE);
+// - nNoFadeAway: Passing TRUE for this parameter will keep the bodies from fading after the creature
+//                dies. Note that NO XP will be awarded if the creature is killed with this parameter.
+effect EffectDeath(int nSpectacularDeath=FALSE, int nDisplayFeedback=TRUE, int nNoFadeAway=FALSE);
 
 // 134: Create a Knockdown effect
 // This effect knocks creatures off their feet, they will sit until the effect
@@ -2676,7 +3060,9 @@ object GetObjectByTag(string sTag, int nNth=0);
 //          the aligment value will become 50
 // - nShift: this is the desired shift in alignment
 // * No return value
-void AdjustAlignment(object oSubject, int nAlignment, int nShift);
+// - bDontModifyNPCs - Defaults to 'FALSE', if you pass in 'TRUE' then you can adjust
+//   the playercharacter's alignment without impacting the rest of the NPCs
+void AdjustAlignment(object oSubject, int nAlignment, int nShift, int bDontModifyNPCs = FALSE);
 
 // 202: Do nothing for fSeconds seconds.
 void ActionWait(float fSeconds);
@@ -2709,7 +3095,9 @@ void SetAreaTransitionBMP(int nPredefinedAreaTransition, string sCustomAreaTrans
 // - sNameObjectToIgnore1-6 - Normally objects in the animation list of the dialog editor have to be available for animations on that node to work
 //                                        these 6 strings are to indicate 6 objects that don’t need to be available for things to proceed.  The string should be EXACTLY
 //                                        the same as the string that it represents in the dialog editor.
-void ActionStartConversation(object oObjectToConverse, string sDialogResRef = "", int bPrivateConversation = FALSE, int nConversationType = CONVERSATION_TYPE_CINEMATIC, int bIgnoreStartRange = FALSE, string sNameObjectToIgnore1 = "", string sNameObjectToIgnore2 = "", string sNameObjectToIgnore3 = "", string sNameObjectToIgnore4 = "", string sNameObjectToIgnore5 = "", string sNameObjectToIgnore6 = "", int bUseLeader = FALSE);
+// - nBarkX and nBarkY - These override the left, top corner position for the bark string if the conversation starting is a bark string.
+//                       They only happen on a conversation by conversation basis and don't stay in effect in subsequent conversations.
+void ActionStartConversation(object oObjectToConverse, string sDialogResRef = "", int bPrivateConversation = FALSE, int nConversationType = CONVERSATION_TYPE_CINEMATIC, int bIgnoreStartRange = FALSE, string sNameObjectToIgnore1 = "", string sNameObjectToIgnore2 = "", string sNameObjectToIgnore3 = "", string sNameObjectToIgnore4 = "", string sNameObjectToIgnore5 = "", string sNameObjectToIgnore6 = "", int bUseLeader = FALSE, int nBarkX = -1, int nBarkY = -1, int bDontClearAllActions = 0);
 
 // 205: Pause the current conversation.
 void ActionPauseConversation();
@@ -2893,7 +3281,7 @@ void ActionSpeakStringByStrRef(int nStrRef, int nTalkVolume=TALKVOLUME_TALK);
 // 241: Destroy oObject (irrevocably).
 // This will not work on modules and areas.
 // The bNoFade and fDelayUntilFade are for creatures and placeables only
-void DestroyObject(object oDestroy, float fDelay=0.0f, int bNoFade = FALSE, float fDelayUntilFade = 0.0f);
+void DestroyObject(object oDestroy, float fDelay=0.0f, int bNoFade = FALSE, float fDelayUntilFade = 0.0f, int nHideFeedback = 0);
 
 // 242: Get the module.
 // * Return value on error: OBJECT_INVALID
@@ -3095,6 +3483,10 @@ object GetModuleItemAcquiredFrom();
 void SetCustomToken(int nCustomTokenNumber, string sTokenValue);
 
 // 285: Determine whether oCreature has nFeat, and nFeat is useable.
+// PLEASE NOTE!!! - This function will return FALSE if the target
+// is not currently able to use the feat due to daily limits or
+// other restrictions. Use GetFeatAcquired() if you just want to
+// know if they've got it or not.
 // - nFeat: FEAT_*
 // - oCreature
 int GetHasFeat(int nFeat, object oCreature=OBJECT_SELF);
@@ -3255,7 +3647,10 @@ int GetLastAttackMode(object oCreature=OBJECT_SELF);
 float GetDistanceBetween2D(object oObjectA, object oObjectB);
 
 // 320: * Returns TRUE if oCreature is in combat.
-int GetIsInCombat(object oCreature=OBJECT_SELF);
+//RWT-OEI 09/30/04 - If you pass TRUE in as the second parameter then
+//this function will only return true if the character is in REAL combat.
+//If you don't know what that means, don't pass in TRUE.
+int GetIsInCombat(object oCreature=OBJECT_SELF, int bOnlyCountReal = FALSE);
 
 // 321: Get the last command (ASSOCIATE_COMMAND_*) issued to oAssociate.
 int GetLastAssociateCommand(object oAssociate=OBJECT_SELF);
@@ -3406,7 +3801,12 @@ int GetInventoryDisturbType();
 object GetInventoryDisturbItem();
 
 // 354: Displays the upgrade screen where the player can modify weapons and armor
-void ShowUpgradeScreen(object oItem = OBJECT_INVALID);
+// If oItem is NOT invalid, then the player will be forced to upgrade oItem and only oItem.
+// If oCharacter is NOT invalid, then that character's various skills will be used... *NOT IMPLEMENTED*
+// If nDisableItemCreation = TRUE, then the player will not be able to access the item creation screen
+// If nDisableUpgrade = TRUE, then the player will be forced straight to item creation and not be able
+//      to access Item Upgrading.
+void ShowUpgradeScreen(object oItem = OBJECT_INVALID, object oCharacter = OBJECT_INVALID, int nDisableItemCreation = FALSE, int nDisableUpgrade = FALSE, string sOverride2DA = "");
 
 // 355: Set eEffect to be versus a specific alignment.
 // - eEffect
@@ -3502,6 +3902,10 @@ object GetAttemptedSpellTarget();
 object GetLastOpenedBy();
 
 // 377: Determine whether oCreature has nSpell memorised.
+// PLEASE NOTE!!! - This function will return FALSE if the target
+// is not currently able to use the spell due to lack of sufficient
+// Force Points. Use GetSpellAcquired() if you just want to
+// know if they've got it or not.
 // - nSpell: SPELL_*
 // - oCreature
 int GetHasSpell(int nSpell, object oCreature=OBJECT_SELF);
@@ -3709,12 +4113,12 @@ void MusicBackgroundSetDelay(object oArea, int nDelay);
 // 428: Change the background day track for oArea to nTrack.
 // - oArea
 // - nTrack
-void MusicBackgroundChangeDay(object oArea, int nTrack);
+void MusicBackgroundChangeDay(object oArea, int nTrack, int nStreamingMusic = FALSE);
 
 // 429: Change the background night track for oArea to nTrack.
 // - oArea
 // - nTrack
-void MusicBackgroundChangeNight(object oArea, int nTrack);
+void MusicBackgroundChangeNight(object oArea, int nTrack, int nStreamingMusic = FALSE);
 
 // 430: Play the battle music for oArea.
 void MusicBattlePlay(object oArea);
@@ -4106,6 +4510,7 @@ void RevealMap(vector vPoint=[0.0,0.0,0.0],int nRadius=-1);
 void SetTutorialWindowsEnabled( int bEnabled );
 
 // 517: ShowTutorialWindow
+// nWindow - A row index from Tutorial.2DA specifying the message to display.
 // Pops up the specified tutorial window.  If the tutorial window has already popped
 // up once before, this will do nothing.
 void ShowTutorialWindow( int nWindow );
@@ -4708,7 +5113,7 @@ void AddJournalWorldEntryStrref ( int strref, int strrefTitle );
 // 671: BarkString
 // this will cause a creature to bark the strRef from the talk table
 // If creature is specefied as OBJECT_INVALID a general bark is made.
-void BarkString(object oCreature,int strRef);
+void BarkString(object oCreature,int strRef, int nBarkX = -1, int nBarkY = -1);
 
 // 672: DeleteJournalWorldAllEntries
 // Nuke's 'em all, user entered or otherwise.
@@ -4739,22 +5144,23 @@ void SetJournalQuestEntryPicture(string szPlotID, object oObject, int nPictureIn
 
 // 679. GetLocalBoolean
 // This gets a boolean flag on an object
-// currently the index is a range between 0 and 63
+// currently the index is a range between 20 and 63
 int GetLocalBoolean( object oObject, int nIndex );
 
 // 680. SetLocalBoolean
 // This sets a boolean flag on an object
-// currently the index is a range between 0 and 63
+// currently the index is a range between 20 and 63
 void SetLocalBoolean( object oObject, int nIndex, int nValue );
 
 // 681. GetLocalNumber
 // This gets a number on an object
-// currently the index is a range between 0 and 0
+// currently the index is a range between 12 and 28
 int GetLocalNumber( object oObject, int nIndex );
 
 // 682. SetLocalNumber
 // This sets a number on an object
-// currently the index is a range between 0 and 0
+// currently the index is a range between 12 and 28
+// the value range is 0 to 255
 void SetLocalNumber( object oObject, int nIndex, int nValue );
 
 // 683. SWMG_GetSoundFrequency
@@ -4872,6 +5278,9 @@ void SetNPCAIStyle(object oCreature, int nStyle);
 void SetNPCSelectability(int nNPC, int nSelectability);
 
 // 709: GetNPCSelectability
+// nNPC - NPC_
+// returns 1 if in current party, 0 if selectable as a party member
+// -1 if not in party at all
 int GetNPCSelectability(int nNPC);
 
 // 710: Clear all the effects of the caller.
@@ -4889,7 +5298,15 @@ string GetLastConversation();
 // select the members of the party from
 // if exit script is specified, will be executed when
 // the GUI is exited
-void ShowPartySelectionGUI(string sExitScript = "", int nForceNPC1 = -1, int nForceNPC2 = -1);
+// RWT-OEI 08/23/04 - New parameter = nAllowCancel. Passing in TRUE
+//  to this parameter makes it possible for the player to cancel out
+//  of the party selection GUI, so be careful that you are okay with
+//  them cancelling out of it before you pass TRUE.
+//  Also, in the sExitScript that gets called after the Party Select
+//  GUI exits, you can use GetRunScriptVar to find out if they
+//  cancelled. If it returns TRUE, they didn't cancel. If it returns
+//  FALSE, they cancelled.  See me if there's questions.
+void ShowPartySelectionGUI(string sExitScript = "", int nForceNPC1 = -1, int nForceNPC2 = -1, int nAllowCancel = FALSE);
 
 // 713: GetStandardFaction
 // Find out which standard faction oObject belongs to.
@@ -4991,7 +5408,7 @@ int GetIsDebilitated(object oCreature = OBJECT_SELF);
 
 // 733. PlayMovie
 // Playes a Movie.
-void PlayMovie( string sMovie );
+void PlayMovie( string sMovie, int nStreamingMusic = FALSE );
 
 // 734. SaveNPCState
 // Tells the party table to save the state of a party member NPC
@@ -5144,30 +5561,761 @@ object CreateItemOnFloor(string sTemplate, location lLocation, int bUseAppearAni
 // This will set the object id that should be used for a specific available NPC
 void SetAvailableNPCId(INT nNPC, OBJECT_ID oidNPC);
 
-// 768. IsMoviePlaying
-// Checks if a movie is currently playing.
+// DJS-OEI
+// 768. GetScriptParameter
+// This function will take the index of a script parameter
+// and return the value associated with it. The index
+// of the first parameter is 1.
+int GetScriptParameter( int nIndex );
+
+//RWT-OEI 12/10/03
+// 769. SetFadeUntilScript
+// This script function will make it so that the fade cannot be lifted under any circumstances
+// other than a call to the SetGlobalFadeIn() script.
+// This function should be called AFTER the fade has already been called. For example, you would
+// do a SetGlobalFadeOut() first, THEN do SetFadeUntilScript()
+// The exception to this if it's used in an OnModuleLoad() script, where instead of starting a new
+// fade you are just extending the LevelLoad fade indefinitely. You can just call SetFadeUntilScript
+// in such cases and the game will stay faded until a GlobalSetFadeIn() is called.
+void SetFadeUntilScript();
+
+// DJS-OEI 12/15/2003
+// 770: Create a Force Body effect
+// - nLevel: The level of the Force Body effect.
+//    0 = Force Body
+//    1 = Improved Force Body
+//    2 = Master Force Body
+effect EffectForceBody(int nLevel);
+
+// FAK-OEI 12/15/2003
+// 771: Get the number of components for an item
+int GetItemComponent( );
+
+// FAK-OEI 12/15/2003
+// 771: Get the number of components for an item in pieces
+int GetItemComponentPieceValue( );
+
+// FAK-OEI 12/15/2003
+// 773: Start the GUI for Chemical Workshop
+void ShowChemicalUpgradeScreen(object oCharacter );
+
+// FAK-OEI 12/15/2003
+// 774: Get the number of chemicals for an item
+int GetChemicals( );
+
+// FAK-OEI 12/15/2003
+// 775: Get the number of chemicals for an item in pieces
+int GetChemicalPieceValue( );
+
+// DJS-OEI 12/30/2003
+// 776: Get the number of Force Points that were required to
+// cast this spell. This includes modifiers such as Room Force
+// Ratings and the Force Body power.
+// * Return value on error: 0
+int GetSpellForcePointCost( );
+
+// DJS-OEI 1/2/2004
+// 777: Create a Fury effect.
+effect EffectFury();
+
+// DJS-OEI 1/3/2004
+// 778: Create a Blind effect.
+effect EffectBlind();
+
+// DJS-OEI 1/4/2004
+// 779: Create an FP regeneration modifier effect.
+effect EffectFPRegenModifier( int nPercent );
+
+// DJS-OEI 1/4/2004
+// 780: Create a VP regeneration modifier effect.
+effect EffectVPRegenModifier( int nPercent );
+
+// DJS-OEI 1/9/2004
+// 781: Create a Force Crush effect.
+effect EffectCrush();
+
+// FAK - OEI 1/12/04
+// 782: Minigame grabs a swoop bike upgrade
+int SWMG_GetSwoopUpgrade( int nSlot );
+
+// DJS-OEI 1/12/2004
+// 783: Returns whether or not the target has access to a feat,
+// even if they can't use it right now due to daily limits or
+// other restrictions.
+int GetFeatAcquired( int nFeat, object oCreature=OBJECT_SELF );
+
+// DJS-OEI 1/12/2004
+// 784: Returns whether or not the target has access to a spell,
+// even if they can't use it right now due to lack of Force Points.
+int GetSpellAcquired( int nSpell, object oCreature=OBJECT_SELF );
+
+// FAK-OEI 1/12/2004
+// 785: Displays the Swoop Bike upgrade screen.
+void ShowSwoopUpgradeScreen( );
+
+// DJS-OEI 1/13/2004
+// 786: Grants the target a feat without regard for prerequisites.
+void GrantFeat( int nFeat, object oCreature );
+
+// DJS-OEI 1/13/2004
+// 787: Grants the target a spell without regard for prerequisites.
+void GrantSpell( int nSpell, object oCreature );
+
+// DJS-OEI 1/13/2004
+// 788: Places an active mine on the map.
+// nMineType - Mine Type from Traps.2DA
+// lPoint - The location in the world to place the mine.
+// nDetectDCBase - This value, plus the "DetectDCMod" column in Traps.2DA
+// results in the final DC for creatures to detect this mine.
+// nDisarmDCBase - This value, plus the "DisarmDCMod" column in Traps.2DA
+// results in the final DC for creatures to disarm this mine.
+// oCreator - The object that should be considered the owner of the mine.
+// If oCreator is set to OBJECT_INVALID, the faction of the mine will be
+// considered Hostile1, meaning the party will be vulnerable to it.
+void SpawnMine( int nMineType, location lPoint, int nDetectDCBase, int nDisarmDCBase, object oCreator );
+
+// FAK - OEI 1/15/04
+// 789: Yet another minigame function. Returns the object's track's position.
+vector SWMG_GetTrackPosition(object oFollower);
+
+// FAK - OEI 1/15/04
+// 790: minigame function that lets you psuedo-set the position of a follower object
+vector SWMG_SetFollowerPosition(vector vPos);
+
+//RWT-OEI 01/16/04
+// 791: A function to put the character into a true combat state but the reason set to
+//      not real combat. This should help us control animations in cutscenes with a bit
+//      more precision. -- Not totally sure this is doing anything just yet. Seems
+//      the combat condition gets cleared shortly after anyway.
+//      If nEnable is 1, it enables fake combat mode. If 0, it disables it.
+//      WARNING: Whenever using this function to enable fake combat mode, you should
+//               have a matching call to it to disable it. (pass 0 for nEnable).
+void SetFakeCombatState( object oObject, int nEnable );
+
+// FAK - OEI 1/23/04
+// 792: minigame function that deletes a minigame object
+void SWMG_DestroyMiniGameObject(object oObject);
+
+// DJS-OEI 1/26/2004
+// 793: Returns the Demolitions skill of the creature that
+// placed this mine. This will often be 0. This function accepts
+// the object that the mine is attached to (Door, Placeable, or Trigger)
+// and will determine which one it actually is at runtime.
+int GetOwnerDemolitionsSkill( object oObject );
+
+// RWT-OEI 01/29/04
+// 794: Disables or Enables the Orient On Click behavior in creatures. If
+//      disabled, they will not orient to face the player when clicked on
+//      for dialogue. The default behavior is TRUE.
+void SetOrientOnClick( object oCreature = OBJECT_SELF, int nState = TRUE );
+
+// DJS-OEI 1/29/2004
+// 795: Gets the PC's influence on the alignment of a CNPC.
+// Parameters:
+// nNPC - NPC_* constant identifying the CNPC we're interested in.
+// If this character is not an available party member, the return
+// value with be 0. If the character is in the party, but has an
+// attitude of Ambivalent, this will be -1.
+int GetInfluence( int nNPC );
+
+// DJS-OEI 1/29/2004
+// 796: Sets the PC's influence on the alignment of a CNPC.
+// Parameters:
+// nNPC - NPC_* constant identifying the CNPC we're interested in.
+// If this character is not an available party member, nothing
+// will happen.
+// nInfluence - The new value for the influence on this CNPC.
+void SetInfluence( int nNPC, int nInfluence );
+
+// DJS-OEI 1/29/2004
+// 797: Modifies the PC's influence on the alignment of a CNPC.
+// Parameters:
+// nNPC - NPC_* constant identifying the CNPC we're interested in.
+// If this character is not an available party member, nothing
+// will happen.
+// nModifier - The modifier to the current influence on this CNPC.
+// This may be a negative value to reduce the influence.
+void ModifyInfluence( int nNPC, int nModifier );
+
+// FAK - OEI 2/3/04
+// 798: returns the racial sub-type of the oTarget object
+int GetRacialSubType(object oTarget);
+
+// DJS-OEI 2/3/2004
+// 799: Increases the value of the given global number by the given amount.
+// This function only works with Number type globals, not booleans. It
+// will fail with a warning if the final amount is greater than the max
+// of 127.
+void IncrementGlobalNumber( string sIdentifier, int nAmount );
+
+// DJS-OEI 2/3/2004
+// 800: Decreases the value of the given global number by the given amount.
+// This function only works with Number type globals, not booleans. It
+// will fail with a warning if the final amount is less than the minimum
+// of -128.
+void DecrementGlobalNumber( string sIdentifier, int nAmount );
+
+// RWT-OEI 02/06/04
+// 801: SetBonusForcePoints - This sets the number of bonus force points
+//      that will always be added to that character's total calculated
+//      force points.
+void SetBonusForcePoints( object oCreature, int nBonusFP );
+
+// RWT-OEI 02/06/04
+// 802: AddBonusForcePoints - This adds nBonusFP to the current total
+//      bonus that the player has. The Bonus Force Points are a pool
+//      of force points that will always be added after the player's
+//      total force points are calculated (based on level, force dice,
+//      etc.)
+void AddBonusForcePoints( object oCreature, int nBonusFP );
+
+// RWT-OEI 02/06/04
+// 803: GetBonusForcePoints - This returns the total number of bonus
+//      force points a player has. Bonus Force Points are a pool of
+//      points that are always added to a player's Max Force Points.
+void GetBonusForcePoints( object oCreature );
+
+// FAK - OEI 2/11/04
+// 804: SWMG_SetJumpSpeed -- the sets the 'jump speed' for the swoop
+//      bike races. Gravity will act upon this velocity.
+void SWMG_SetJumpSpeed(float fSpeed);
+
+// PC CODE MERGER
+// 805. IsMoviePlaying--dummy func so we can compile
 int IsMoviePlaying();
 
-// 769. QueueMovie
-// Queues up a movie to be played using PlayMovieQueue.
-// If bSkippable is TRUE, the player can cancel the movie by hitting escape.
-// If bSkippable is FALSE, the player cannot cancel the movie and must wait
-// for it to finish playing.
-void QueueMovie( string sMovie, int bSkippable );
+// 806 QueueMovie
+void QueueMovie(string sMovie, int nSkippable = TRUE);
 
-// 770. PlayMovieQueue
-// Plays the movies that have been added to the queue by QueueMovie
-// If bAllowSeparateSkips is TRUE, hitting escape to cancel a movie only
-// cancels out of the currently playing movie rather than the entire queue
-// of movies (assuming the currently playing movie is flagged as skippable).
-// If bAllowSeparateSkips is FALSE, the entire movie queue will be cancelled
-// if the player hits escape (assuming the currently playing movie is flagged
-// as skippable).
-void PlayMovieQueue( int bAllowSeparateSkips );
+// 807
+void PlayMovieQueue(int nAllowSkips = TRUE);
 
-// 771. YavinHackCloseDoor
-// This is an incredibly hacky function to allow the doors to be properly
-// closed on Yavin without running into the problems we've had.  It is too
-// late in development to fix it correctly, so thus we do this.  Life is
-// hard.  You'll get over it
-void YavinHackCloseDoor( object oidDoor );
+// 808
+void YavinHackDoorClose(object oCreature);
+
+// 809
+// new function for droid confusion so inherint mind immunity can be
+// avoided.
+effect EffectDroidConfused();
+// END PC CODE MERGER
+
+// 810
+// DJS-OEI 3/8/2004
+// Determines if the given creature is in Stealth mode or not.
+// 0 = Creature is not stealthed.
+// 1 = Creature is stealthed.
+// This function will return 0 for any non-creature.
+int IsStealthed( object oCreature );
+
+// 811
+// DJS-OEI 3/12/2004
+// Determines if the given creature is using any Meditation Tree
+// Force Power.
+// 0 = Creature is not meditating.
+// 1 = Creature is meditating.
+// This function will return 0 for any non-creature.
+int IsMeditating( object oCreature );
+
+// 812
+// DJS-OEI 3/16/2004
+// Determines if the given creature is using the Total Defense
+// Stance.
+// 0 = Creature is not in Total Defense.
+// 1 = Creature is in Total Defense.
+// This function will return 0 for any non-creature.
+int IsInTotalDefense( object oCreature );
+
+// 813
+// RWT-OEI 03/19/04
+// Stores a Heal Target for the Healer AI script. Should probably
+// not be used outside of the Healer AI script.
+void SetHealTarget( object oidHealer, object oidTarget );
+
+// 814
+// RWT-OEI 03/19/04
+// Retrieves the Heal Target for the Healer AI script. Should probably
+// not be used outside of the Healer AI script.
+object GetHealTarget( object oidHealer );
+
+// 815
+// RWT-OEI 03/23/04
+// Returns a vector containing a random destination that the
+// given creature can walk to that's within the range of the
+// passed parameter.
+vector GetRandomDestination( object oCreature, int rangeLimit );
+
+// 816
+// DJS-OEI 3/25/2004
+// Returns whether the given creature is currently in the
+// requested Lightsaber/Consular Form and can make use of
+// its benefits. This function will perform trumping checks
+// and lightsaber-wielding checks for those Forms that require
+// them.
+int IsFormActive( object oCreature, int nFormID );
+
+// 817
+// DJS-OEI 3/28/2004
+// Returns the Form Mask of the requested spell. This is used
+// to determine if a spell is affected by various Forms, usually
+// Consular forms that modify duration/range.
+int GetSpellFormMask( int nSpellID );
+
+// 818
+// DJS-OEI 3/29/2004
+// Return the base number of Force Points required to cast
+// the given spell. This does not take into account modifiers
+// of any kind.
+int GetSpellBaseForcePointCost( int nSpellID );
+
+// 819
+// RWT-OEI 04/05/04
+// Setting this to TRUE makes it so that the Stealth status is
+// left on characters even when entering cutscenes. By default,
+// stealth is removed from anyone taking part in a cutscene.
+// ALWAYS set this back to FALSE on every End Dialog node in
+// the cutscene you wanted to stay stealthed in. This isn't a
+// flag that should be left on indefinitely. In fact, it isn't
+// saved, so needs to be set/unset on a case by case basis.
+void SetKeepStealthInDialog( int nStealthState );
+
+// 820
+// RWT-OEI 04/06/04
+// This returns TRUE or FALSE if there is a clear line of sight from
+// the source vector to the target vector. This is used in the AI to
+// help the creatures using ranged weapons find better places to shoot
+// when the player moves out of sight.
+int HasLineOfSight( vector vSource, vector vTarget, object oSource = OBJECT_INVALID, object oTarget = OBJECT_INVALID );
+
+// 821
+// FAK - OEI 5/3/04
+// ShowDemoScreen, displays a texture, timeout, string and xy for string
+int ShowDemoScreen(string sTexture, int nTimeout, int nDisplayString, int nDisplayX, int nDisplayY );
+
+// 822
+// DJS-OEI 5/4/2004
+// Forces a Heartbeat on the given creature. THIS ONLY WORKS FOR CREATURES
+// AT THE MOMENT. This heartbeat should force perception updates to occur.
+void ForceHeartbeat( object oCreature );
+
+// 823
+// DJS-OEI 5/5/2004
+// Creates a Force Sight effect.
+effect EffectForceSight();
+
+// 824
+// FAK - OEI 5/7/04
+// gets the walk state of the creature: 0 walk or standing, 1 is running
+int IsRunning( object oCreature );
+
+// 825
+// FAK - OEI 5/24/04
+// applies a velocity to the player object
+void SWMG_PlayerApplyForce(vector vForce);
+
+// 826
+// DJS-OEI 6/12/2004
+// This function allows a script to set the conditions which constitute
+// a combat forfeit by a member of the player's party. This is typically
+// used to handle Battle Circle behavior or other challenge-based combats.
+// nForfeitFlags: This is an OR'ed together series of FORFEIT_* defines.
+void SetForfeitConditions( int nForfeitFlags );
+
+// 827
+// DJS-OEI 6/12/2004
+// This function returns the last FORFEIT_* condition that the player
+// has violated.
+int GetLastForfeitViolation();
+
+// 828
+// AWD-OEI 6/21/2004
+// This function does not return a value.
+// This function modifies the BASE value of the REFLEX saving throw for aObject
+void ModifyReflexSavingThrowBase(object aObject, int aModValue);
+
+// 829
+// AWD-OEI 6/21/2004
+// This function does not return a value.
+// This function modifies the BASE value of the FORTITUDE saving throw for aObject
+void ModifyFortitudeSavingThrowBase(object aObject, int aModValue);
+
+// 830
+// AWD-OEI 6/21/2004
+// This function does not return a value.
+// This function modifies the BASE value of the WILL saving throw for aObject
+void ModifyWillSavingThrowBase(object aObject, int aModValue);
+
+// DJS-OEI 6/21/2004
+// 831
+// This function will return the one CExoString parameter
+// allowed for the currently running script.
+string GetScriptStringParameter();
+
+// 832
+// AWD-OEI 6/29/2004
+// This function returns the personal space value of an object
+float GetObjectPersonalSpace(object aObject);
+
+// 833
+// AWD-OEI 7/06/2004
+// This function adjusts a creatures stats.
+// oObject is the creature that will have it's attribute adjusted
+// The following constants are acceptable for the nAttribute parameter:
+// ABILITY_STRENGTH
+// ABILITY_DEXTERITY
+// ABILITY_CONSTITUTION
+// ABILITY_INTELLIGENCE
+// ABILITY_WISDOM
+// ABILITY_CHARISMA
+// nAmount is the integer vlaue to adjust the stat by (negative values will work).
+void AdjustCreatureAttributes(object oObject, int nAttribute, int nAmount);
+
+// 834
+// AWD-OEI 7/08/2004
+// This function raises a creature's priority level.
+void SetCreatureAILevel(object oObject, int nPriority);
+
+// 835
+// AWD-OEI 7/08/2004
+// This function raises a creature's priority level.
+void ResetCreatureAILevel(object oObject);
+
+// 836
+// RWT-OEI 07/17/04
+// This function adds a Puppet to the Puppet Table by
+// template.
+// Returns 1 if successful, 0 if there was an error
+// This does not spawn the puppet or anything. It just
+// adds it to the party table and makes it available for
+// use down the line. Exactly like AddAvailableNPCByTemplate
+int AddAvailablePUPByTemplate( int nPUP, string sTemplate );
+
+// 837
+// RWT-OEI 07/17/04
+// This function adds a Puppet to the Puppet Table by
+// creature ID
+// Returns 1 if successful, 0 if there was an error
+// This does not spawn the puppet or anything. It just
+// adds it to the party table and makes it available for
+// use down the line. Exactly like AddAvailableNPCByTemplate
+int AddAvailablePUPByObject( int nPUP, object oPuppet );
+
+// 838
+// RWT-OEI 07/17/04
+// This function assigns a PUPPET constant to a
+// Party NPC.  The party NPC -MUST- be in the game
+// before calling this.
+// Both the PUP and the NPC have
+// to be available in their respective tables
+// Returns 1 if successful, 0 if there was an error
+int AssignPUP( int nPUP, int nNPC );
+
+// 839
+// RWT-OEI 07/17/04
+// This function spawns a Party PUPPET.
+// This must be used whenever you want a copy
+// of the puppet around to manipulate in the game
+// since the puppet is stored in the party table
+// just like NPCs are.  Once a puppet is assigned
+// to a party NPC (see AssignPUP), it will spawn
+// or disappear whenever its owner joins or leaves
+// the party.
+// This does not add it to the party automatically,
+// just like SpawnNPC doesn't. You must call AddPuppet()
+// to actually add it to the party
+object SpawnAvailablePUP( int nPUP, location lLocation );
+
+// 840
+// RWT-OEI 07/18/04
+// This adds an existing puppet object to the party. The
+// puppet object must already exist via SpawnAvailablePUP
+// and must already be available via AddAvailablePUP*
+// functions.
+int AddPartyPuppet(int nPUP, object oidCreature);
+
+// 841
+// RWT-OEI 07/19/04
+// This returns the object ID of the puppet's owner.
+// The Puppet's owner must exist and must be in the party
+// in order to be found.
+// Returns invalid object Id if the owner cannot be found.
+object GetPUPOwner(object oPUP = OBJECT_SELF);
+
+// 842
+// RWT-OEI 07/19/04
+// Returns 1 if the creature is a Puppet in the party.
+// Otherwise returns 0. It is possible for a 'party puppet'
+// to exist without actually being in the party table.
+// such as when SpawnAvailablePUP is used without subsequently
+// using AddPartyPuppet to add the newly spawned puppet to
+// the party table. A puppet in that in-between state would
+// return 0 from this function
+int GetIsPuppet(object oPUP = OBJECT_SELF );
+
+// 843
+// RWT-OEI 07/20/04
+// Similiar to ActionFollowLeader() except the creature
+// follows its owner
+//nRange is how close it should follow. Note that once this
+//action is queued, it will be the only thing this creature
+//does until a ClearAllActions() is used.
+void ActionFollowOwner(float fRange = 2.5);
+
+// 844
+// RWT-OEI 07/21/04
+// Returns TRUE if the object ID passed is the character
+// that the player is actively controlling at that point.
+// Note that this function is *NOT* able to return correct
+// information during Area Loading since the player is not
+// actively controlling anyone at that point.
+int GetIsPartyLeader(object oCharacter = OBJECT_SELF);
+
+// 845
+// RWT-OEI 07/21/04
+// Returns the object ID of the character that the player
+// is actively controlling. This is the 'Party Leader'.
+// Returns object Invalid on error
+// Note that this function is *NOT* able to return correct
+// information during Area Loading since the player is not
+// actively controlling anyone at that point.
+object GetPartyLeader();
+
+// 846
+// JAB-OEI 07/22/04
+// Will remove the CNPC from the 3 person party, and remove
+// him/her from the area, effectively sending the CNPC back
+// to the base. The CNPC data is still stored in the
+// party table, and calling this function will not destroy
+// the CNPC in any way.
+// Returns TRUE for success.
+int RemoveNPCFromPartyToBase(int nNPC);
+
+// 847
+// AWD-OEI 7/22/2004
+// This causes a creature to flourish with it's currently equipped weapon.
+void CreatureFlourishWeapon(object oObject);
+
+// 848
+// Create a Mind Trick effect
+effect EffectMindTrick();
+
+// 849
+// Create a Faction Modifier effect.
+effect EffectFactionModifier( int nNewFaction );
+
+// 850
+// ChangeObjectAppearance
+// oObjectToChange = Object to change appearance of
+// nAppearance = appearance to change to (from appearance.2da)
+void ChangeObjectAppearance( object oObjectToChange, int nAppearance );
+
+// 851
+// GetIsXBox
+// Returns TRUE if this script is being executed on the X-Box. Returns FALSE
+// if this is the PC build.
+int GetIsXBox();
+
+// 852
+// Create a Droid Scramble effect
+effect EffectDroidScramble();
+
+// 853
+// ActionSwitchWeapons
+// Forces the creature to switch between Config 1 and Config 2
+// of their equipment. Does not work in dialogs. Works with
+// AssignCommand()
+void ActionSwitchWeapons();
+
+// 854
+// DJS-OEI 8/29/2004
+// PlayOverlayAnimation
+// This function will play an overlay animation on a character
+// even if the character is moving. This does not cause an action
+// to be placed on the queue. The animation passed in must be
+// designated as an overlay in Animations.2DA.
+void PlayOverlayAnimation( object oTarget, int nAnimation );
+
+// 855
+// RWT-OEI 08/30/04
+// UnlockAllSongs
+// Calling this will set all songs as having been unlocked.
+// It is INTENDED to be used in the end-game scripts to unlock
+// any end-game songs as well as the KotOR1 sound track.
+void UnlockAllSongs();
+
+// 856
+// RWT-OEI 08/31/04
+// Passing TRUE into this function turns off the player's maps.
+// Passing FALSE into this function re-enables them. This change
+// is permanent once called, so it is important that there *is*
+// a matching call to DisableMap(FALSE) somewhere or else the
+// player is stuck without a map indefinitely.
+void DisableMap(int nFlag = FALSE);
+
+// 857
+// RWT-OEI 08/31/04
+// This function schedules a mine to play its DETONATION
+// animation once it is destroyed. Note that this detonates
+// the mine immediately but has nothing to do with causing
+// the mine to do any damage to anything around it. To
+// get the mine to damage things around it when it detonates
+// do:
+// AssignCommand(<mine>,ExecuteScript( "k_trp_generic",<mine>));
+// right before you call DetonateMine(). By my experience so far
+// you don't need any kind of delay between the two.
+void DetonateMine(object oMine);
+
+// 858
+// RWT-OEI 09/06/04
+// This function turns off the innate health regeneration that all party
+// members have. The health regen will *stay* off until it is turned back
+// on by passing FALSE to this function.
+void DisableHealthRegen(int nFlag = FALSE);
+
+// 859
+// DJS-OEI 9/7/2004
+// This function sets the current Jedi Form on the given creature. This
+// call will do nothing if the target does not know the Form itself.
+void SetCurrentForm( object oCreature, int nFormID );
+
+// 860
+// RWT-OEI 09/09/04
+// This will disable or enable area transit
+void SetDisableTransit(int nFlag = FALSE);
+
+// 861
+//RWT-OEI 09/09/04
+// This will set the specific input class.
+// The valid options are:
+// 0 - Normal PC control
+// 1 - Mini game control
+// 2 - GUI control
+// 3 - Dialog Control
+// 4 - Freelook control
+void SetInputClass(int nClass);
+
+// 862
+//RWT-OEI 09/15/04
+// This script allows an object to recieve updates even if it is outside
+//the normal range limit of 250.0f meters away from the player. This should
+//ONLY be used for cutscenes that involve objects that are more than 250
+//meters away from the player. It needs to be used on a object by object
+//basis.
+//This flag should *always* be set to false once the cutscene it is needed
+//for is over, or else the game will spend CPU time updating the object
+//when it doesn't need to.
+//For questions on use of this function, or what its purpose is, check
+//with me.
+void SetForceAlwaysUpdate(object oObject, int nFlag);
+
+//863
+//RWT-OEI 09/15/04
+//This function enables or disables rain
+void EnableRain( int nFlag );
+
+//864
+//RWT-OEI 09/27/04
+//This function displays the generic Message Box with the strref
+//message in it
+//sIcon is the resref for an icon you would like to display.
+void DisplayMessageBox(int nStrRef, string sIcon = "");
+
+//865
+//RWT-OEI 09/28/04
+//This function displays a datapad popup. Just pass it the
+//object ID of a datapad.
+void DisplayDatapad(object oDatapad);
+
+// 866
+// CTJ-OEI 09-29-04
+// Removes the heartbeat script on the placeable.  Useful for
+// placeables whose contents get populated in the heartbeat
+// script and then the heartbeat no longer needs to be called.
+void RemoveHeartbeat(object oPlaceable);
+
+
+//867
+// JF-OEI 10-07-2004
+// Remove an effect by ID
+void RemoveEffectByID( object oCreature, int nEffectID );
+
+//868
+// RWT-OEI 10/07/04
+// This script removes an effect by an identical match
+// based on:
+// Must have matching EffectID types.
+// Must have the same value in Integer(0)
+// Must have the same value in Integer(1)
+// I'm specifically using this function for Mandalore's implant swapping
+// script and it will probably not be useful for anyone else. If you're
+// not sure what this script function does, see me before using it.
+void RemoveEffectByExactMatch( object oCreature, effect eEffect);
+
+// 869
+// DJS-OEI 10/9/2004
+// This function adjusts a creature's skills.
+// oObject is the creature that will have its skill adjusted
+// The following constants are acceptable for the nSkill parameter:
+// SKILL_COMPUTER_USE
+// SKILL_DEMOLITIONS
+// SKILL_STEALTH
+// SKILL_AWARENESS
+// SKILL_PERSUADE
+// SKILL_REPAIR
+// SKILL_SECURITY
+// SKILL_TREAT_INJURY
+// nAmount is the integer value to adjust the stat by (negative values will work).
+void AdjustCreatureSkills(object oObject, int nSkill, int nAmount);
+
+// 870
+// DJS-OEI 10/10/2004
+// This function returns the base Skill Rank for the requested
+// skill. It does not include modifiers from effects/items.
+// The following constants are acceptable for the nSkill parameter:
+// SKILL_COMPUTER_USE
+// SKILL_DEMOLITIONS
+// SKILL_STEALTH
+// SKILL_AWARENESS
+// SKILL_PERSUADE
+// SKILL_REPAIR
+// SKILL_SECURITY
+// SKILL_TREAT_INJURY
+// oObject is the creature that will have its skill base returned.
+int GetSkillRankBase(int nSkill, object oObject=OBJECT_SELF);
+
+// 871
+// DJS-OEI 10/15/2004
+// This function will allow the caller to modify the rendering behavior
+// of the target object.
+// oObject - The object to change rendering state on.
+// bEnable - If 0, the object will stop rendering. Else, the object will render.
+void EnableRendering( object oObject, int bEnable );
+
+// 872
+// RWT-OEI 10/19/04
+// This function returns TRUE if the creature has actions in its
+// Combat Action queue.
+int GetCombatActionsPending(object oCreature);
+
+// 873
+// RWT-OEI 10/26/04
+// This function saves the party member at that index with the object
+// that is passed in.
+void SaveNPCByObject( int nNPC, object oidCharacter);
+
+// 874
+// RWT-OEI 10/26/04
+// This function saves the party puppet at that index with the object
+// that is passed in. For the Remote, just use '0' for nPUP
+void SavePUPByObject( int nPUP, object oidPuppet );
+
+// 875
+// RWT-OEI 10/29/04
+// Returns TRUE if the object passed in is the character that the player
+// made at the start of the game
+int GetIsPlayerMadeCharacter(object oidCharacter);
+
+// 876
+// RWT-OEI 11/12/04
+// This repopulates the NPCObject table in CSWPartyTable. Do not use this
+// unless you understand exactly what it is doing.
+void RebuildPartyTable();
