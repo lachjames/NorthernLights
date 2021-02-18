@@ -13,16 +13,16 @@ public class AuroraData
     public Game game = Game.KotOR;
 
     string moduleName;
-    public RIMObject rim, srim;
-    public ERFObject dlg, mod;
+    public AuroraArchive rim, srim;
+    public AuroraArchive dlg, mod;
 
     public StateSystem stateManager;
     public AISystem aiManager;
     public LoadingSystem loader;
 
     public KEYObject keyObject;
-    public BIFObject[] bifObjects;
-    public ERFObject textures, guiTextures;
+    public AuroraArchive[] bifObjects;
+    public AuroraArchive textures, guiTextures;
     public Module module;
 
     public Dictionary<string, ERFObject> lips = new Dictionary<string, ERFObject>();
@@ -104,6 +104,49 @@ public class AuroraData
 
     void LoadBase()
     {
+        if (AuroraPrefs.DeveloperMode())
+        {
+            LoadFromDirectories();
+        } else
+        {
+            LoadFromGameFiles();
+        }
+    }
+
+    void LoadFromDirectories ()
+    {
+        loaded2das = new Dictionary<string, _2DAObject>();
+
+        List<FolderObject> dataFolders = new List<FolderObject>();
+
+        // We assume that the subfolders of the "data" folder
+        // contain all the BIF objects
+        foreach (string dir in Directory.EnumerateDirectories(AuroraPrefs.GetKotorLocation() + "/data"))
+        {
+            dataFolders.Add(new FolderObject(dir));
+        }
+        bifObjects = dataFolders.ToArray();
+
+        textures = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\textures\\tpa");
+        guiTextures = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\textures\\gui");
+
+        // Load the VO directory
+        string voicedir = AuroraPrefs.GetKotorLocation() + "\\vo";
+
+        foreach (string filepath in Directory.GetFiles(voicedir, "*.wav", SearchOption.AllDirectories))
+        {
+            string filename = filepath.Split('\\').Last().Replace(".wav", "");
+            voLocations[filename.ToLower()] = filepath;
+        }
+
+        string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
+        tlk = new TLKObject(tlkXML);
+
+        UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
+    }
+
+    void LoadFromGameFiles ()
+    {
         loaded2das = new Dictionary<string, _2DAObject>();
 
         keyObject = new KEYObject(AuroraPrefs.GetKotorLocation() + "\\chitin.key");
@@ -123,7 +166,8 @@ public class AuroraData
         if (AuroraPrefs.TargetGame() == Game.KotOR)
         {
             voicedir += "\\streamwaves";
-        } else
+        }
+        else
         {
             voicedir += "\\streamvoice";
         }
@@ -149,28 +193,54 @@ public class AuroraData
 
     void LoadModule(bool instantiateModule)
     {
+        if (AuroraPrefs.DeveloperMode())
+        {
+            LoadModuleFromFolders(instantiateModule);
+        } else
+        {
+            LoadModuleFromGameFiles(instantiateModule);
+        }
+    }
+
+    void LoadModuleFromFolders(bool instantiateModule)
+    {
+        rim = null;
+        srim = null;
+        dlg = null;
+
+        mod = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName);
+        module = new Module(moduleName, this, instantiateModule);
+    }
+
+    void LoadModuleFromGameFiles (bool instantiateModule)
+    {
+        rim = null;
+        srim = null;
+        dlg = null;
+        mod = null;
+
         if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim"))
         {
             rim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim");
-            UnityEngine.Debug.Log("Loaded " + rim.resources.Keys.Count + " items from " + moduleName + ".rim");
+            //UnityEngine.Debug.Log("Loaded " + rim.resources.Keys.Count + " items from " + moduleName + ".rim");
         }
 
         if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim"))
         {
             srim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim");
-            UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
+            //UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
         }
 
         if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf"))
         {
             dlg = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf");
-            UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
+            //UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
         }
 
         if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod"))
         {
             mod = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod");
-            UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
+            //UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
         }
 
         module = new Module(moduleName, this, instantiateModule);
@@ -254,6 +324,7 @@ public class AuroraData
 
     public Stream GetStream(string resref, ResourceType rt)
     {
+        resref = resref.ToLower();
         Stream stream = GetStreamFromOverride(resref, rt);
         if (stream != null)
             return stream;
@@ -322,19 +393,18 @@ public class AuroraData
     Stream GetStreamFromBase(string resref, ResourceType type)
     {
         Stream resourceStream;
-        uint id;
 
-        // Then try and load from BIFs
-        if (keyObject.TryGetResourceID(resref, type, out id))
+        // Try to load from BIFObjects
+        foreach (AuroraArchive bifObject in bifObjects)
         {
-            uint bifIndex = id >> 20;
-            BIFObject bif = bifObjects[bifIndex];
-
-            return bif.GetResourceData(bif.GetResourceById(id));
+            if ((resourceStream = bifObject.GetResource(resref, type)) != null)
+            {
+                return resourceStream;
+            }
         }
 
         // Try to load from lip ERFs
-        foreach (ERFObject erf in lips.Values)
+        foreach (AuroraArchive erf in lips.Values)
         {
             if ((resourceStream = erf.GetResource(resref, ResourceType.LIP)) != null)
             {
@@ -359,10 +429,19 @@ public class AuroraData
     {
         HashSet<(string, ResourceType)> resources = new HashSet<(string, ResourceType)>();
 
+        if (AuroraPrefs.DeveloperMode())
+        {
+            foreach ((string resref, ResourceType rt) in ((FolderObject)mod).resources.Keys)
+            {
+                resources.Add((resref, rt));
+            }
+            return resources;
+        }
+
         // List items from .rim
         if (rim != null)
         {
-            foreach ((string resref, ResourceType rt) in rim.resources.Keys)
+            foreach ((string resref, ResourceType rt) in ((RIMObject)rim).resources.Keys)
             {
                 resources.Add((resref, rt));
             }
@@ -371,7 +450,7 @@ public class AuroraData
         // List items from _s.rim
         if (srim != null)
         {
-            foreach ((string resref, ResourceType rt) in srim.resources.Keys)
+            foreach ((string resref, ResourceType rt) in ((RIMObject)srim).resources.Keys)
             {
                 resources.Add((resref, rt));
             }
@@ -380,7 +459,7 @@ public class AuroraData
         // List items from _dlg.erf
         if (dlg != null)
         {
-            foreach ((string resref, ResourceType rt) in dlg.resourceKeys.Keys)
+            foreach ((string resref, ResourceType rt) in ((ERFObject)dlg).resourceKeys.Keys)
             {
                 resources.Add((resref, rt));
             }
@@ -389,7 +468,7 @@ public class AuroraData
         // List items from .mod
         if (mod != null)
         {
-            foreach ((string resref, ResourceType rt) in mod.resourceKeys.Keys)
+            foreach ((string resref, ResourceType rt) in ((ERFObject)mod).resourceKeys.Keys)
             {
                 resources.Add((resref, rt));
             }

@@ -8,12 +8,16 @@ public abstract class AuroraArchive
 {
     public string filePath;
     public MemoryStream memoryStream;
-    public AuroraArchive(string path)
+    public AuroraArchive(string path, bool readStream = true)
     {
         filePath = path;
-        using (FileStream stream = File.Open(filePath, FileMode.Open))
+
+        if (readStream)
         {
-            ReadStream(stream);
+            using (FileStream stream = File.Open(filePath, FileMode.Open))
+            {
+                ReadStream(stream);
+            }
         }
 
         SetupArchive();

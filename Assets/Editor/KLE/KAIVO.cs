@@ -45,6 +45,13 @@ public class KAIVO : EditorWindow
             {
                 SaveFile();
             }
+
+            if (GUILayout.Button("Batch Convert DLGs"))
+            {
+                throw new NotImplementedException("Need to implement speaker dictionary first");
+                //BatchConvert();
+            }
+
         }
     }
 
@@ -224,5 +231,45 @@ public class KAIVO : EditorWindow
         KModuleEditor.CreateGFFFile(saveLoc + "\\", new_filename, dlg, "dlg");
         KModuleEditor.CreateGFFFile(saveLoc + "\\", filename, transitionDLG, "dlg");
         //File.WriteAllText(saveLoc + "\\" + filename + "_s.nss", transitionNSS);
+    }
+
+    void BatchConvert ()
+    {
+        string infolder = EditorUtility.OpenFolderPanel("Select input folder", "", "");
+        string outfolder = EditorUtility.SaveFolderPanel("Select output folder", "", "");
+
+        // Find every DLG file in infolder, recursively
+        string[] filenames = Directory.GetFiles(infolder, "*.dlg", SearchOption.AllDirectories);
+
+        int i = 0;
+        foreach (string filename in filenames)
+        {
+            string out_filename = filename.Replace(infolder, outfolder);
+            Directory.CreateDirectory(Path.GetDirectoryName(out_filename));
+            ConvertDLG(filename, out_filename);
+            i++;
+        }
+    }
+
+    void ConvertDLG (string filepath, string outpath)
+    {
+        // Takes a DLG file and converts it to PCVO
+        
+        // Load the DLG
+        loadLoc = filepath;
+        using (FileStream stream = new FileStream(loadLoc, FileMode.Open))
+        {
+            dlg = (AuroraDLG)new GFFLoader(stream).GetObject().Serialize<AuroraDLG>();
+        }
+
+        // Make the conversions
+        ConvertDLG();
+        AuroraDLG transitionDLG = CreateTransitionDLG();
+
+        string new_filename = TrimPath(12) + "aivo";
+
+        // Save the files
+        KModuleEditor.CreateGFFFile(Path.GetDirectoryName(outpath) + "/" + new_filename + ".dlg", "", dlg, "");
+        KModuleEditor.CreateGFFFile(outpath, "", transitionDLG, "");
     }
 }

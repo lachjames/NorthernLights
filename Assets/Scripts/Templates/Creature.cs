@@ -31,11 +31,20 @@ namespace AuroraEngine
 			//get the model name for this appearance id
 			string modelRef = Resources.Load2DA("appearance")[appearance, "modela"];
 			if (modelRef == null) {
+                // This should only happen if we didn't find the row in appearance
 				modelRef = Resources.Load2DA("appearance")[appearance, "race"];
 			}
+
 			string texRef = Resources.Load2DA("appearance")[appearance, "texa"];
 
             string cubemapRef = Resources.From2DA("appearance", appearance, "envmap");
+
+            if (Resources.data.GetStream(modelRef, ResourceType.MDL) == null)
+            {
+                modelRef = Resources.Load2DA("appearance")[appearance, "modelb"];
+                texRef = Resources.Load2DA("appearance")[appearance, "texb"];
+            }
+
             if (cubemapRef == "" || cubemapRef == "DEFAULT")
             {
                 cubemapRef = null;

@@ -31,6 +31,9 @@ public class AuroraPrefs : ScriptableObject
     [SerializeField]
     private Game game;
 
+    [SerializeField]
+    private bool devMode;
+
     public static AuroraPrefs prefs;
 
     public static AuroraPrefs GetOrCreateSettings()
@@ -43,6 +46,7 @@ public class AuroraPrefs : ScriptableObject
             settings.k1Location = "D:\\SteamLibrary\\steamapps\\common\\swkotor";
             settings.tslLocation = "D:\\SteamLibrary\\steamapps\\common\\Knights of the Old Republic II";
             settings.game = Game.KotOR;
+            settings.devMode = false;
             AssetDatabase.CreateAsset(settings, k_MyCustomSettingsPath);
             AssetDatabase.SaveAssets();
         }
@@ -111,6 +115,15 @@ public class AuroraPrefs : ScriptableObject
         }
         return prefs.game;
     }
+
+    public static bool DeveloperMode ()
+    {
+        if (prefs == null)
+        {
+            prefs = GetOrCreateSettings();
+        }
+        return prefs.devMode;
+    }
 }
 
 // Register a SettingsProvider using IMGUI for the drawing framework:
@@ -145,6 +158,10 @@ static class MyCustomSettingsIMGUIRegister
 
                 EditorGUILayout.LabelField("NOTE: The 'Module Out Location' directory is used for temp storage, and its contents WILL OFTEN be fully and non-reversibly deleted!");
                 EditorGUILayout.PropertyField(settings.FindProperty("moduleOutLocation"), new GUIContent("Module Out Location"));
+
+                EditorGUILayout.Space();
+                EditorGUILayout.PropertyField(settings.FindProperty("devMode"), new GUIContent("Developer Mode"));
+
                 settings.ApplyModifiedProperties();
             },
 

@@ -58,9 +58,9 @@ public class KLE : EditorWindow
             GUILayout.Space(10);
             savedName = GUILayout.TextField(savedName);
 
-            if (GUILayout.Button("Save module"))
+            if (GUILayout.Button("Save GIT file"))
             {
-                SaveModule();
+                SaveGIT();
             }
 
             GUILayout.Space(10);
@@ -76,8 +76,14 @@ public class KLE : EditorWindow
     {
         AuroraEngine.Resources.Load(null);
 
-        modules = Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\modules", "*");
-        
+        if (AuroraPrefs.DeveloperMode())
+        {
+            modules = Directory.GetDirectories(AuroraPrefs.GetKotorLocation() + "\\modules", "*");
+        } else
+        {
+            modules = Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\modules", "*");
+        }
+
         names = new List<string>();
 
         foreach (string mod in modules)
@@ -100,48 +106,56 @@ public class KLE : EditorWindow
         AuroraEngine.Resources.data.loader.Load(names[moduleIdx]);
     }
 
-    void SaveModule ()
+    void SaveGIT()
     {
-        string folder = AuroraPrefs.GetModuleOutLocation();
-
-        Module module = AuroraEngine.Resources.data.module;
-        string moduleName = module.moduleName;
-
-        if (AuroraPrefs.TargetGame() == Game.TSL)
-        {
-            string filename = EditorUtility.OpenFilePanel("MOD archive to duplicate and insert into", "", "mod");
-
-            // Copy the .mod file to the moduleout folder
-            File.Copy(filename, folder + "tmp.mod");
-
-            // Unpack the mod
-            KModuleEditor.UnpackArchive(folder, "tmp.mod", "unerf");
-
-            // Delete the temporary module file
-            UnityEngine.Windows.File.Delete(folder + "tmp.mod");
-        }
-
-        // Access/create the required files
+        string filename = EditorUtility.SaveFilePanel("Save a new GIT file", "", "", "");
         AuroraGIT git = GameObject.Find("Area").GetComponent<AreaManager>().CreateGIT();
-        AuroraARE are = module.are;
-        AuroraIFO ifo = module.ifo;
-        string areaName = ifo.Mod_Entry_Area;
-        
-        // Create the GFF files
-        KModuleEditor.CreateGFFFile(folder, areaName, git, "git");
-        KModuleEditor.CreateGFFFile(folder, areaName, are, "are");
-        KModuleEditor.CreateGFFFile(folder, "module", ifo, "ifo");
-
-        // Package the items up
-        if (AuroraPrefs.TargetGame() == Game.KotOR)
-        {
-            // Create a RIM archive
-            KModuleEditor.CreateArchive(folder, moduleName + ".rim", "rim");
-        }
-        else
-        {
-            // Repack the MOD
-            KModuleEditor.CreateArchive(folder, moduleName + ".mod", "erf", "--mod");
-        }
+        string no_ext = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename));
+        KModuleEditor.CreateGFFFile(no_ext, "", git, "git");
     }
+
+    //void SaveModule ()
+    //{
+    //    string folder = AuroraPrefs.GetModuleOutLocation();
+
+    //    Module module = AuroraEngine.Resources.data.module;
+    //    string moduleName = module.moduleName;
+
+    //    if (AuroraPrefs.TargetGame() == Game.TSL)
+    //    {
+    //        string filename = EditorUtility.OpenFilePanel("MOD archive to duplicate and insert into", "", "mod");
+
+    //        // Copy the .mod file to the moduleout folder
+    //        File.Copy(filename, folder + "tmp.mod");
+
+    //        // Unpack the mod
+    //        KModuleEditor.UnpackArchive(folder, "tmp.mod", "unerf");
+
+    //        // Delete the temporary module file
+    //        UnityEngine.Windows.File.Delete(folder + "tmp.mod");
+    //    }
+
+    //    // Access/create the required files
+    //    AuroraGIT git = GameObject.Find("Area").GetComponent<AreaManager>().CreateGIT();
+    //    AuroraARE are = module.are;
+    //    AuroraIFO ifo = module.ifo;
+    //    string areaName = ifo.Mod_Entry_Area;
+
+    //    // Create the GFF files
+    //    KModuleEditor.CreateGFFFile(folder, areaName, git, "git");
+    //    KModuleEditor.CreateGFFFile(folder, areaName, are, "are");
+    //    KModuleEditor.CreateGFFFile(folder, "module", ifo, "ifo");
+
+    //    // Package the items up
+    //    if (AuroraPrefs.TargetGame() == Game.KotOR)
+    //    {
+    //        // Create a RIM archive
+    //        KModuleEditor.CreateArchive(folder, moduleName + ".rim", "rim");
+    //    }
+    //    else
+    //    {
+    //        // Repack the MOD
+    //        KModuleEditor.CreateArchive(folder, moduleName + ".mod", "erf", "--mod");
+    //    }
+    //}
 }

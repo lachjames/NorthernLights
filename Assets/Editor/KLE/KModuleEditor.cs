@@ -642,6 +642,10 @@ public class KModuleEditor : EditorWindow
     }
     public static void CreateGFFFile(string folder, string name, AuroraStruct template, string ext)
     {
+        if (ext == "")
+        {
+            Debug.LogError("Empty extention will mean the resulting template will require hex-editing to set the template type");
+        }
         // Create an XML file for the GFF template
         string xmlpath = folder + "tmp.xml";
         string xml = template.ToXML(ext.ToUpper());
@@ -650,7 +654,7 @@ public class KModuleEditor : EditorWindow
         File.WriteAllText(Application.dataPath + "\\out.xml", xml);
 
         // Convert from XML to GFF using xoreos-tools
-        string filename = name + "." + ext;
+        string filename = name + (ext == "" ? "" : "." + ext);
         string fullpath = folder + filename;
 
         AuroraEngine.Resources.RunXoreosTools(

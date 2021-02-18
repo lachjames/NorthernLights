@@ -1,6 +1,8 @@
 import os
 import shutil
 import threading
+
+
 # from checksumdir import dirhash
 
 
@@ -30,6 +32,10 @@ def unpack_fn(ctx):
     ctx.status_token.set("Clearing scratch folder")
     shutil.rmtree("scratch")
     os.makedirs("scratch")
+
+    ctx.status_token.set("Copying extra files")
+    ctx.root.update_idletasks()
+    unpack_extra_files(ctx)
 
     ctx.status_token.set("Unpacking modules")
     ctx.root.update_idletasks()
@@ -234,6 +240,11 @@ def unpack_movies(ctx):
 
 def unpack_override(ctx):
     shutil.copytree(ctx.input_folder + "/override/", ctx.output_folder + "/override/")
+
+
+def unpack_extra_files(ctx):
+    shutil.copyfile(ctx.input_folder + "/dialog.tlk", ctx.output_folder + "/dialog.tlk")
+    shutil.copyfile(ctx.input_folder + "/chitin.key", ctx.output_folder + "/chitin.key")
 
 
 def unpack_all(ctx, from_folder, to_folder, unpack_func):

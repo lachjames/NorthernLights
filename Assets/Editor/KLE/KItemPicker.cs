@@ -218,33 +218,45 @@ public class KItemPicker : EditorWindow
 
     void BIFItems ()
     {
-        AuroraEngine.ResourceType curType = TypeMap[curItemType];
         List<string> objects = new List<string>();
+        ResourceType curType = TypeMap[curItemType];
 
-        var dict = AuroraEngine.Resources.data.keyObject.resourceKeys;
-        // Get items from the base BIFs
-        foreach ((string name, AuroraEngine.ResourceType rt) in dict.Keys)
+        foreach (AuroraArchive archive in AuroraEngine.Resources.data.bifObjects)
         {
-            if (rt != curType)
+            if (archive.GetType() == typeof(RIMObject))
             {
-                continue;
+                RIMObject rim = (RIMObject)archive;
+
+                foreach ((string name, ResourceType rt) in rim.resources.Keys)
+                {
+                    if (rt != curType)
+                    {
+                        continue;
+                    }
+                    using (Stream stream = rim.GetResource(name, rt))
+                    {
+                        GFFObject obj = new GFFLoader(stream).GetObject();
+                        objects.Add((string)obj["TemplateResRef"].Value);
+                    }
+                }
+
+            } else if (archive.GetType() == typeof(FolderObject))
+            {
+                FolderObject folder = (FolderObject)archive;
+
+                foreach ((string name, ResourceType rt) in folder.resources.Keys)
+                {
+                    if (rt != curType)
+                    {
+                        continue;
+                    }
+                    using (Stream stream = folder.GetResource(name, rt))
+                    {
+                        GFFObject obj = new GFFLoader(stream).GetObject();
+                        objects.Add((string)obj["TemplateResRef"].Value);
+                    }
+                }
             }
-
-            // Get the relevant BIF object
-            int bifIndex = (int)dict[(name, rt)] >> 20;
-            AuroraEngine.BIFObject bif = AuroraEngine.Resources.data.bifObjects[bifIndex];
-
-            Stream stream = bif.GetResourceData(
-                bif.GetResourceById(
-                    dict[(name, rt)]
-                )
-            );
-
-            AuroraEngine.GFFObject obj = new AuroraEngine.GFFLoader(stream).GetObject();
-
-            string resref = (string)obj["TemplateResRef"].Value;
-
-            objects.Add(resref);
         }
 
         bifItems = objects.ToArray();

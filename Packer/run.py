@@ -33,6 +33,10 @@ def pack_module():
         cur_dir + "/scratch/tmp.mod"
     ] + filenames)
 
+    # Make sure the first four bytes are "MOD "
+    with open(cur_dir + "/scratch/tmp.mod", "r+b") as f:
+        f.write(bytearray("MOD ", encoding="ascii"))
+
     # Copy the mod file to the selected location
     shutil.copyfile(cur_dir + "/scratch/tmp.mod", to_file)
 

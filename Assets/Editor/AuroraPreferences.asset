@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: AuroraPreferences
   m_EditorClassIdentifier: 
   m_Number: 0
-  k1Location: D:\SteamLibrary\steamapps\common\swkotor
+  k1Location: D:\KOTOR\kotor1_files
   k1SaveLocation: C:\Users\lachl\Downloads\My kotor saves 1.1
-  tslLocation: D:\SteamLibrary\steamapps\common\Knights of the Old Republic II
+  tslLocation: D:\KOTOR\tsl_rcm_dev
   tslSaveLocation: C:\Users\lachl\Downloads\KotOR II + RCM + M4-78EP saves
   moduleOutLocation: D:\KOTOR\KotOR-Unity\moduleout
   game: 1
+  devMode: 1
