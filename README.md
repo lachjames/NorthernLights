@@ -2,7 +2,7 @@
 
 The Northern Lights Project (a placeholder name) is a full reimplementation of the Aurora/Odyssey engine, targeting the two Knights of the Old Republic games (KotOR 1 and TSL). It is made of two elements:
  - A full re-reimplementation of the Odyssey engine, intended to fix bugs and allow the game to run on modern hardware without the nightmares of the past...
- - A level editor (named the KotOR Level Editor, or KLE) with similar (but extended) capabilities to the Aurora toolset, originally designed for Neverwinter Nights.
+ - A level editor (named the KotOR Level Editor, or KLE) with similar (but extended) capabilities to the Aurora toolset from Neverwinter Nights, targeted at the KotOR games.
  
 Please find a video outlining the features of the KLE [here](https://www.youtube.com/watch?v=HoQwFkdiEkk).
 
