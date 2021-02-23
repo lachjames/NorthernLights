@@ -25,6 +25,7 @@ Please find a video outlining the features of the KLE [here](https://www.youtube
  
 ## Installation (for level editor - engine reimplementation is not ready for prime-time yet)
 Please follow the following steps:
+
  0. Go to this link (as it is the latest stable version of KLE): https://github.com/lachjames/NorthernLights/tree/0b994f127ab1f394e20e0cae2b514aff9fca2a6a
  1. Download the repository, either by cloning it using git or just downloading it as a .zip file
  2. Unzip the resulting folder somewhere on your computer
