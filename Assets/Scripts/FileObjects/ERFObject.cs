@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UnityEngine;
 
 namespace AuroraEngine
 {
@@ -54,6 +55,7 @@ namespace AuroraEngine
             memoryStream.Position = offsetToKeyList;
             memoryStream.Read(buffer, 0, (int)resourceCount * KEY_SIZE);
 
+            Debug.Log("Loading " + resourceCount + " resources from " + filePath);
             for (int i = 0; i < resourceCount; i++)
             {
                 string resref = Encoding.UTF8.GetString(buffer, (i * KEY_SIZE) + 0, 16).TrimEnd('\0').ToLower();    //resrefs are always case insensitive
@@ -61,6 +63,8 @@ namespace AuroraEngine
                 uint type = BitConverter.ToUInt16(buffer, (i * KEY_SIZE) + 20);
 
                 resourceKeys.Add((resref, (ResourceType)type), index);
+
+                // Debug.Log("Loaded resource " + resref + " from " + filePath);
             }
 
             //Read resource list
@@ -79,12 +83,13 @@ namespace AuroraEngine
             }
         }
 
-		public override Stream GetResource(string resref, ResourceType type)
-		{
-			uint value;
+        public override Stream GetResource(string resref, ResourceType type)
+        {
+            uint value;
 
-			if (resourceKeys.TryGetValue((resref.ToLower(), type), out value)) {
-				var pointer = resourcePointers[value];
+            if (resourceKeys.TryGetValue((resref.ToLower(), type), out value))
+            {
+                var pointer = resourcePointers[value];
 
                 memoryStream.Position = pointer.Item1;
 
@@ -93,7 +98,7 @@ namespace AuroraEngine
                 return new MemoryStream(buffer);
             }
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 }

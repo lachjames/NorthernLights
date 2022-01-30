@@ -329,12 +329,12 @@ namespace NCSInstructions
         public override void Run(NCSContext context)
         {
             // Pushes an immediate value onto the stack
-            string value = args[1];
+            string value = args[2];
             context.Push(value);
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
         {
-            matrix.Push(command, new PropagateData(NCSDataType.STRING, args[1]));
+            matrix.Push(command, new PropagateData(NCSDataType.STRING, args[2]));
             return new NOOP();
         }
 

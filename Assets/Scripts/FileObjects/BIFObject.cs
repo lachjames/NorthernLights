@@ -9,24 +9,31 @@ using UnityEngine;
 
 namespace AuroraEngine
 {
-	public class BIFObject : AuroraArchive
-	{
-		public struct Resource
-		{
-			public uint ID, Offset, FileSize, ResType;
-		}
+    public class BIFObject : AuroraArchive
+    {
+        public struct Resource
+        {
+            public uint ID, Offset, FileSize, ResType;
+        }
 
-		private const int HEADER_SIZE = 20;
+        private const int HEADER_SIZE = 20;
 
-		private string fileType, fileVersion;
-		private uint variableResourceCount, fixedResourceCount, variableTableOffset, variableTableRowSize, variableTableSize;
+        private string fileType, fileVersion;
+        private uint variableResourceCount, fixedResourceCount, variableTableOffset, variableTableRowSize, variableTableSize;
 
-		public Resource[] resources;
+        public Resource[] resources;
 
         KEYObject keyObject;
 
-        public BIFObject(string filepath, KEYObject key) : base(filepath) {
+        public BIFObject(string filepath, KEYObject key) : base(filepath)
+        {
             keyObject = key;
+            // foreach (Resource r in resources)
+            // {
+            //     // Get the resref and print it
+            //     string resref = keyObject.GetStringFromID(r.ID);
+            //     Debug.Log("Loaded resource " + resref + " of type " + r.ResType + " in " + filepath);
+            // }
         }
 
         public BIFObject(Stream stream) : base(stream) { }
@@ -53,6 +60,7 @@ namespace AuroraEngine
             memoryStream.Read(buffer, 0, (int)variableTableSize);
             resources = new Resource[variableResourceCount];
 
+            Debug.Log("Loading " + variableResourceCount + " resources from " + filePath);
             for (int i = 0; i < variableResourceCount; i++)
             {
                 resources[i] = new Resource
@@ -66,27 +74,30 @@ namespace AuroraEngine
         }
 
 
-		public Resource GetResourceById(uint id)
-		{
-			for (int i = 0; i < variableResourceCount; i++) {
-				if (this.resources[i].ID == id) {
-					return this.resources[i];
-				}
-			}
-			throw new Exception("Resource not found.");
-		}
+        public Resource GetResourceById(uint id)
+        {
+            for (int i = 0; i < variableResourceCount; i++)
+            {
+                if (this.resources[i].ID == id)
+                {
+                    return this.resources[i];
+                }
+            }
+            throw new Exception("Resource not found.");
+        }
 
-		public Stream GetResourceData(Resource resource)
-		{
-			using (FileStream stream = File.Open(filePath, FileMode.Open)) {
-				stream.Position = resource.Offset;
-				//stream.CopyTo(resourceFile, (int)resource.FileSize);
+        public Stream GetResourceData(Resource resource)
+        {
+            using (FileStream stream = File.Open(filePath, FileMode.Open))
+            {
+                stream.Position = resource.Offset;
+                //stream.CopyTo(resourceFile, (int)resource.FileSize);
 
-				var buffer = new byte[(int)resource.FileSize];
-				stream.Read(buffer, 0, (int)resource.FileSize);
-				return new MemoryStream(buffer);
-			}
-		}
+                var buffer = new byte[(int)resource.FileSize];
+                stream.Read(buffer, 0, (int)resource.FileSize);
+                return new MemoryStream(buffer);
+            }
+        }
 
         public override Stream GetResource(string resref, ResourceType rt)
         {
@@ -97,7 +108,16 @@ namespace AuroraEngine
             {
                 uint bifIndex = id >> 20;
 
-                return GetResourceData(GetResourceById(id));
+                // return GetResourceData(GetResourceById(bifIndex));
+                try
+                {
+                    return GetResourceData(GetResourceById(id));
+                }
+                catch (Exception e)
+                {
+                    // Debug.LogWarning("Failed to load object " + resref + " from " + filePath + ": " + e.Message);
+                    return null;
+                }
             }
 
             return null;

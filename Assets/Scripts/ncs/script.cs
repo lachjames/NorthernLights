@@ -10,6 +10,7 @@ using System.Threading;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Net.Mime;
+using System.Reflection;
 
 public class NCSContext
 {
@@ -27,22 +28,34 @@ public class NCSContext
     public object last_return;
 
     public List<string> logs = new List<string>();
+    public NCSFile file;
 
-    public void Start (NCSScript script)
+    public NCSContext(NCSScript script, NCSFile file)
     {
         this.script = script;
+        this.file = file;
 
-        programCounter = 0;
-        returnStack.Clear();
-        returnStack.Add(-1);
+        // programCounter = 0;
+        // returnStack.Clear();
+        // returnStack.Add(-1);
     }
 
-    public void StoreState (int pc)
+    // public void Start(NCSScript script, NCSFile file)
+    // {
+    //     this.script = script;
+    //     this.file = file;
+
+    //     programCounter = 0;
+    //     returnStack.Clear();
+    //     returnStack.Add(-1);
+    // }
+
+    public void StoreState(int pc)
     {
         stateStack.Add(Copy(pc));
     }
 
-    public NCSContext GetState ()
+    public NCSContext GetState()
     {
         NCSContext ctx = stateStack.Last();
         stateStack.RemoveAt(stateStack.Count - 1);
@@ -50,9 +63,9 @@ public class NCSContext
         return ctx;
     }
 
-    public NCSContext Copy (int pc)
+    public NCSContext Copy(int pc)
     {
-        NCSContext copy = new NCSContext();
+        NCSContext copy = new NCSContext(script, file);
 
         // We don't actually copy the return stack here
         //foreach (int r in returnStack)
@@ -87,7 +100,7 @@ public class NCSContext
         return copy;
     }
 
-    public void Dump (string loc)
+    public void Dump(string loc)
     {
         // Dump the current state to disk in JSON form
         //File.WriteAllText(loc, JsonConvert.SerializeObject(this));
@@ -153,7 +166,8 @@ public class NCSContext
         if (isVector)
         {
             stackPointer += 12;
-        } else
+        }
+        else
         {
             stackPointer += 4;
         }
@@ -177,10 +191,39 @@ public class NCSContext
         return item;
     }
 
-    public void Jump(int pos)
+    public void JumpOffset(int offset, bool pushReturn = false)
     {
-        returnStack.Add(programCounter + 1);
-        programCounter = pos;
+        UnityEngine.Debug.Log("Jumping to offset " + offset + ", current PC is " + programCounter);
+        if (pushReturn)
+        {
+            returnStack.Add(programCounter + 1);
+        }
+
+        int dir = 1;
+        if (offset < 0)
+        {
+            dir = -1;
+        }
+        UnityEngine.Debug.Log("Moving in direction " + dir);
+
+        if (dir == -1)
+        {
+            UnityEngine.Debug.Log("Adjusting offset because we don't include the current instruction when jumping backwards");
+            offset -= file.operations[programCounter].instructionSize;
+        }
+
+        // int cur_offset = file.operations[programCounter].instructionStart;
+        // UnityEngine.Debug.Log("Current offset: " + cur_offset);
+        while (offset != 0)
+        {
+            UnityEngine.Debug.Log("Jumping over instruction " + file.operations[programCounter].opType.Name);
+            offset -= dir * file.operations[programCounter].instructionSize;
+            programCounter += dir;
+            UnityEngine.Debug.Log("Program counter: " + programCounter + ", offset: " + offset);
+        }
+        
+        UnityEngine.Debug.Log("New program counter is " + programCounter);
+        // programCounter = pos;
     }
 
     public void Return()
@@ -205,7 +248,7 @@ public class NCSContext
         return programCounter;
     }
 
-    public void ChangePC (int steps)
+    public void ChangePC(int steps)
     {
         programCounter += steps;
     }
@@ -224,163 +267,195 @@ public class NCSContext
 
 public class NCSScript
 {
+    public static Dictionary<int, MethodInfo> actions = null;
     public string scriptName;
 
     public List<NCSInstruction> instructions = new List<NCSInstruction>();
     public Dictionary<string, int> labels = new Dictionary<string, int>();
 
     public NCSInstruction lastInstruction;
+    public NCSFile file;
 
-    public NCSScript (Stream stream, string name)
+    public NCSScript(Stream stream, string name)
     {
-        // Firstly, we save the script to disk
+        // if (actions == null)
+        // {
+        //     ReadActions();
+        // }
+        // We read the NCS file directly from the stream
+        file = new NCSFile(stream);
+        scriptName = name;
 
-        byte[] buffer = new byte[stream.Length];
-        stream.Read(buffer, 0, (int)stream.Length);
-
-        FileStream filestream = File.Create("D:\\KOTOR\\KotOR-Unity\\tmp\\tmp.ncs");
-        stream.Seek(0, SeekOrigin.Begin);
-        stream.CopyTo(filestream);
-        filestream.Close();
-        
-        // Then we read it using xoreos-tools's disassembler
-        Process p = new Process();
-        p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-        p.StartInfo.CreateNoWindow = true;
-        p.StartInfo.UseShellExecute = false;
-        p.StartInfo.FileName = "D:\\KOTOR\\KOTOR1\\KotOR-Unity\\xt\\ncsdis.exe";
-        p.StartInfo.Arguments = "--assembly --kotor D:\\KOTOR\\KotOR-Unity\\tmp\\tmp.ncs";
-        p.StartInfo.RedirectStandardOutput = true;
-        p.StartInfo.RedirectStandardError = true;
-        p.EnableRaisingEvents = true;
-
-        StringBuilder outputBuilder = new StringBuilder();
-        StringBuilder errorBuilder = new StringBuilder();
-
-        using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
-        using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+        foreach (NCSOperation op in file.operations)
         {
-            p.OutputDataReceived += (sender, e) => {
-                if (e.Data == null)
-                {
-                    outputWaitHandle.Set();
-                }
-                else
-                {
-                    outputBuilder.AppendLine(e.Data);
-                }
-            };
-            p.ErrorDataReceived += (sender, e) =>
-            {
-                if (e.Data == null)
-                {
-                    errorWaitHandle.Set();
-                }
-                else
-                {
-                    errorBuilder.AppendLine(e.Data);
-                }
-            };
+            NCSInstruction instruction = (NCSInstruction)Activator.CreateInstance(op.opType);
+            //Debug.Log(instruction);
 
-            p.Start();
-
-            p.BeginOutputReadLine();
-            p.BeginErrorReadLine();
-
-            if (p.WaitForExit(1000) &&
-                outputWaitHandle.WaitOne() &&
-                errorWaitHandle.WaitOne())
-            {
-                // Process completed. Check process.ExitCode here.
-            }
-            else
-            {
-                // Timed out.
-            }
-        }
-
-        string output = outputBuilder.ToString();
-        string error = errorBuilder.ToString();
-
-        //UnityEngine.Debug.Log(output);
-        //UnityEngine.Debug.Log(error);
-
-        // Finally, we run the normal NCSScript reader on that
-        ParseString(output, name);
-    }
-
-    public NCSScript(string script, string name)
-    {
-        ParseString(script, name);
-    }
-
-    void ParseString (string script, string name)
-    {
-        this.scriptName = name;
-        string[] lines = script.Split(new[] { '\n' }, StringSplitOptions.None);
-        //UnityEngine.Debug.Log(lines.Length);
-        foreach (string rawline in lines)
-        {
-            // Determine the line type
-            string line = rawline.Trim().Split(new char[] { ';' })[0].Trim();
-            //UnityEngine.Debug.Log(line);
-            if (line.Length == 0)
-            {
-                // This was a blank line or comment, so ignore it
-                //Debug.Log("Ignoring blank/comment line: " + rawline);
-            }
-            else if (line[line.Length - 1] == ':')
-            {
-                // This is a label
-                //Debug.Log("Registering label: " + rawline);
-
-                string labelName = String.Concat(line.Take(line.Length - 1));
-                // If we have n instructions, this label points to instruction n+1 (at index n+1-1=n)
-                labels[labelName] = instructions.Count;
-            }
-            else
-            {
-                // This is an instruction
-                //Debug.Log("Registering instruction: " + rawline);
-
-                // TODO: Make this work for lines that have strings with spaces in them
-                string[] rawInstruction = line.Split(new char[] { ' ' });
-
-                // Remove quotes surrounding strings
-                for (int i = 0; i < rawInstruction.Length; i++)
-                {
-                    string s = rawInstruction[i];
-                    if (s.Length < 2)
-                    {
-                        continue;
-                    }
-                    if (s[0] == '"' && s[s.Length-1] == '"')
-                    {
-                        s = s.Substring(1, s.Length - 2);
-                        rawInstruction[i] = s;
-                    }
-                }
-
-                string instructionName = rawInstruction[0];
-
-                Type instructionType = Type.GetType("NCSInstructions." + instructionName);
-                if (instructionType == null)
-                {
-                    throw new Exception("Instruction type was null for " + instructionName);
-                }
-                NCSInstruction instruction = (NCSInstruction)Activator.CreateInstance(instructionType);
-                //Debug.Log(instruction);
-
-                instruction.Initialize(rawInstruction, this);
-                instructions.Add(instruction);
-            }
+            instruction.Initialize(op.args, this);
+            instructions.Add(instruction);
         }
     }
 
-    public void Start(NCSContext context)
-    {
-        context.Start(this);
-    }
+    // void ReadActions()
+    // {
+    //     // Read actions from nwscript.nss
+    //     actions = new Dictionary<int, MethodInfo>();
+    //     Stream stream = AuroraData.Instance.GetStream("nwscript.nss", AuroraEngine.ResourceType.NSS);
+    //     string text = new StreamReader(stream).ReadToEnd();
+    //     UnityEngine.Debug.Log("Loaded nwscript.nss: " + text);
+    // }
+
+    // public NCSScript(Stream stream, string name)
+    // {
+    //     // Firstly, we save the script to disk
+
+    //     byte[] buffer = new byte[stream.Length];
+    //     stream.Read(buffer, 0, (int)stream.Length);
+
+    //     FileStream filestream = File.Create("D:\\KOTOR\\KotOR-Unity\\tmp\\tmp.ncs");
+    //     stream.Seek(0, SeekOrigin.Begin);
+    //     stream.CopyTo(filestream);
+    //     filestream.Close();
+
+    //     // Then we read it using xoreos-tools's disassembler
+    //     Process p = new Process();
+    //     p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+    //     p.StartInfo.CreateNoWindow = true;
+    //     p.StartInfo.UseShellExecute = false;
+    //     p.StartInfo.FileName = "D:\\KOTOR\\KOTOR1\\KotOR-Unity\\xt\\ncsdis.exe";
+    //     p.StartInfo.Arguments = "--assembly --kotor D:\\KOTOR\\KotOR-Unity\\tmp\\tmp.ncs";
+    //     p.StartInfo.RedirectStandardOutput = true;
+    //     p.StartInfo.RedirectStandardError = true;
+    //     p.EnableRaisingEvents = true;
+
+    //     StringBuilder outputBuilder = new StringBuilder();
+    //     StringBuilder errorBuilder = new StringBuilder();
+
+    //     using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
+    //     using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
+    //     {
+    //         p.OutputDataReceived += (sender, e) =>
+    //         {
+    //             if (e.Data == null)
+    //             {
+    //                 outputWaitHandle.Set();
+    //             }
+    //             else
+    //             {
+    //                 outputBuilder.AppendLine(e.Data);
+    //             }
+    //         };
+    //         p.ErrorDataReceived += (sender, e) =>
+    //         {
+    //             if (e.Data == null)
+    //             {
+    //                 errorWaitHandle.Set();
+    //             }
+    //             else
+    //             {
+    //                 errorBuilder.AppendLine(e.Data);
+    //             }
+    //         };
+
+    //         p.Start();
+
+    //         p.BeginOutputReadLine();
+    //         p.BeginErrorReadLine();
+
+    //         if (p.WaitForExit(1000) &&
+    //             outputWaitHandle.WaitOne() &&
+    //             errorWaitHandle.WaitOne())
+    //         {
+    //             // Process completed. Check process.ExitCode here.
+    //         }
+    //         else
+    //         {
+    //             // Timed out.
+    //         }
+    //     }
+
+    //     string output = outputBuilder.ToString();
+    //     string error = errorBuilder.ToString();
+
+    //     //UnityEngine.Debug.Log(output);
+    //     //UnityEngine.Debug.Log(error);
+
+    //     // Finally, we run the normal NCSScript reader on that
+    //     ParseString(output, name);
+    // }
+
+    // public NCSScript(string script, string name)
+    // {
+    //     ParseString(script, name);
+    // }
+
+    // void ParseString(string script, string name)
+    // {
+    //     this.scriptName = name;
+    //     string[] lines = script.Split(new[] { '\n' }, StringSplitOptions.None);
+    //     //UnityEngine.Debug.Log(lines.Length);
+    //     foreach (string rawline in lines)
+    //     {
+    //         // Determine the line type
+    //         string line = rawline.Trim().Split(new char[] { ';' })[0].Trim();
+    //         //UnityEngine.Debug.Log(line);
+    //         if (line.Length == 0)
+    //         {
+    //             // This was a blank line or comment, so ignore it
+    //             //Debug.Log("Ignoring blank/comment line: " + rawline);
+    //         }
+    //         else if (line[line.Length - 1] == ':')
+    //         {
+    //             // This is a label
+    //             //Debug.Log("Registering label: " + rawline);
+
+    //             string labelName = String.Concat(line.Take(line.Length - 1));
+    //             // If we have n instructions, this label points to instruction n+1 (at index n+1-1=n)
+    //             labels[labelName] = instructions.Count;
+    //         }
+    //         else
+    //         {
+    //             // This is an instruction
+    //             //Debug.Log("Registering instruction: " + rawline);
+
+    //             // TODO: Make this work for lines that have strings with spaces in them
+    //             string[] rawInstruction = line.Split(new char[] { ' ' });
+
+    //             // Remove quotes surrounding strings
+    //             for (int i = 0; i < rawInstruction.Length; i++)
+    //             {
+    //                 string s = rawInstruction[i];
+    //                 if (s.Length < 2)
+    //                 {
+    //                     continue;
+    //                 }
+    //                 if (s[0] == '"' && s[s.Length - 1] == '"')
+    //                 {
+    //                     s = s.Substring(1, s.Length - 2);
+    //                     rawInstruction[i] = s;
+    //                 }
+    //             }
+
+    //             string instructionName = rawInstruction[0];
+
+    //             Type instructionType = Type.GetType("NCSInstructions." + instructionName);
+    //             if (instructionType == null)
+    //             {
+    //                 throw new Exception("Instruction type was null for " + instructionName);
+    //             }
+    //             NCSInstruction instruction = (NCSInstruction)Activator.CreateInstance(instructionType);
+    //             //Debug.Log(instruction);
+
+    //             instruction.Initialize(rawInstruction, this);
+    //             instructions.Add(instruction);
+    //         }
+    //     }
+    // }
+
+    // public void Start(NCSContext context)
+    // {
+    //     context.Start(this);
+    // }
 
     public void Run(NCSContext context)
     {
@@ -412,7 +487,7 @@ public class NCSScript
         NCSInstruction instruction = instructions[context.GetPC()];
 
         //Debug.Log(instruction.AsString());
-        
+
         instruction.Run(context);
         if (instruction.IncrementsPC)
         {

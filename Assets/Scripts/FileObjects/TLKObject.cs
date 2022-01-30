@@ -8,22 +8,29 @@ using System.Xml;
 
 namespace AuroraEngine
 {
-	public class TLKObject
-	{
+    public class TLKObject
+    {
         public Dictionary<int, TLKEntry> strings = new Dictionary<int, TLKEntry>();
 
-		public TLKEntry this[int index] {
-			get {
+        public TLKEntry this[int index]
+        {
+            get
+            {
                 if (!strings.ContainsKey(index))
                 {
                     return new TLKEntry();
                 }
 
                 return strings[index];
-			}
-		}
+            }
+        }
 
-        public TLKObject (string xml)
+        public TLKObject(TLK tlk)
+        {
+            
+        }
+
+        public TLKObject(string xml)
         {
             // Read the XML file using xoreos-tools 
             XmlDocument doc = new XmlDocument();
@@ -59,7 +66,7 @@ namespace AuroraEngine
 
             UnityEngine.Debug.Log("Loaded " + i + " strings from the TLK file");
         }
-	}
+    }
 
     public struct TLKEntry
     {

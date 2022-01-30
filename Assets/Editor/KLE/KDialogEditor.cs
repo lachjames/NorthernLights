@@ -9,6 +9,8 @@ using UnityEditor;
 using UnityEngine;
 using XNode;
 using XNodeEditor;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class KDialogEditor : EditorWindow
 {
@@ -49,7 +51,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    public void LoadDLGFromFile ()
+    public void LoadDLGFromFile()
     {
         // Ask for a filename
         string filename = EditorUtility.OpenFilePanel("Select a DLG file", "", "");
@@ -60,14 +62,75 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    public void SaveDLGToFile ()
+    public void SaveDLGToFile()
     {
         string filename = EditorUtility.SaveFilePanel("Save File As...", "", "dialog.dlg", "");
         KModuleEditor.CreateGFFFile(AuroraPrefs.GetModuleOutLocation(), "dialog", dlg, "dlg");
         File.Move(AuroraPrefs.GetModuleOutLocation() + "/dialog.dlg", filename);
     }
 
-    public void LoadDLG (AuroraDLG dlg)
+    void ExportPCLines()
+    {
+        string outloc = EditorUtility.SaveFilePanel("Save File As...", "", "pc.json", "");
+
+        List<object> lines = new List<object>();
+        HashSet<string> seen = new HashSet<string>();
+        foreach (AuroraDLG.AReply reply in dlg.ReplyList)
+        {
+            // Get the text for this line
+            string text = AuroraEngine.Resources.GetString(reply.Text);
+            string baseText = text;
+
+            if (seen.Contains(text))
+            {
+                continue;
+            }
+            seen.Add(text);
+
+            Debug.Log(text);
+            if (text == "")
+            {
+                continue;
+            }
+
+            // Remove all text between '[' and ']' from the text
+            while (text.Contains("["))
+            {
+                int start = text.IndexOf("[");
+                int end = text.IndexOf("]");
+                text = text.Remove(start, end - start + 1);
+            }
+
+            // Remove all text between '{ and '}'
+            while (text.Contains("{"))
+            {
+                int start = text.IndexOf("{");
+                int end = text.IndexOf("}");
+                text = text.Remove(start, end - start + 1);
+            }
+
+            if (text.Trim() == "") {
+                continue;
+            }
+
+            lines.Add(new
+            {
+                speaker = "femshep/checkpoint_21934",
+                text = text.Trim(),
+                audio_data = "",
+                metadata = new {
+                    tlk_idx = reply.Text.stringref,
+                    base_text = baseText,
+                    follow_on = false
+                }
+            });
+        }
+
+        string json = JsonConvert.SerializeObject(lines, Formatting.Indented);
+        File.WriteAllText(outloc, json);
+    }
+
+    public void LoadDLG(AuroraDLG dlg)
     {
         curEntry = null;
         curReply = null;
@@ -95,10 +158,14 @@ public class KDialogEditor : EditorWindow
                 Debug.Log(dg);
                 NodeEditorWindow.Open(dg);
             }
+            if (GUILayout.Button("Export JSON"))
+            {
+                ExportPCLines();
+            }
         }
     }
 
-    void Editor ()
+    void Editor()
     {
         using (new EditorGUILayout.HorizontalScope())
         {
@@ -108,7 +175,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void LeftSidebar ()
+    void LeftSidebar()
     {
         using (new EditorGUILayout.VerticalScope(GUILayout.Width(300)))
         {
@@ -134,7 +201,8 @@ public class KDialogEditor : EditorWindow
             if (curReply != null)
                 GUILayout.Label("Reply: " + curReply.ToString());
 
-            using (var scroll = new EditorGUILayout.ScrollViewScope(leftScroll)) {
+            using (var scroll = new EditorGUILayout.ScrollViewScope(leftScroll))
+            {
                 leftScroll = scroll.scrollPosition;
 
                 // Show the inspector for the currently selected link
@@ -144,7 +212,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void BackToStart ()
+    void BackToStart()
     {
         curEntry = null;
         curReply = null;
@@ -163,7 +231,7 @@ public class KDialogEditor : EditorWindow
                 {
                     structid = (uint)idx
                 });
-                
+
                 dlg.StartingList.Add(new AuroraDLG.AStarting()
                 {
                     Index = (uint)idx
@@ -171,7 +239,8 @@ public class KDialogEditor : EditorWindow
                 break;
             case DialogState.CHOOSING_ENTRY:
                 idx = dlg.EntryList.Count;
-                dlg.EntryList.Add(new AuroraDLG.AEntry() {
+                dlg.EntryList.Add(new AuroraDLG.AEntry()
+                {
                     structid = (uint)idx
                 });
                 curReply.EntriesList.Add(new AuroraDLG.AReply.AEntries()
@@ -193,7 +262,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void UnlinkResponse ()
+    void UnlinkResponse()
     {
         switch (mode)
         {
@@ -210,7 +279,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void CopySelected ()
+    void CopySelected()
     {
         switch (mode)
         {
@@ -242,7 +311,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void MoveSelectedDown ()
+    void MoveSelectedDown()
     {
         switch (mode)
         {
@@ -273,7 +342,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void MoveSelectedUp ()
+    void MoveSelectedUp()
     {
         switch (mode)
         {
@@ -304,7 +373,7 @@ public class KDialogEditor : EditorWindow
         }
     }
 
-    void DialogViewer ()
+    void DialogViewer()
     {
         GUISkin old = GUI.skin;
         GUI.skin = (GUISkin)CreateInstance("GUISkin");
@@ -319,7 +388,7 @@ public class KDialogEditor : EditorWindow
         GUI.skin.label.wordWrap = true;
 
         GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-        
+
         using (new EditorGUILayout.VerticalScope())
         {
             using (var entryScope = new EditorGUILayout.ScrollViewScope(entryScroll))
@@ -336,8 +405,8 @@ public class KDialogEditor : EditorWindow
 
         GUI.skin = old;
     }
-    
-    void EntryView ()
+
+    void EntryView()
     {
         switch (mode)
         {
@@ -414,7 +483,8 @@ public class KDialogEditor : EditorWindow
                         {
                             SelectedEntryReply(link);
                             SelectedReply(reply);
-                        } else
+                        }
+                        else
                         {
                             ToChooseEntry(link);
                         }
@@ -452,14 +522,14 @@ public class KDialogEditor : EditorWindow
     }
 
 
-    void NavigateFromStart (AuroraDLG.AStarting start)
+    void NavigateFromStart(AuroraDLG.AStarting start)
     {
         Debug.Log("Navigating from start");
         // Find the entry this start points to
         curEntry = GetEntry((int)start.Index);
         mode = DialogState.CHOOSING_REPLY;
     }
-    
+
     void ToChooseEntry(AuroraDLG.AEntry.AReplies entryReply)
     {
         Debug.Log("Navigating from entry");
@@ -475,35 +545,35 @@ public class KDialogEditor : EditorWindow
         mode = DialogState.CHOOSING_REPLY;
     }
 
-    void SelectedStart (AuroraDLG.AStarting start)
+    void SelectedStart(AuroraDLG.AStarting start)
     {
         curEditingLink = start;
         curEditing = GetEntry((int)start.Index);
     }
 
-    void SelectedEntry (AuroraDLG.AEntry entry)
+    void SelectedEntry(AuroraDLG.AEntry entry)
     {
         // The user selected an entry, so show all relevant replies
         curEditing = entry;
     }
 
-    void SelectedReply (AuroraDLG.AReply reply)
+    void SelectedReply(AuroraDLG.AReply reply)
     {
         // The user selected a reply, so show all relevant entries
         curEditing = reply;
     }
 
-    void SelectedEntryReply (AuroraDLG.AEntry.AReplies entryReply)
+    void SelectedEntryReply(AuroraDLG.AEntry.AReplies entryReply)
     {
         curEditingLink = entryReply;
     }
 
-    void SelectedReplyEntry (AuroraDLG.AReply.AEntries replyEntry)
+    void SelectedReplyEntry(AuroraDLG.AReply.AEntries replyEntry)
     {
         curEditingLink = replyEntry;
     }
 
-    void RightSidebar ()
+    void RightSidebar()
     {
         using (new EditorGUILayout.VerticalScope(GUILayout.Width(300)))
         {

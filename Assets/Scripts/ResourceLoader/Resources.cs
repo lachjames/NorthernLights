@@ -11,7 +11,7 @@ using UnityEngine.Video;
 namespace AuroraEngine
 {
     public enum Game
-	{
+    {
         KotOR, TSL
     }
 
@@ -368,10 +368,10 @@ namespace AuroraEngine
     }
 
     public static partial class Resources
-	{
+    {
         public static AuroraData data;
-        
-		private static Game targetGame = Game.KotOR;
+
+        private static Game targetGame = Game.KotOR;
 
         public const int ANISO_LEVEL = 16;
 
@@ -380,13 +380,13 @@ namespace AuroraEngine
         static Dictionary<string, Texture2D> loadedSpeculars = new Dictionary<string, Texture2D>();
         static Dictionary<string, NCSScript> scriptCache = new Dictionary<string, NCSScript>();
 
-        public static void Load (string moduleName, bool instantiateModule = true)
+        public static void Load(string moduleName, bool instantiateModule = true)
         {
             data = new AuroraData(targetGame, moduleName, instantiateModule);
         }
 
-		public static Texture2D LoadTexture2D(string resref)
-		{
+        public static Texture2D LoadTexture2D(string resref)
+        {
             if (!loadedTextures.ContainsKey(resref))
             {
                 Texture2D tex;
@@ -449,13 +449,13 @@ namespace AuroraEngine
             return loadedSpeculars[resref];
         }
 
-        public static Texture2D GenerateSpecularMap (Texture2D diffuse, float strength = 1f, float cutoff = 0.5f)
+        public static Texture2D GenerateSpecularMap(Texture2D diffuse, float strength = 1f, float cutoff = 0.5f)
         {
             Texture2D spec = NormalMapTools.CreateSpecular(diffuse, strength, cutoff);
             return NormalMapTools.CombineRGBAndSpecular(diffuse, spec);
         }
 
-        public static Texture2D GenerateBumpMap (Texture2D diffuse, float strength = 1f)
+        public static Texture2D GenerateBumpMap(Texture2D diffuse, float strength = 1f)
         {
             return NormalMapTools.CreateNormalmap(diffuse, strength);
         }
@@ -477,7 +477,7 @@ namespace AuroraEngine
             return scriptCache[resourceRef];
         }
 
-        public static string From2DA (string name, int idx, string row)
+        public static string From2DA(string name, int idx, string row)
         {
             if (!data.loaded2das.ContainsKey(name))
             {
@@ -493,7 +493,27 @@ namespace AuroraEngine
         //    return new TLKObject(xml);
         //}
 
-        public static string GetString (GFFObject.CExoLocString locStr)
+        public static TLK LoadTLK()
+        {
+            string tlk_location = AuroraPrefs.GetKotorLocation() + "/dialog.tlk";
+
+            TLK tlk = new TLK();
+            using (Stream stream = File.OpenRead(tlk_location))
+            {
+                tlk.Load(stream, new Dictionary<string, Stream>(), skip: 0);
+            }
+
+            UnityEngine.Debug.Log("Loaded " + tlk.stringCount + " strings");
+
+            return tlk;
+            // UnityEngine.Debug.Log("Dictionary is of size " + tlk.strings.Count);
+
+            // TLKObject tlkObject = new TLKObject(tlk);
+
+            // return tlkObject;
+        }
+
+        public static string GetString(GFFObject.CExoLocString locStr)
         {
             if (locStr.strings.Count > 0)
             {
@@ -505,12 +525,12 @@ namespace AuroraEngine
                 return "";
             }
 
-            return data.tlk.strings[(int)locStr.stringref].str;
+            return data.tlk.strings[(int)locStr.stringref].text;
         }
 
         public static string GetStringByStrref(int strref)
         {
-            return data.tlk.strings[strref].str;
+            return data.tlk.strings[strref].text;
         }
 
 
@@ -534,7 +554,7 @@ namespace AuroraEngine
         }
 
         public static Material LoadMaterial(string diffuse, string lightmap = null, string cubemap = null)
-		{
+        {
             Material mat = new Material(Shader.Find("Standard"));
 
             if (cubemap != null)
@@ -548,10 +568,11 @@ namespace AuroraEngine
             //Texture2D tNormal = LoadNormal(diffuse);
             //Texture2D tSpecular = LoadSpecular(diffuse);
             //Texture2D tNormal = NormalGeneration.Diff2Normal(tDiffuse);
-            if (tDiffuse) {
+            if (tDiffuse)
+            {
                 // Diffuse map
-				mat.SetTexture("_MainTex", tDiffuse);
-                
+                mat.SetTexture("_MainTex", tDiffuse);
+
                 // Normal map
                 //mat.EnableKeyword("_NORMALMAP");
                 //mat.SetTexture("_BumpMap", tNormal);
@@ -571,26 +592,30 @@ namespace AuroraEngine
             }
 
             return mat;
-		}
+        }
 
-		public static _2DAObject Load2DA(string resref)
-		{
-			_2DAObject _2da;
+        public static _2DAObject Load2DA(string resref)
+        {
+            _2DAObject _2da;
 
-			if (data.loaded2das.TryGetValue(resref, out _2da)) {
-				return _2da;
-			}
+            if (data.loaded2das.TryGetValue(resref, out _2da))
+            {
+                return _2da;
+            }
 
-			Stream stream = data.GetStream(resref, ResourceType.TDA);
-			if (stream == null) {
-				UnityEngine.Debug.LogWarning("Missing 2da: " + resref);
-				return null;
-			} else {
-				_2da = new _2DAObject(stream);
+            Stream stream = data.GetStream(resref, ResourceType.TDA);
+            if (stream == null)
+            {
+                UnityEngine.Debug.LogWarning("Missing 2da: " + resref);
+                return null;
+            }
+            else
+            {
+                _2da = new _2DAObject(stream);
                 data.loaded2das.Add(resref, _2da);
-				return _2da;
-			}
-		}
+                return _2da;
+            }
+        }
 
         public static LIP LoadLipSync(string resref)
         {
@@ -616,17 +641,19 @@ namespace AuroraEngine
 
         public static AudioClip LoadAudio(string resref)
         {
-            using (FileStream stream = File.Open(AuroraPrefs.GetKotorLocation() + "\\streammusic\\" + resref + ".wav", FileMode.Open)) {
-				WAVObject wav = new WAVObject(stream);
+            // using (FileStream stream = File.Open(AuroraPrefs.GetKotorLocation() + "\\streammusic\\" + resref + ".wav", FileMode.Open)) {
+            using (FileStream stream = File.Open(AuroraPrefs.GetKotorLocation() + "/streammusic/" + resref + ".wav", FileMode.Open))
+            {
+                WAVObject wav = new WAVObject(stream);
 
-				AudioClip clip = AudioClip.Create(resref, wav.data.Length / wav.channels, wav.channels, wav.sampleRate, false);
-				clip.SetData(wav.data, 0);
+                AudioClip clip = AudioClip.Create(resref, wav.data.Length / wav.channels, wav.channels, wav.sampleRate, false);
+                clip.SetData(wav.data, 0);
 
-				return clip;
-			}
-		}
+                return clip;
+            }
+        }
 
-        public static AudioClip LoadVO (string resref, int index)
+        public static AudioClip LoadVO(string resref, int index)
         {
             resref = resref.ToLower();
 
@@ -651,15 +678,15 @@ namespace AuroraEngine
                 return null;
             }
 
-            if (data.tlk.strings[index].sound != null && data.tlk.strings[index].sound != "")
+            if (data.tlk.strings[index].soundResRef != null && data.tlk.strings[index].soundResRef != "")
             {
-                return LoadVO(data.tlk.strings[index].sound, -1);
+                return LoadVO(data.tlk.strings[index].soundResRef, -1);
             }
 
             return null;
         }
 
-        static AudioClip LoadVOAlternative (string resref)
+        static AudioClip LoadVOAlternative(string resref)
         {
             // Check if the resref is long enough
             if (resref.Length <= 11)
@@ -676,7 +703,8 @@ namespace AuroraEngine
             // Next six characters are the subfolder
             string subFolder = resref.Substring(6, 6);
 
-            string fullname = AuroraPrefs.GetKotorLocation() + "\\streamwaves\\" + topFolder + "\\" + subFolder + "\\" + resref + ".wav";
+            string fullname = AuroraPrefs.GetKotorLocation() + "/streamwaves/" + topFolder + "/" + subFolder + "/" + resref + ".wav";
+            // string fullname = AuroraPrefs.GetKotorLocation() + "\\streamwaves\\" + topFolder + "\\" + subFolder + "\\" + resref + ".wav";
 
             if (!File.Exists(fullname))
             {
@@ -732,7 +760,8 @@ namespace AuroraEngine
             using (AutoResetEvent outputWaitHandle = new AutoResetEvent(false))
             using (AutoResetEvent errorWaitHandle = new AutoResetEvent(false))
             {
-                p.OutputDataReceived += (sender, e) => {
+                p.OutputDataReceived += (sender, e) =>
+                {
                     if (e.Data == null)
                     {
                         outputWaitHandle.Set();

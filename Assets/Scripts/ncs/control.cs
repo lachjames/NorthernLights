@@ -10,17 +10,28 @@ namespace NCSInstructions
     public class ACTION : NCSInstruction
     {
         static Type nwscript;
-        static ACTION () {
+        static ACTION()
+        {
             nwscript = Type.GetType("AuroraEngine.NWScript");
         }
-        
+
         // Runs an engine function (defined in nwscript.nss)
         public override void Run(NCSContext context)
         {
             context.Log("Calling " + args[1]);
 
             // Get the function definition for the action
-            MethodInfo m = nwscript.GetMethod(args[1]);
+            int method_idx = int.Parse(args[1]);
+
+            string method_name = NWScript_Actions.ACTIONS[method_idx];
+            UnityEngine.Debug.Log("Calling action " + method_name);
+
+            MethodInfo m = nwscript.GetMethod(method_name);
+            UnityEngine.Debug.Log("Action " + method_name + " has MethodInfo " + m);
+            // MethodInfo[] methods = typeof(AuroraEngine.NWScript).GetMethods(BindingFlags.Public | BindingFlags.Static);
+            // UnityEngine.Debug.Log("Calling method " + method_idx + " of " + methods.Length);
+            // MethodInfo m = methods[method_idx];
+            // UnityEngine.Debug.Log("Calling method no " + method_idx + ": " + m.Name);
 
             if (m == null)
             {
@@ -31,12 +42,12 @@ namespace NCSInstructions
 
             object[] parameters = new object[m.GetParameters().Length];
 
-            context.Log("Method " + m.Name + " has " + 
-                m.GetParameters().Length + " parameter(s)" + 
+            context.Log("Method " + m.Name + " has " +
+                m.GetParameters().Length + " parameter(s)" +
                 " and providing " + paramCount
             );
 
-            ParameterInfo[] paramInfo= m.GetParameters();
+            ParameterInfo[] paramInfo = m.GetParameters();
             for (int i = 0; i < paramCount; i++)
             {
                 ParameterInfo p = paramInfo[i];
@@ -45,7 +56,9 @@ namespace NCSInstructions
                 {
                     context.Log("Getting parameter from store state stack");
                     parameters[i] = context.GetState();
-                } else if (p.ParameterType == typeof(AuroraVector)) {
+                }
+                else if (p.ParameterType == typeof(AuroraVector))
+                {
                     context.Log("Getting vector from stack");
 
                     context.Log(context.stack.Last());
@@ -56,7 +69,9 @@ namespace NCSInstructions
                     float z = (float)context.Pop();
 
                     parameters[i] = new AuroraVector(x, y, z);
-                } else {
+                }
+                else
+                {
                     context.Log("Getting parameter from stack");
                     parameters[i] = context.Pop();
                 }
@@ -71,7 +86,7 @@ namespace NCSInstructions
 
             // Generate the function call signature
             string signature = args[1] + "(";
-            
+
             for (int i = 0; i < parameters.Length; i++)
             {
                 signature += parameters[i];
@@ -80,7 +95,7 @@ namespace NCSInstructions
                     signature += ",";
                 }
             }
-            
+
             signature += ")";
 
             object return_value;
@@ -88,7 +103,8 @@ namespace NCSInstructions
             try
             {
                 return_value = m.Invoke(null, parameters);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 LoggedEvents.Log("  Action", "FAILED: " + signature);
                 throw e;
@@ -101,13 +117,15 @@ namespace NCSInstructions
             if (m.ReturnType == typeof(void))
             {
 
-            } else if (m.ReturnType == typeof(AuroraVector))
+            }
+            else if (m.ReturnType == typeof(AuroraVector))
             {
                 AuroraVector vec = (AuroraVector)return_value;
                 context.Push(vec.z);
                 context.Push(vec.y);
                 context.Push(vec.x);
-            } else
+            }
+            else
             {
                 context.Push(return_value);
             }
@@ -122,20 +140,18 @@ namespace NCSInstructions
     public class JNZ : NCSInstruction
     {
 
+        public override bool IncrementsPC { get { return false; } }
         public override void Run(NCSContext context)
         {
             string label = args[1];
-            int offset = context.script.labels[label];
+            // int offset = context.script.labels[label];
 
             int stackTop = (int)context.Pop();
             if (stackTop != 0)
             {
                 // Jump to the label
-                // Subtract one from the program counter
-                // because we will add one to it when this is done -
-                // this avoids having to write custom logic for whether to
-                // increment the PC or not after doing this instruction
-                context.programCounter = offset - 1;
+                int offset = int.Parse(args[1]);
+                context.JumpOffset(offset);
             }
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
@@ -147,21 +163,20 @@ namespace NCSInstructions
 
     public class JZ : NCSInstruction
     {
+        public override bool IncrementsPC { get { return false; } }
 
         public override void Run(NCSContext context)
         {
-            string label = args[1];
-            int offset = context.script.labels[label];
-
-            int stackTop = (int)context.Pop();
+            // string label = args[1];
+            // int offset = context.script.labels[label];
+            object top = context.Pop();
+            UnityEngine.Debug.Log("Top of stack: " + top);
+            int stackTop = (int)top;
             if (stackTop == 0)
             {
                 // Jump to the label
-                // Subtract one from the program counter
-                // because we will add one to it when this is done -
-                // this avoids having to write custom logic for whether to
-                // increment the PC or not after doing this instruction
-                context.programCounter = offset - 1;
+                int offset = int.Parse(args[1]);
+                context.JumpOffset(offset);
             }
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
@@ -176,8 +191,10 @@ namespace NCSInstructions
         public override void Run(NCSContext context)
         {
             // Moves forward a number of steps in the program
-            int newPC = script.labels[args[1]];
-            context.programCounter = newPC;
+            // int newPC = script.labels[args[1]];
+            // context.programCounter = newPC;
+            int offset = int.Parse(args[1]);
+            context.JumpOffset(offset);
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
         {
@@ -191,8 +208,10 @@ namespace NCSInstructions
         public override bool IncrementsPC { get { return false; } }
         public override void Run(NCSContext context)
         {
-            int newPC = script.labels[args[1]];
-            context.Jump(newPC);
+            // int newPC = script.labels[args[1]];
+            int offset = int.Parse(args[1]);
+            context.JumpOffset(offset, true);
+            // context.Jump(newPC);
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
         {
@@ -237,8 +256,9 @@ namespace NCSInstructions
     {
         public override void Run(NCSContext context)
         {
+            // The T instruction doesn't do anything!
             // Pushes an immediate value onto the stack
-            Debug.Log("This should never be reached");
+            // Debug.Log("This should never be reached");
         }
         public override ILInstruction Convert(int command, StackMatrix matrix)
         {

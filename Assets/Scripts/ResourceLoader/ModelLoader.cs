@@ -7,7 +7,8 @@ namespace AuroraEngine
     public static partial class Resources
     {
         static StateSystem manager;
-        static Resources () {
+        static Resources()
+        {
             manager = GameObject.Find("State System").GetComponent<StateSystem>();
         }
 
@@ -52,7 +53,7 @@ namespace AuroraEngine
                     {
                         throw new System.Exception("Invalid zero weight detected");
                     }
-                    
+
                     weights[i] = new BoneWeight
                     {
                         weight0 = node.weights[i][0],
@@ -131,7 +132,7 @@ namespace AuroraEngine
         }
 
 
-        static Material CreateMaterial (MDLNode node, string cubemap)
+        static Material CreateMaterial(MDLNode node, string cubemap)
         {
             Material mat = LoadMaterial(node.trimeshHeader.textureName, node.trimeshHeader.lightmapName, cubemap);
             Color emissive = new Color(
@@ -161,7 +162,8 @@ namespace AuroraEngine
                 // (because it looks WAY better)
                 mat.SetFloat("_Metallic", 1f);
                 mat.SetFloat("_Glossiness", 0.9f);
-            } else
+            }
+            else
             {
                 //mat.SetFloat("_Metallic", 0.2f);
                 mat.SetFloat("_Glossiness", 0f);
@@ -170,7 +172,7 @@ namespace AuroraEngine
             return mat;
         }
 
-        static void CreateTrimesh (MDLNode node, GameObject go, string cubemap)
+        static void CreateTrimesh(MDLNode node, GameObject go, string cubemap)
         {
             if (node.trimeshHeader == null)
             {
@@ -183,7 +185,14 @@ namespace AuroraEngine
 
             go.AddComponent<MeshFilter>().sharedMesh = mesh;
 
-            col.sharedMesh = mesh;
+            try
+            {
+                col.sharedMesh = mesh;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to set mesh collider mesh: " + e.Message);
+            }
 
             //meshes with a NULL texture should be invisible
             if (node.trimeshHeader.textureName != "NULL")
@@ -218,7 +227,7 @@ namespace AuroraEngine
             }
         }
 
-        public static void CreateLight (MDLNode node, GameObject go)
+        public static void CreateLight(MDLNode node, GameObject go)
         {
             if (node.lightHeader == null)
             {
@@ -232,10 +241,10 @@ namespace AuroraEngine
             {
                 // Make it a directional light
                 light.type = LightType.Directional;
-                
+
                 // Directional light intensity is a bit much in Unity
                 light.intensity = 0.5f;
-                
+
                 // Make it point to the origin
                 light.transform.LookAt(Vector3.zero);
             }
@@ -253,7 +262,7 @@ namespace AuroraEngine
             light.shadows = LightShadows.Soft;
         }
 
-        public static void CreateEmitter (MDLNode node, GameObject go)
+        public static void CreateEmitter(MDLNode node, GameObject go)
         {
             if (node.emitterHeader == null)
             {
@@ -300,7 +309,8 @@ namespace AuroraEngine
                         if (Application.isPlaying)
                         {
                             GameObject.Destroy(go.GetComponent<MeshFilter>());
-                        } else
+                        }
+                        else
                         {
                             GameObject.DestroyImmediate(go.GetComponent<MeshFilter>());
                         }
@@ -387,7 +397,7 @@ namespace AuroraEngine
             {
                 CreateBones(node.childNodes[i], names, go.transform, nodeIdx, nodeStr, bones, cubemap);
             }
-            
+
             return go;
         }
 
@@ -455,13 +465,14 @@ namespace AuroraEngine
                 model.transform.parent = body.transform;
                 model.transform.position = headPos.transform.position;
                 model.transform.rotation = headPos.transform.rotation;
-            } else
+            }
+            else
             {
                 throw new System.Exception("Failed to find headPos");
             }
         }
 
-        public static GameObject LoadModel(Stream mdl, Stream mdx, Dictionary<string, GameObject> modelCache, Vector3 basePos, 
+        public static GameObject LoadModel(Stream mdl, Stream mdx, Dictionary<string, GameObject> modelCache, Vector3 basePos,
             GameObject body, string cubemap, AuroraObject obj)
         {
             // TODO: Make this work for K2 as well

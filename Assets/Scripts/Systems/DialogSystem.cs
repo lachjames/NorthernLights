@@ -489,7 +489,7 @@ public class DialogSystem : MonoBehaviour
             }
 
             NCSScript rplyScript = AuroraEngine.Resources.LoadScript(rply.Active);
-            if (rplyScript.RunConditional(new NCSContext()) > 0)
+            if (rplyScript.RunConditional(new NCSContext(rplyScript, rplyScript.file)) > 0)
             {
                 replies.Add(rply);
             }
@@ -538,7 +538,7 @@ public class DialogSystem : MonoBehaviour
             }
 
             NCSScript script = AuroraEngine.Resources.LoadScript(rply.Active);
-            int value = script.RunConditional(new NCSContext());
+            int value = script.RunConditional(new NCSContext(script, script.file));
 
             if (value > 0)
             {

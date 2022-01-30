@@ -30,7 +30,7 @@ public abstract class AuroraArchive
         SetupArchive();
     }
 
-    void ReadStream (Stream stream)
+    void ReadStream(Stream stream)
     {
         memoryStream = new MemoryStream();
         stream.Seek(0, SeekOrigin.Begin);

@@ -74,7 +74,7 @@ public class StateSystem : MonoBehaviour
 
     public Dictionary<string, Func<AuroraObject, int, int>> scriptOverrides = new Dictionary<string, Func<AuroraObject, int, int>>()
     {
-        //{ "k_ai_master", NCSOverride.k_ai_master }
+        { "k_ai_master", NCSOverride.k_ai_master }
     };
 
     public enum GameState
@@ -308,7 +308,7 @@ public class StateSystem : MonoBehaviour
 
     int Execute (AuroraObject caller, NCSScript script, NCSContext context, int scriptVar, bool isConditional = false)
     {
-        Debug.Log("Executing script" + script.scriptName);
+        Debug.Log("Executing script: '" + script.scriptName + "'");
         LoggedEvents.Log("Run Script", script.scriptName);
 
         if (pauseOnScript)
@@ -399,7 +399,7 @@ public class StateSystem : MonoBehaviour
             Debug.LogWarning("Could not find script " + resref);
             return;
         }
-        NCSContext context = new NCSContext();
+        NCSContext context = new NCSContext(script, script.file);
 
         Execute(caller, script, context, scriptVar);
     }
@@ -419,7 +419,7 @@ public class StateSystem : MonoBehaviour
             return 0;
         }
 
-        NCSContext context = new NCSContext();
+        NCSContext context = new NCSContext(script, script.file);
 
         Debug.Log("Running conditional script " + resref);
         return Execute(caller, script, context, -1, true);

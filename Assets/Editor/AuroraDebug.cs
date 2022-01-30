@@ -94,7 +94,7 @@ public class AuroraDebug : EditorWindow
 
                 if (GUILayout.Button("<<", GUILayout.Width(50), GUILayout.Height(50)))
                 {
-                    context = new NCSContext();
+                    context = new NCSContext(script, script.file);
                     script.lastInstruction = null;
                 }
                 if (script.lastInstruction != null)

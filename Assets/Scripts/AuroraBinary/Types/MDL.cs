@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityBinary;
 
 [System.Serializable]
 public class MDL : BinaryStructure
@@ -33,7 +34,7 @@ public class MDL : BinaryStructure
 
     public NamesHeader nameHeader;
 
-    [BinaryPointerArray("animationPointer")] public Pointer[] animationPointers;
+    [BinaryPointerArray("animationPointer")] public UnityBinary.Pointer[] animationPointers;
     [BinaryDerefArray("animationPointer", "animationPointers")] public AnimationNode[] animations;
 
     [BinaryCustom("ReadNodes")] public MDLNode rootNode;
@@ -106,7 +107,7 @@ public class NamesHeader : BinaryStructure
     public uint mdxOffset;
 
     public PointerArray namesPointer;
-    [BinaryPointerArray("namesPointer")] public Pointer[] nameOffsets;
+    [BinaryPointerArray("namesPointer")] public UnityBinary.Pointer[] nameOffsets;
 
     // The names are located right after the nameOffsets
     [BinaryDerefArray("namesPointer", "nameOffsets")] public NodeName[] names;
@@ -1079,7 +1080,7 @@ public class LightHeader : BinaryStructure
     // so maybe there's a problem with the implementation here?
     //[BinaryPointerArray("colorShifts")] public Vertex[] colorShifts;
 
-    [BinaryPointerArray("flareTexturePointersArray")] public Pointer[] flareTexturePointers;
+    [BinaryPointerArray("flareTexturePointersArray")] public UnityBinary.Pointer[] flareTexturePointers;
     [BinaryDerefArray("flareTexturePointersArray", "flareTexturePointers")] public FlareTextureName[] flareTextureNames;
 }
 

@@ -30,15 +30,46 @@ public class ScriptTool : EditorWindow
     {
         using (new EditorGUILayout.VerticalScope())
         {
-            if (GUILayout.Button("Load Script"))
+            using (new EditorGUILayout.HorizontalScope())
             {
-                LoadScript();
-            }
+                if (GUILayout.Button("Load Script"))
+                {
+                    LoadScript();
+                }
 
-            if (GUILayout.Button("Reset Tool"))
-            {
-                ResetTool();
+                if (GUILayout.Button("Reset Tool"))
+                {
+                    ResetTool();
+                }
+
+                // Controls
+                if (GUILayout.Button(">", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    script.Step(context);
+                }
+                if (GUILayout.Button(">10", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        script.Step(context);
+                    }
+                }
+                if (GUILayout.Button(">50", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    for (int i = 0; i < 50; i++)
+                    {
+                        script.Step(context);
+                    }
+                }
+
+                if (GUILayout.Button("<<", GUILayout.Width(50), GUILayout.Height(20)))
+                {
+                    context = new NCSContext(script, script.file);
+                    script.lastInstruction = null;
+                }
             }
+            if (script != null && script.lastInstruction != null)
+                GUILayout.Label("Last instruction (" + context.programCounter + "): " + script.lastInstruction.ToString());
 
             if (script != null)
             {
@@ -58,7 +89,7 @@ public class ScriptTool : EditorWindow
         using (FileStream fs = File.OpenRead(location))
         {
             script = new NCSScript(fs, "script");
-            context = new NCSContext();
+            context = new NCSContext(script, script.file);
         }
     }
 
@@ -89,41 +120,10 @@ public class ScriptTool : EditorWindow
                     DrawCode();
                 }
             }
-
-            // Controls
-            using (new GUILayout.HorizontalScope("box"))
-            {
-                if (GUILayout.Button(">", GUILayout.Width(50), GUILayout.Height(50)))
-                {
-                    script.Step(context);
-                }
-                if (GUILayout.Button(">10", GUILayout.Width(50), GUILayout.Height(50)))
-                {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        script.Step(context);
-                    }
-                }
-                if (GUILayout.Button(">50", GUILayout.Width(50), GUILayout.Height(50)))
-                {
-                    for (int i = 0; i < 50; i++)
-                    {
-                        script.Step(context);
-                    }
-                }
-
-                if (GUILayout.Button("<<", GUILayout.Width(50), GUILayout.Height(50)))
-                {
-                    context = new NCSContext();
-                    script.lastInstruction = null;
-                }
-                if (script.lastInstruction != null)
-                    GUILayout.Label("Last instruction (" + context.programCounter + "): " + script.lastInstruction.ToString());
-            }
         }
     }
 
-    void DrawStack ()
+    void DrawStack()
     {
         using (new GUILayout.VerticalScope("box"))
         {
@@ -141,7 +141,7 @@ public class ScriptTool : EditorWindow
         }
     }
 
-    void DrawCode ()
+    void DrawCode()
     {
         using (new GUILayout.VerticalScope("box"))
         {
@@ -151,7 +151,8 @@ public class ScriptTool : EditorWindow
                 if (i == context.GetPC())
                 {
                     style.normal.textColor = Color.green;
-                } else
+                }
+                else
                 {
                     style.normal.textColor = Color.black;
                 }

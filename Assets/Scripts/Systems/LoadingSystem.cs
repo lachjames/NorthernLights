@@ -32,7 +32,7 @@ public class LoadingSystem : MonoBehaviour
             Load(levelName);
     }
 
-    void Update ()
+    void Update()
     {
 
     }
@@ -90,23 +90,24 @@ public class LoadingSystem : MonoBehaviour
 
             // The LoadItems coroutine runs every frame
             StartCoroutine("LoadItems");
-        } else
+        }
+        else
         {
             LoadAllAtOnce();
         }
     }
 
-    public void AddAction (Action action)
+    public void AddAction(Action action)
     {
         actions.Enqueue(action);
     }
 
-    void Lock ()
+    void Lock()
     {
         locked = true;
     }
 
-    void Unlock ()
+    void Unlock()
     {
         Debug.Log("Unlocking game");
         locked = false;
@@ -120,12 +121,12 @@ public class LoadingSystem : MonoBehaviour
         musicSystem.Initialize();
     }
 
-    public bool IsLocked ()
+    public bool IsLocked()
     {
         return locked;
     }
 
-    IEnumerator LoadItems ()
+    IEnumerator LoadItems()
     {
         while (true)
         {
@@ -136,7 +137,7 @@ public class LoadingSystem : MonoBehaviour
             }
 
             maxActions = actions.Count > maxActions ? actions.Count : maxActions;
-            
+
             //float maxTime = 1f / FPSTarget;
 
             //float startTime = Time.time;
@@ -148,10 +149,13 @@ public class LoadingSystem : MonoBehaviour
 
             try
             {
-                action.Invoke();
-            } catch (Exception e)
+                // action.Invoke();
+                action();
+            }
+            catch (Exception e)
             {
                 Debug.LogError(e);
+                // throw;
             }
             // Set the frametime
             //frameTime = (Time.time - startTime);
@@ -162,7 +166,7 @@ public class LoadingSystem : MonoBehaviour
         }
     }
 
-    void LoadAllAtOnce ()
+    void LoadAllAtOnce()
     {
         Debug.Log("Loading actions");
         foreach (Action action in actions)
@@ -170,9 +174,11 @@ public class LoadingSystem : MonoBehaviour
             try
             {
                 action.Invoke();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Debug.LogError(e);
+                throw;
             }
         }
 
@@ -202,10 +208,11 @@ public class LoadingSystem : MonoBehaviour
         template.SkillList = new List<AuroraUTC.ASkill>();
         template.SpecAbilityList = new List<AuroraUTC.ASpecAbility>();
 
+        // TODO: Temporary stuff; this should be set by character creation later
         // Set some default scripts
         template.ScriptUserDefine = "k_def_userdef01";
 
-        // Temporary stuff; this should be set by character creation later
+        // Set some default variable values
         template.Gender = 0;
         template.ClassList.Add(new AuroraUTC.AClass()
         {

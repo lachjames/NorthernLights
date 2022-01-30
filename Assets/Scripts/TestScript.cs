@@ -17,7 +17,7 @@ public class TestScript : MonoBehaviour
     void Start()
     {
         script = AuroraEngine.Resources.LoadScript(ScriptName);
-        context = new NCSContext();
+        context = new NCSContext(script, script.file);
     }
 
     private void OnGUI()
@@ -63,7 +63,7 @@ public class TestScript : MonoBehaviour
 
                 if (GUILayout.Button("<<", GUILayout.Width(50), GUILayout.Height(50)))
                 {
-                    context = new NCSContext();
+                    context = new NCSContext(script, script.file);
                     script.lastInstruction = null;
                 }
                 if (script.lastInstruction != null)

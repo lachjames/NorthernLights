@@ -1,7 +1,7 @@
 ﻿using AuroraEngine;
 using NAudio.MediaFoundation;
 using System.Collections.Generic;
-using System.Diagnostics;
+// using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,9 +10,10 @@ using UnityEngine;
 
 public class AuroraData
 {
+    public static AuroraData Instance;
     public Game game = Game.KotOR;
 
-    string moduleName;
+    public string moduleName;
     public AuroraArchive rim, srim;
     public AuroraArchive dlg, mod;
 
@@ -29,8 +30,8 @@ public class AuroraData
     public Dictionary<string, string> voLocations = new Dictionary<string, string>();
 
     public Dictionary<string, _2DAObject> loaded2das = new Dictionary<string, _2DAObject>();
-    public TLKObject tlk;
-    //public TLK tlk;
+    // public TLKObject tlk;
+    public TLK tlk;
 
     public List<string> overrideFiles = new List<string>();
     public Dictionary<(string, ResourceType), string> overridePaths = new Dictionary<(string, ResourceType), string>();
@@ -70,6 +71,7 @@ public class AuroraData
 
     public AuroraData(Game game, string moduleName, bool instantiateModule = true)
     {
+        AuroraData.Instance = this;
         this.game = game;
         this.moduleName = moduleName;
 
@@ -85,9 +87,10 @@ public class AuroraData
             LoadModule(instantiateModule);
     }
 
-    void LoadOverride ()
+    void LoadOverride()
     {
-        foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        // foreach (string path in Directory.GetFiles(AuroraPrefs.GetKotorLocation() + "\\override\\", "*", SearchOption.AllDirectories))
+        foreach (string path in Directory.GetFiles(GetPath("Override/"), "*", SearchOption.AllDirectories))
         {
             string name = Path.GetFileNameWithoutExtension(path);
             string ext = Path.GetExtension(path).Replace(".", "");
@@ -107,13 +110,19 @@ public class AuroraData
         if (AuroraPrefs.DeveloperMode())
         {
             LoadFromDirectories();
-        } else
+        }
+        else
         {
             LoadFromGameFiles();
         }
     }
 
-    void LoadFromDirectories ()
+    public static string GetPath(string filename)
+    {
+        return Path.Join(AuroraPrefs.GetKotorLocation(), filename.Replace("\\", "/"));
+    }
+
+    void LoadFromDirectories()
     {
         loaded2das = new Dictionary<string, _2DAObject>();
 
@@ -121,17 +130,17 @@ public class AuroraData
 
         // We assume that the subfolders of the "data" folder
         // contain all the BIF objects
-        foreach (string dir in Directory.EnumerateDirectories(AuroraPrefs.GetKotorLocation() + "/data"))
+        foreach (string dir in Directory.EnumerateDirectories(GetPath("data")))
         {
             dataFolders.Add(new FolderObject(dir));
         }
         bifObjects = dataFolders.ToArray();
 
-        textures = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\textures\\tpa");
-        guiTextures = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\textures\\gui");
+        textures = new FolderObject(GetPath("textures/tpa"));
+        guiTextures = new FolderObject(GetPath("textures/gui"));
 
         // Load the VO directory
-        string voicedir = AuroraPrefs.GetKotorLocation() + "\\vo";
+        string voicedir = GetPath("vo");
 
         foreach (string filepath in Directory.GetFiles(voicedir, "*.wav", SearchOption.AllDirectories))
         {
@@ -139,37 +148,40 @@ public class AuroraData
             voLocations[filename.ToLower()] = filepath;
         }
 
-        string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
-        tlk = new TLKObject(tlkXML);
+        // TODO: Fix this
+        // string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
+        // tlk = new TLKObject(tlkXML);
 
         UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
     }
 
-    void LoadFromGameFiles ()
+    void LoadFromGameFiles()
     {
         loaded2das = new Dictionary<string, _2DAObject>();
 
-        keyObject = new KEYObject(AuroraPrefs.GetKotorLocation() + "\\chitin.key");
+        // keyObject = new KEYObject(AuroraPrefs.GetKotorLocation() + "\\chitin.key");
+        keyObject = new KEYObject(GetPath("chitin.key"));
+        Debug.Log("Loaded keyObject: " + keyObject);
 
         KEYObject.BIFStream[] bifs = keyObject.GetBIFs();
         bifObjects = new BIFObject[bifs.Length];
         for (int i = 0; i < bifs.Length; i++)
         {
-            bifObjects[i] = new BIFObject(AuroraPrefs.GetKotorLocation() + "\\" + bifs[i].Filename, keyObject);
+            bifObjects[i] = new BIFObject(GetPath(bifs[i].Filename), keyObject);
         }
 
-        textures = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\TexturePacks\\swpc_tex_tpa.erf");
-        guiTextures = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\TexturePacks\\swpc_tex_gui.erf");
+        textures = new ERFObject(GetPath("TexturePacks/swpc_tex_tpa.erf"));
+        guiTextures = new ERFObject(GetPath("TexturePacks/swpc_tex_gui.erf"));
 
         // Load the VO directory
-        string voicedir = AuroraPrefs.GetKotorLocation();
+        string voicedir;
         if (AuroraPrefs.TargetGame() == Game.KotOR)
         {
-            voicedir += "\\streamwaves";
+            voicedir = GetPath("streamwaves");
         }
         else
         {
-            voicedir += "\\streamvoice";
+            voicedir = GetPath("streamvoice");
         }
 
         foreach (string filepath in Directory.GetFiles(voicedir, "*.wav", SearchOption.AllDirectories))
@@ -178,17 +190,19 @@ public class AuroraData
             voLocations[filename.ToLower()] = filepath;
         }
 
-        //Stream tlk_stream = new FileStream(AuroraPrefs.GetKotorLocation() + "\\dialog.tlk", FileMode.Open);
-        //int b = tlk_stream.ReadByte();
-        //UnityEngine.Debug.Log(b);
-        //tlk_stream.Seek(0, SeekOrigin.Begin);
-        //tlk = new TLK();
-        //tlk.Load(tlk_stream, new Dictionary<string, Stream>(), 0, 0);
+        // Stream tlk_stream = new FileStream(AuroraPrefs.GetKotorLocation() + "\\dialog.tlk", FileMode.Open);
+        // int b = tlk_stream.ReadByte();
+        // UnityEngine.Debug.Log(b);
+        // tlk_stream.Seek(0, SeekOrigin.Begin);
+        // tlk = new TLK();
+        // tlk.Load(tlk_stream, new Dictionary<string, Stream>(), 0, 0);
 
-        string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
-        tlk = new TLKObject(tlkXML);
+        // string tlkXML = AuroraEngine.Resources.RunXoreosTools("\"" + AuroraPrefs.GetKotorLocation() + "\\dialog.tlk\"", "tlk2xml", AuroraPrefs.TargetGame() == Game.KotOR ? "--kotor" : "--kotor2");
+        // tlk = new TLKObject(tlkXML);
 
-        UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
+        tlk = AuroraEngine.Resources.LoadTLK();
+
+        // UnityEngine.Debug.Log("Loaded " + tlk.strings.Count + " strings from the TLK");
     }
 
     void LoadModule(bool instantiateModule)
@@ -196,7 +210,8 @@ public class AuroraData
         if (AuroraPrefs.DeveloperMode())
         {
             LoadModuleFromFolders(instantiateModule);
-        } else
+        }
+        else
         {
             LoadModuleFromGameFiles(instantiateModule);
         }
@@ -208,39 +223,50 @@ public class AuroraData
         srim = null;
         dlg = null;
 
-        mod = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName);
+        // mod = new FolderObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName);
+        mod = new FolderObject(GetPath("modules/" + moduleName));
         module = new Module(moduleName, this, instantiateModule);
     }
 
-    void LoadModuleFromGameFiles (bool instantiateModule)
+    public void LoadModuleFromGameFiles(bool instantiateModule)
     {
         rim = null;
         srim = null;
         dlg = null;
         mod = null;
 
-        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim"))
+        string rimPath = GetPath("modules/" + moduleName + ".rim");
+        string srimPath = GetPath("modules/" + moduleName + "_s.rim");
+        string dlgPath = GetPath("modules/" + moduleName + ".dlg");
+        string modPath = GetPath("modules/" + moduleName + ".mod");
+
+        if (File.Exists(rimPath))
         {
-            rim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".rim");
+            rim = new RIMObject(rimPath);
             //UnityEngine.Debug.Log("Loaded " + rim.resources.Keys.Count + " items from " + moduleName + ".rim");
         }
 
-        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim"))
+        if (File.Exists(srimPath))
         {
-            srim = new RIMObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_s.rim");
+            srim = new RIMObject(srimPath);
             //UnityEngine.Debug.Log("Loaded " + srim.resources.Keys.Count + " items from " + moduleName + "_s.rim");
         }
 
-        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf"))
+        if (File.Exists(dlgPath))
         {
-            dlg = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + "_dlg.erf");
+            dlg = new ERFObject(dlgPath);
             //UnityEngine.Debug.Log("Loaded " + dlg.resourceKeys.Count + " items from " + moduleName + "_dlg.erf");
         }
 
-        if (File.Exists(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod"))
+        if (File.Exists(modPath))
         {
-            mod = new ERFObject(AuroraPrefs.GetKotorLocation() + "\\modules\\" + moduleName + ".mod");
+            mod = new ERFObject(modPath);
             //UnityEngine.Debug.Log("Loaded " + mod.resourceKeys.Count + " items from " + moduleName + ".mod");
+        }
+
+        if (rim == null && srim == null && dlg == null && mod == null)
+        {
+            UnityEngine.Debug.LogError("Could not find any files for module " + moduleName);
         }
 
         module = new Module(moduleName, this, instantiateModule);
@@ -328,7 +354,7 @@ public class AuroraData
         Stream stream = GetStreamFromOverride(resref, rt);
         if (stream != null)
             return stream;
-            
+
         stream = GetStreamFromModule(resref, rt);
         if (stream != null)
             return stream;
@@ -336,7 +362,7 @@ public class AuroraData
         return GetStreamFromBase(resref, rt);
     }
 
-    Stream GetStreamFromModule(string resref, ResourceType rt, bool warnOnFail = false)
+    Stream GetStreamFromModule(string resref, ResourceType rt, bool warnOnFail = true)
     {
         // Check if the item is in the rim
 

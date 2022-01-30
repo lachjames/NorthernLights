@@ -29,7 +29,7 @@ namespace AuroraEngine
 
         List<ReflectionProbe> realtimeProbes = new List<ReflectionProbe>();
 
-        void SetLayerRecursive (GameObject obj, int layer)
+        void SetLayerRecursive(GameObject obj, int layer)
         {
             obj.layer = layer;
             foreach (Transform t in obj.transform)
@@ -94,6 +94,7 @@ namespace AuroraEngine
             }
 
             ifo = data.Get<AuroraIFO>("module", ResourceType.IFO);
+            Debug.Log(ifo);
             string areaName = ifo.Mod_Entry_Area;
 
             are = data.Get<AuroraARE>(areaName, ResourceType.ARE);
@@ -102,6 +103,7 @@ namespace AuroraEngine
             entryPosition = new Vector3(ifo.Mod_Entry_X, ifo.Mod_Entry_Z, ifo.Mod_Entry_Y);
 
             Dictionary<string, Vector3> layout = Resources.LoadLayout(areaName, data);
+            Debug.Log("Layout has " + layout.Count + " rooms.");
 
             area = Area.Create(are);
 
@@ -112,11 +114,13 @@ namespace AuroraEngine
             {
                 loader.AddAction(() =>
                 {
+                    Debug.Log("Loading room " + value.Key);
                     string resref = value.Key.ToLower();
 
                     GameObject room = Resources.LoadModel(resref);
 
-                    if (SetupSkybox(room)) {
+                    if (SetupSkybox(room))
+                    {
                         return;
                     }
 
@@ -152,12 +156,12 @@ namespace AuroraEngine
             });
         }
 
-        public bool SetupSkybox (GameObject room)
+        public bool SetupSkybox(GameObject room)
         {
             return SkymapTaris(room) || SkymapTattoine(room);
         }
 
-        bool SkymapTaris (GameObject skymapObj)
+        bool SkymapTaris(GameObject skymapObj)
         {
             Transform up = skymapObj.transform.Find("sky01");
             Transform front = skymapObj.transform.Find("sky015");
@@ -168,7 +172,7 @@ namespace AuroraEngine
             return MakeSkymap(up, front, back, left, right);
         }
 
-        bool MakeSkymap (Transform up, Transform front, Transform back, Transform left, Transform right)
+        bool MakeSkymap(Transform up, Transform front, Transform back, Transform left, Transform right)
         {
             if (!up || !front || !back || !left || !right)
             {
@@ -198,7 +202,7 @@ namespace AuroraEngine
             return true;
         }
 
-        bool SkymapTattoine (GameObject skymapObj)
+        bool SkymapTattoine(GameObject skymapObj)
         {
             return Tatt1(skymapObj) || Tatt2(skymapObj);
         }
@@ -230,7 +234,7 @@ namespace AuroraEngine
             return MakeSkymap(up, front, back, left, right);
         }
 
-        public void UpdateProbes ()
+        public void UpdateProbes()
         {
             foreach (ReflectionProbe probe in realtimeProbes)
             {
@@ -321,7 +325,7 @@ namespace AuroraEngine
                     door.transform.rotation = rot;
 
                     string tag = d.Tag;
-                    
+
                     door.transform.SetParent(parent.transform);
                     door.transform.name = tag;
 
@@ -531,7 +535,7 @@ namespace AuroraEngine
 
 
                     string tag = t.Tag;
-                    
+
                     trigger.transform.SetParent(parent.transform);
                     trigger.transform.name = tag;
 
@@ -677,22 +681,22 @@ namespace AuroraEngine
             //idx[12 * i + 11] = B;
         }
 
-        public void OnEnter ()
+        public void OnEnter()
         {
             stateManager.RunScript(are.OnEnter, area);
         }
 
-        public void OnExit ()
+        public void OnExit()
         {
             stateManager.RunScript(are.OnExit, area);
         }
 
-        public void OnHeartbeat ()
+        public void OnHeartbeat()
         {
             stateManager.RunScript(are.OnHeartbeat, area);
         }
 
-        public void OnUserDefined ()
+        public void OnUserDefined()
         {
             stateManager.RunScript(are.OnUserDefined, area);
         }
